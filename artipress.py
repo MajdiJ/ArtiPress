@@ -939,6 +939,9 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
 
     for folder, article_data in validated_articles:
 
+        if article_data.get("hide_from_article_list", False):
+            continue
+
         article_labels = ""
         #  Check to see if there are any labels for the article
         if article_data.get("article_labels"):

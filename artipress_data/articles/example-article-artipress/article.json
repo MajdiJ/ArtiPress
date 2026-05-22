@@ -27,6 +27,6 @@
         "technology"
     ],
     "featured": false,
-    "hidden": false,
+    "hide_from_article_list": false,
     "auto_build": true
 }
