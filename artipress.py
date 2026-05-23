@@ -28,7 +28,6 @@ JSON_ARTICLE_FILEPATH = "article.json"
 REQUIRED_JSON_ARTICLE_FIELDS = [
     "article_title",
     "author_slugs",
-    "article_image_url",
     "article_strap_line",
     "date.published"
 ]
@@ -843,6 +842,17 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         ISO_edited_date = article_data.get("date", {}).get("edited", "")
         edited_date_element = f' | Edited on {format_display_date(ISO_edited_date)}'
 
+    article_image_url = article_data.get("article_image_url", "")
+    article_image_alt = article_data.get("article_image_alt", "")
+    if article_image_url:
+        article_image_block = (
+            '<div class="article-image-container article-content featured-article-image">\n'
+            f'        <img src="{article_image_url}" alt="{article_image_alt}"/>\n'
+            '    </div>'
+        )
+    else:
+        article_image_block = ""
+
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
         "website_title": CONFIG["website_title"],
@@ -852,7 +862,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         "article_strap_line": article_data.get("article_strap_line", ""),
         "article_keywords_list": ", ".join(article_data.get("article_keywords", [])),
         "author_meta_tags": make_author_meta_tag(article_data),
-        "article_featured_image": article_data.get("article_image_url", ""),
+        "article_featured_image": article_image_url,
         "article_published_date_iso": ISO_published_date,
         "article_edited_date_iso_iso": ISO_edited_date,
         "og_meta_tags_authors": make_author_og_meta_tag(article_data),
@@ -861,8 +871,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         "article_published_date": published_date_element,
         "article_edited_date": edited_date_element,
         "website_logo_url": CONFIG.get("website_logo_url", ""),
-        "article_image_url": article_data.get("article_image_url", ""),
-        "article_image_alt": article_data.get("article_image_alt", ""),
+        "article_image_block": article_image_block,
         "article_html_content": markdown_to_html(article_md_content),
     }
 
@@ -885,6 +894,17 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
     if article_data.get("date", {}).get("edited") not in (None, ""):
         edited_date_text = f' | Edited on {format_display_date(article_data["date"]["edited"])}'
 
+    article_image_url = article_data.get("article_image_url", "")
+    article_image_alt = article_data.get("article_image_alt", "")
+    if article_image_url:
+        article_image_block = (
+            '<div class="article-image-container article-content featured-article-image">\n'
+            f'        <img src="{article_image_url}" alt="{article_image_alt}"/>\n'
+            '    </div>'
+        )
+    else:
+        article_image_block = ""
+
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
         "website_title": CONFIG["website_title"],
@@ -896,8 +916,7 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
         "article_published_date": format_display_date(ISO_published_date),
         "article_edited_date": edited_date_text,
         "article_edited_date_iso": edited_date_text,
-        "article_image_url": article_data.get("article_image_url", ""),
-        "article_image_alt": article_data.get("article_image_alt", ""),
+        "article_image_block": article_image_block,
         "article_html_content": markdown_to_html(article_md_content),
     }
 
@@ -963,6 +982,15 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
                 article_authors += ", "
             article_authors += author_info.get('author_name', 'Unknown Author')
 
+        article_image_url = article_data.get("article_image_url", "")
+        article_image_alt = article_data.get("article_image_alt", "")
+        if article_image_url:
+            article_card_thumbnail = (
+                f'<img src="{article_image_url}" alt="{article_image_alt}" class="article-card-thumbnail" />'
+            )
+        else:
+            article_card_thumbnail = ""
+
         article_list_items_html += ("\n" + render_template(article_list_item_template, {
             "article_title": article_data.get("article_title", "Untitled Article"),
             "article_strap_line": article_data.get("article_strap_line", ""),
@@ -970,8 +998,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
             "article_authors": article_authors,
             "article_published_date": format_display_date(article_data.get("date", {}).get("published", "")),
             "article_published_date_iso": article_data.get("date", {}).get("published", ""),
-            "article_image_url": article_data.get("article_image_url", ""),
-            "article_image_alt": article_data.get("article_image_alt", ""),
+            "article_card_thumbnail": article_card_thumbnail,
             "article_url": f"/{CONFIG['generated_articles_output_path']}/{folder}/index.html",
         }))
 
