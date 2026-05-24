@@ -201,45 +201,97 @@
         <p>The following is an example article written in Markdown format, demonstrating various features such as headings, formatting, lists, code blocks, tables, images, links, and blockquotes. This article is structured to showcase the capabilities of Markdown for creating rich content.</p>
 <h2>Introduction</h2>
 <p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <em>Ut enim ad minim veniam</em>, quis nostrud exercitation ullamco laboris.</p>
-<hr>
+<hr />
 <h2>Section Two: Typography</h2>
-<p>This paragraph uses <strong><em>bold and italic</em></strong> together. You can also use <del>strikethrough</del> for deleted content. Inline <code>code snippets</code> look like this.</p>
+<p>This paragraph uses <strong><em>bold and italic</em></strong> together. You can also use ~~strikethrough~~ for deleted content. Inline <code>code snippets</code> look like this.</p>
 <blockquote>
 <p>"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</p>
 <p>— <em>Cicero, probably</em></p>
 </blockquote>
-<hr>
+<hr />
 <h2>Section Three: Lists</h2>
 <h3>Unordered List</h3>
-<ul><li><p>Lorem ipsum dolor sit amet</p></li><li><p>Consectetur adipiscing elit</p>
-<ul><li>Sed do eiusmod tempor</li><li>Incididunt ut labore</li></ul></li><li><p>Ut enim ad minim veniam</p></li></ul>
+<ul>
+<li>Lorem ipsum dolor sit amet</li>
+<li>Consectetur adipiscing elit</li>
+<li>Sed do eiusmod tempor</li>
+<li>Incididunt ut labore</li>
+<li>Ut enim ad minim veniam</li>
+</ul>
 <h3>Ordered List</h3>
-<ol><li><p>First, lorem ipsum dolor sit amet</p></li><li><p>Second, consectetur adipiscing elit</p></li><li><p>Third, sed do eiusmod tempor incididunt</p></li><li><p>Fourth, ut labore et dolore magna aliqua</p></li></ol>
+<ol>
+<li>First, lorem ipsum dolor sit amet</li>
+<li>Second, consectetur adipiscing elit</li>
+<li>Third, sed do eiusmod tempor incididunt</li>
+<li>Fourth, ut labore et dolore magna aliqua</li>
+</ol>
 <h3>Task List</h3>
-<ul><li><p><input type="checkbox" disabled checked> Lorem ipsum dolor sit amet</p></li><li><p><input type="checkbox" disabled checked> Consectetur adipiscing elit</p></li><li><p><input type="checkbox" disabled> Sed do eiusmod tempor incididunt</p></li><li><p><input type="checkbox" disabled> Ut enim ad minim veniam</p></li></ul>
-<hr>
+<ul>
+<li>[x] Lorem ipsum dolor sit amet</li>
+<li>[x] Consectetur adipiscing elit</li>
+<li>[ ] Sed do eiusmod tempor incididunt</li>
+<li>[ ] Ut enim ad minim veniam</li>
+</ul>
+<hr />
 <h2>Section Four: Code</h2>
 <p>Inline code: <code>const lorem = "ipsum";</code></p>
 <pre><code class="language-javascript">// Lorem ipsum function
 function loremIpsum(words) {
-  const lorem = ["lorem", "ipsum", "dolor", "sit", "amet"];
-  return Array.from({ length: words }, (_, i) =&gt; lorem[i % lorem.length]).join(" ");
+  const lorem = [&quot;lorem&quot;, &quot;ipsum&quot;, &quot;dolor&quot;, &quot;sit&quot;, &quot;amet&quot;];
+  return Array.from({ length: words }, (_, i) =&gt; lorem[i % lorem.length]).join(&quot; &quot;);
 }
 
-console.log(loremIpsum(5));</code></pre>
+console.log(loremIpsum(5));
+</code></pre>
 <pre><code class="language-bash"># Run the lorem generator
-echo "Lorem ipsum dolor sit amet"</code></pre>
-<hr>
+echo &quot;Lorem ipsum dolor sit amet&quot;
+</code></pre>
+<hr />
 <h2>Section Five: Table</h2>
-<table><thead><tr><th>Name</th><th>Role</th><th>Status</th><th>Score</th></tr></thead><tbody><tr><td>Lorem Ipsum</td><td>Developer</td><td>✅ Active</td><td>98</td></tr><tr><td>Dolor Sit</td><td>Designer</td><td>✅ Active</td><td>87</td></tr><tr><td>Amet Consec</td><td>Manager</td><td>⏸ Paused</td><td>74</td></tr><tr><td>Tur Adipisc</td><td>Analyst</td><td>❌ Inactive</td><td>61</td></tr></tbody></table>
-<hr>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Role</th>
+<th>Status</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lorem Ipsum</td>
+<td>Developer</td>
+<td>✅ Active</td>
+<td>98</td>
+</tr>
+<tr>
+<td>Dolor Sit</td>
+<td>Designer</td>
+<td>✅ Active</td>
+<td>87</td>
+</tr>
+<tr>
+<td>Amet Consec</td>
+<td>Manager</td>
+<td>⏸ Paused</td>
+<td>74</td>
+</tr>
+<tr>
+<td>Tur Adipisc</td>
+<td>Analyst</td>
+<td>❌ Inactive</td>
+<td>61</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2>Section Six: Images</h2>
-<p><img src="https://picsum.photos/seed/lorem/800/400" alt="A serene placeholder landscape"></p>
+<p><img alt="A serene placeholder landscape" src="https://picsum.photos/seed/lorem/800/400" /></p>
 <p><em>Fig. 1 — Lorem ipsum landscape, circa nullam.</em></p>
-<hr>
-<h2>Section Seven: Links & Footnotes</h2>
+<hr />
+<h2>Section Seven: Links &amp; Footnotes</h2>
 <p>Visit <a href="https://www.lipsum.com">Lorem Ipsum Generator</a> for more placeholder text. You can also reference <a href="https://en.wikipedia.org/wiki/Lorem_ipsum">Wikipedia's article on Lorem Ipsum</a>.</p>
-<hr>
+<hr />
 <h2>Section Eight: Nested Blockquotes</h2>
 <blockquote>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -250,10 +302,10 @@ echo "Lorem ipsum dolor sit amet"</code></pre>
 </blockquote>
 </blockquote>
 </blockquote>
-<hr>
-<h2>Section Nine: Horizontal Rules & Closing</h2>
+<hr />
+<h2>Section Nine: Horizontal Rules &amp; Closing</h2>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-<hr>
+<hr />
 <p><em>Fin. Lorem ipsum dolor sit amet.</em></p>
         
     </div>
