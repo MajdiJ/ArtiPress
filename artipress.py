@@ -205,7 +205,7 @@ def write_file(path: str, content: str) -> None:
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
 
-def markdown_to_html(md: str) -> str:
+def markdown_to_html(md: str, source_label: str = "") -> str:
     """
     Convert Markdown to plain HTML (no added styling).
 
@@ -747,6 +747,18 @@ def markdown_to_html(md: str) -> str:
         )
         html += (f'\n<section class="footnotes"><ol>\n{items_html}\n</ol></section>')
 
+    # Conditional heading shift: if the author used '#' (h1) in their markdown,
+    # shift every heading down one level (clamped at h6) so the page template's
+    # title remains the sole h1.
+    if re.search(r'<h1\b', html, flags=re.IGNORECASE):
+        where = f" in '{source_label}'" if source_label else ""
+        print(f"Warning: '#' (h1) used in markdown{where} — shifting all headings down one level (use '##' or deeper to avoid this)")
+        def _shift(match):
+            slash = match.group(1)
+            level = int(match.group(2))
+            return f'<{slash}h{min(level + 1, 6)}'
+        html = re.sub(r'<(/?)h([1-6])\b', _shift, html, flags=re.IGNORECASE)
+
     return html
 
 def render_template(template: str, variables: dict) -> str:
@@ -872,10 +884,10 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         "article_edited_date": edited_date_element,
         "website_logo_url": CONFIG.get("website_logo_url", ""),
         "article_image_block": article_image_block,
-        "article_html_content": markdown_to_html(article_md_content),
+        "article_html_content": markdown_to_html(article_md_content, source_label=article_slug),
     }
 
-    # Render the final html 
+    # Render the final html
     final_html = render_template(base_page_template, replacement_vars)
 
     # Save the rendered template to the output path
@@ -917,7 +929,7 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
         "article_edited_date": edited_date_text,
         "article_edited_date_iso": edited_date_text,
         "article_image_block": article_image_block,
-        "article_html_content": markdown_to_html(article_md_content),
+        "article_html_content": markdown_to_html(article_md_content, source_label=f"{article_slug} (print)"),
     }
 
     # Pass 1: inject component content and resolve top-level template variables
@@ -1136,7 +1148,7 @@ def generate_author_page(author_data: dict, validated_articles: list[tuple[str, 
 
     # Bio -- raw kept for meta description, markdown rendered for the page body
     author_bio = author_data.get("author_bio", "")
-    author_bio_html = markdown_to_html(author_bio) if author_bio else ""
+    author_bio_html = markdown_to_html(author_bio, source_label=f"author bio: {author_name}") if author_bio else ""
 
     # Picture -- fall back to default if missing
     author_picture_url = (author_data.get("author_picture_url") or "").strip() or DEFAULT_AUTHOR_PICTURE_URL
