@@ -5,12 +5,16 @@ If you do bring/create your own, make sure to update the template path in the co
 
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
-The variables/sections that you must include in your article list template are:
-- 
+The variables/sections that you must include in your article page template are:
+- `article_page_head_metadata`            -> (head, near top) Title, canonical, meta description, OG tags, Twitter Card. Do not place other meta tags above this.
+- `articles_page_styling_and_scripts`     -> (head, middle) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
+- `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
+
 These variables must be put in {html_var(...)} format.
 
-You can edit the `article_list_section.css` styling to fit your site. Some other styling files are not recommended to be edited.
-You can edit the article cards layout in the `article_item.html` template component.
+You can edit the `article_main_element.css` and `article_md_elements.css` styling to fit your site.
+You can edit the article layout in the `article_page_main_article.html` template component.
 -->
 
 <!DOCTYPE html>

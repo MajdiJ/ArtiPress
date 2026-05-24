@@ -6,11 +6,19 @@ If you do bring/create your own, make sure to update the template path in the co
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
 The variables/sections that you must include in your author page template are:
-- `author_page_styling_and_scripts` -> Styling (CSS) and any needed script(s) (JS) for the author page. Edit as needed.
+- `author_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the author page. Edit as needed.
 - `author_role_formatted`           -> Pre-rendered <p> tag for the author's role, or empty string if the author has no role.
 - `author_bio_html`                 -> Author bio rendered from markdown to HTML.
 - `author_social_links_formatted`   -> Pre-rendered <ul> of social link items, or empty string if the author has no social links.
 - `author_articles_list_items`      -> Pre-rendered article cards grid for articles written or co-written by this author.
+
+Direct variables also available for use anywhere in this template:
+- `author_name`        -> The author's display name.
+- `author_slug`        -> The author's URL slug (e.g. john-doe).
+- `author_bio`         -> The author's bio as plain text (used in meta description).
+- `author_picture_url` -> URL to the author's avatar image.
+- `website_title`      -> The site name from config.
+- `base_url`           -> The site base URL (e.g. https://example.com).
 
 These variables must be put in {html_var(...)} format.
 

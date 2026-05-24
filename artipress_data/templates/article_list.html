@@ -6,14 +6,16 @@ If you do bring/create your own, make sure to update the template path in the co
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
 The variables/sections that you must include in your article list template are:
-- `articles_list_styling` -> This variable contains the styling (CSS) needed for the article list part. You can edit this styling.
-- `articles_list_scripts` -> This variable contains any needed script(s) (JS) needed for the article list part. You can edit these scripts.
-- `articles_list` -> This variable contains the actual list of articles in HTML format. You must include this variable where you want the list of articles to be rendered.
+- `article_list_styling_and_scripts` -> Styling (CSS) and scripts (JS) for the article list. Place in the <head>. Edit as needed.
+- `article_list_items`               -> The rendered article card grid HTML. Place where you want the list to appear.
+
+Direct variables also available for use anywhere in this template:
+- `base_url` -> The site base URL (e.g. https://example.com).
 
 These variables must be put in {html_var(...)} format.
 
-You can edit the `article_list_section.css` styling to fit your site. Some other styling files are not recommended to be edited.
-You can edit the article cards layout in the `article_item.html` template component.
+You can edit the `article_list_cards.css` styling to fit your site. Some other styling files are not recommended to be edited.
+You can edit the article card layout in the `article_list_item.html` template component.
 -->
 
 <!DOCTYPE html>

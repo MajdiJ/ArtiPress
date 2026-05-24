@@ -6,13 +6,16 @@ If you do bring/create your own, make sure to update the template path in the co
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
 The variables/sections that you must include in your author list template are:
-- `author_list_styling_and_scripts` -> This variable contains the styling (CSS) and any needed script(s) (JS) for the author list part. You can edit these.
-- `author_list_items` -> This variable contains the actual list of authors in HTML format. You must include this variable where you want the list of authors to be rendered.
+- `author_list_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the author list. Edit as needed.
+- `author_list_items`               -> The rendered author card grid HTML. Place where you want the list to appear.
+
+Direct variables also available for use anywhere in this template:
+- `base_url` -> The site base URL (e.g. https://example.com).
 
 These variables must be put in {html_var(...)} format.
 
 You can edit the `author_list_cards.css` styling to fit your site.
-You can edit the author cards layout in the `author_list_item.html` template component.
+You can edit the author card layout in the `author_list_item.html` template component.
 -->
 
 <!DOCTYPE html>
