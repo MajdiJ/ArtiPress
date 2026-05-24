@@ -36,7 +36,9 @@ You can edit the article cards layout in the `article_item.html` template compon
     <!-- === ArtiPress ===
     You must include variable/section below in your article list template (In the <head> section) -->
     <link rel="stylesheet" href="/artipress_data/style/article_list_cards.css" />
+<link rel="stylesheet" href="/artipress_data/style/lqip.css" />
 <script src="/artipress_data/scripts/recently_published_label.js" defer></script>
+<script src="/artipress_data/scripts/lqip.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 
 </head>
@@ -65,7 +67,10 @@ You can edit the article cards layout in the `article_item.html` template compon
         <div class="artipress-articles-container" data-recently-published-hours="168">
 
 <a href="/articles/example-article-artipress/index.html" class="artipress-article-card" data-published="2026-05-21T00:00:00Z">
-    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="An example image for the article" class="article-card-thumbnail" />
+    <div class="article-card-thumbnail lqip-wrapper">
+    <img src="/articles/example-article-artipress/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
+</div>
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Example</span></p>
         <h3 class="artipress-article-card-title">An example article on Artipress</h3>
@@ -74,7 +79,10 @@ You can edit the article cards layout in the `article_item.html` template compon
     </div>
 </a>
 <a href="/articles/example-article/index.html" class="artipress-article-card" data-published="2026-05-14T00:00:00Z">
-    <img src="/artipress_data/articles/example-article/image1.png" alt="An example image for the article" class="article-card-thumbnail" />
+    <div class="article-card-thumbnail lqip-wrapper">
+    <img src="/articles/example-article/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/artipress_data/articles/example-article/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
+</div>
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Cooking</span></p>
         <h3 class="artipress-article-card-title">Even cooler article: an example article</h3>
@@ -83,7 +91,10 @@ You can edit the article cards layout in the `article_item.html` template compon
     </div>
 </a>
 <a href="/articles/building-simple-pykv/index.html" class="artipress-article-card" data-published="2025-12-22T00:00:00Z">
-    <img src="/artipress_data/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="article-card-thumbnail" />
+    <div class="article-card-thumbnail lqip-wrapper">
+    <img src="/articles/building-simple-pykv/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/artipress_data/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="lqip-full" loading="lazy" decoding="async">
+</div>
     <div class="text-content">
         <div class="artipress-article-card-labels-empty"></div>
         <h3 class="artipress-article-card-title">Building Simple-PyKV: A Lightweight Python Key-Value Store server</h3>
@@ -92,7 +103,10 @@ You can edit the article cards layout in the `article_item.html` template compon
     </div>
 </a>
 <a href="/articles/developing-my-portfolio-website/index.html" class="artipress-article-card" data-published="2025-10-25T00:00:00Z">
-    <img src="/artipress_data/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="article-card-thumbnail" />
+    <div class="article-card-thumbnail lqip-wrapper">
+    <img src="/articles/developing-my-portfolio-website/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/artipress_data/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="lqip-full" loading="lazy" decoding="async">
+</div>
     <div class="text-content">
         <div class="artipress-article-card-labels-empty"></div>
         <h3 class="artipress-article-card-title">Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com</h3>
@@ -101,7 +115,10 @@ You can edit the article cards layout in the `article_item.html` template compon
     </div>
 </a>
 <a href="/articles/a-level-epq-navigating-ai-education-social-impacts/index.html" class="artipress-article-card" data-published="2023-05-15T00:00:00Z">
-    <img src="/artipress_data/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png" alt="Hero image for A-Level EPQ: EPQ Navigating the social impacts of AI on education" class="article-card-thumbnail" />
+    <div class="article-card-thumbnail lqip-wrapper">
+    <img src="/articles/a-level-epq-navigating-ai-education-social-impacts/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/artipress_data/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png" alt="Hero image for A-Level EPQ: EPQ Navigating the social impacts of AI on education" class="lqip-full" loading="lazy" decoding="async">
+</div>
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">A-Level</span><span class="artipress-article-card-label">EPQ</span></p>
         <h3 class="artipress-article-card-title">A-Level EPQ: EPQ Navigating the social impacts of AI on education</h3>

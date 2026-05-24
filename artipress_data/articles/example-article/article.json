@@ -1,32 +1,31 @@
 {
-    "article_title": "Even cooler article: an example article",
-    "author_slugs": [
-        "john-doe"
-    ],
-    "article_image_url": "/artipress_data/articles/example-article/image1.png",
-    "article_image_alt": "An example image for the article",
-    "article_strap_line": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. An example article to demonstrate the structure",
-    "date": {
-        "published": "2026-05-14T00:00:00Z",
-        "edited": "2026-05-14T00:00:00Z"
-    },
-    "article_labels": [
-        "Artipress",
-        "Cooking"
-    ],
-    "article_keywords_list": [
-        "artipress",
-        "example",
-        "article",
-        "markdown",
-        "json",
-        "static site generator",
-        "content management",
-        "web development",
-        "programming",
-        "technology"
-    ],
-    "featured": false,
-    "hide_from_article_list": false,
-    "auto_build": true
+  "article_title": "Even cooler article: an example article",
+  "author_slugs": [
+    "john-doe"
+  ],
+  "article_image_url": "/artipress_data/articles/example-article/image1.png",
+  "article_image_alt": "An example image for the article",
+  "article_strap_line": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. An example article to demonstrate the structure",
+  "date": {
+    "published": "2026-05-14T00:00:00Z",
+    "edited": "2026-05-14T00:00:00Z"
+  },
+  "article_labels": [
+    "Artipress",
+    "Cooking"
+  ],
+  "article_keywords_list": [
+    "artipress",
+    "example",
+    "article",
+    "markdown",
+    "json",
+    "static site generator",
+    "content management",
+    "web development",
+    "programming",
+    "technology"
+  ],
+  "featured": false,
+  "hide_from_article_list": false
 }

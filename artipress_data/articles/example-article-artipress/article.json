@@ -1,32 +1,31 @@
 {
-    "article_title": "An example article on Artipress",
-    "author_slugs": [
-        "john-doe"
-    ],
-    "article_image_url": "/artipress_data/articles/example-article-artipress/resources/images/image1.png",
-    "article_image_alt": "An example image for the article",
-    "article_strap_line": "An examplar article to demonstrate the structure and generation of an article in Artipress.",
-    "date": {
-        "published": "2026-05-21T00:00:00Z",
-        "edited": "2026-05-21T00:00:00Z"
-    },
-    "article_labels": [
-        "Artipress",
-        "Example"
-    ],
-    "article_keywords_list": [
-        "artipress",
-        "example",
-        "article",
-        "markdown",
-        "json",
-        "static site generator",
-        "content management",
-        "web development",
-        "programming",
-        "technology"
-    ],
-    "featured": false,
-    "hide_from_article_list": false,
-    "auto_build": true
+  "article_title": "An example article on Artipress",
+  "author_slugs": [
+    "john-doe"
+  ],
+  "article_image_url": "/artipress_data/articles/example-article-artipress/resources/images/image1.png",
+  "article_image_alt": "An example image for the article",
+  "article_strap_line": "An examplar article to demonstrate the structure and generation of an article in Artipress.",
+  "date": {
+    "published": "2026-05-21T00:00:00Z",
+    "edited": "2026-05-21T00:00:00Z"
+  },
+  "article_labels": [
+    "Artipress",
+    "Example"
+  ],
+  "article_keywords_list": [
+    "artipress",
+    "example",
+    "article",
+    "markdown",
+    "json",
+    "static site generator",
+    "content management",
+    "web development",
+    "programming",
+    "technology"
+  ],
+  "featured": false,
+  "hide_from_article_list": false
 }

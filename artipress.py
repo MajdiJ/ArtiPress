@@ -3,6 +3,7 @@ import os
 import re
 from datetime import datetime
 
+
 JSON_CONFIG_FILEPATH = "artipress_data/artipress.config.json"
 CONFIG_DEFAULTS = {
     "base_url": "http://artipress.majdij.com",
@@ -40,10 +41,73 @@ RESERVED_FOLDERS_IN_ARTICLES_OUTPUT = [
     "authors",
 ]
 
+LQIP_THUMBNAIL_MAX_WIDTH = 100
+LQIP_THUMBNAIL_FILENAME = "thumbnail.webp"
 
 CONFIG = {}
 AUTHORS = []
 SOCIAL_LINKS = {}
+
+def generate_lqip_thumbnail(article_slug: str, article_data: dict) -> str | None:
+    if not article_data.get("make_low_res_thumbnail", True):
+        return None
+
+    try:
+        from PIL import Image
+    except ImportError:
+        print(f"Warning: [{article_slug}] Pillow is not installed — LQIP thumbnails disabled. Run: pip install Pillow")
+        return None
+
+    article_image_url = article_data.get("article_image_url", "")
+    if not article_image_url:
+        return None
+    if article_image_url.startswith(("http://", "https://")):
+        print(f"Warning: [{article_slug}] LQIP skipped — article_image_url is a remote URL")
+        return None
+
+    source_path = article_image_url.lstrip("/")
+    if not os.path.exists(source_path):
+        print(f"Warning: [{article_slug}] Article image not found at '{source_path}' — skipping LQIP thumbnail")
+        return None
+
+    output_dir = os.path.join(CONFIG["generated_articles_output_path"], article_slug, "resources")
+    output_path = os.path.join(output_dir, LQIP_THUMBNAIL_FILENAME)
+    thumbnail_url = f"/{CONFIG['generated_articles_output_path']}/{article_slug}/resources/{LQIP_THUMBNAIL_FILENAME}"
+
+    try:
+        with Image.open(source_path) as img:
+            original_width, original_height = img.size
+            if original_width <= LQIP_THUMBNAIL_MAX_WIDTH:
+                return None
+            new_height = max(1, round(original_height * LQIP_THUMBNAIL_MAX_WIDTH / original_width))
+            thumbnail = img.resize((LQIP_THUMBNAIL_MAX_WIDTH, new_height), Image.LANCZOS)
+            os.makedirs(output_dir, exist_ok=True)
+            thumbnail.save(output_path, "WEBP", quality=60)
+            return thumbnail_url
+    except Exception as e:
+        print(f"Warning: [{article_slug}] Could not generate LQIP thumbnail for '{source_path}' — {e}. Falling back to single image.")
+        return None
+
+def generate_all_lqip_thumbnails(validated_articles: list[tuple[str, dict]]) -> dict:
+    return {slug: generate_lqip_thumbnail(slug, data) for slug, data in validated_articles}
+
+def make_lqip_card_thumbnail(full_url: str, alt: str, thumbnail_url: str) -> str:
+    return (
+        f'<div class="article-card-thumbnail lqip-wrapper">\n'
+        f'    <img src="{thumbnail_url}" alt="" class="lqip-placeholder" aria-hidden="true">\n'
+        f'    <img src="{full_url}" alt="{alt}" class="lqip-full" loading="lazy" decoding="async">\n'
+        f'</div>'
+    )
+
+def make_lqip_featured_image_block(full_url: str, alt: str, thumbnail_url: str) -> str:
+    return (
+        '<div class="article-image-container article-content featured-article-image">\n'
+        '    <div class="lqip-wrapper featured-lqip-wrapper">\n'
+        f'        <img src="{thumbnail_url}" alt="" class="lqip-placeholder" aria-hidden="true">\n'
+        f'        <img src="{full_url}" alt="{alt}" class="lqip-full">\n'
+        '    </div>\n'
+        '</div>'
+    )
 
 def format_display_date(iso_string: str) -> str:
     if not iso_string:
@@ -830,7 +894,7 @@ def startup_checks() -> list[tuple[str, dict]]:
     return validate_article_folders(article_folders)
 
 
-def generate_article_page(article_slug: str, article_data: dict, output_path: str):
+def generate_article_page(article_slug: str, article_data: dict, output_path: str, lqip_thumbnail_url: str | None = None):
 
     article_page_template = read_file(CONFIG["base_template_paths"].get("article_page"))
     article_md_content = read_file(os.path.join(CONFIG["input_articles_folder"], article_slug, "article.md"))
@@ -856,7 +920,9 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
 
     article_image_url = article_data.get("article_image_url", "")
     article_image_alt = article_data.get("article_image_alt", "")
-    if article_image_url:
+    if article_image_url and lqip_thumbnail_url:
+        article_image_block = make_lqip_featured_image_block(article_image_url, article_image_alt, lqip_thumbnail_url)
+    elif article_image_url:
         article_image_block = (
             '<div class="article-image-container article-content featured-article-image">\n'
             f'        <img src="{article_image_url}" alt="{article_image_alt}"/>\n'
@@ -946,17 +1012,17 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
 
     pass
 
-def generate_all_article_pages(validated_articles: list[tuple[str, dict]]):
+def generate_all_article_pages(validated_articles: list[tuple[str, dict]], lqip_thumbnails: dict):
     for folder, article_data in validated_articles:
         output_path = os.path.join(CONFIG["generated_articles_output_path"], folder, "index.html")
-        generate_article_page(folder, article_data, output_path)
+        generate_article_page(folder, article_data, output_path, lqip_thumbnails.get(folder))
 
 def generate_all_article_prints(validated_articles: list[tuple[str, dict]]):
     for folder, article_data in validated_articles:
         output_path = os.path.join(CONFIG["generated_articles_output_path"], folder, "print.html")
         generate_article_print(folder, article_data, output_path)
 
-def render_article_list_items_html(validated_articles, article_list_item_template):
+def render_article_list_items_html(validated_articles, article_list_item_template, lqip_thumbnails: dict | None = None):
     """
     Render the grid of article cards used on both the article list page and individual author pages.
 
@@ -996,9 +1062,12 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
 
         article_image_url = article_data.get("article_image_url", "")
         article_image_alt = article_data.get("article_image_alt", "")
-        if article_image_url:
+        thumbnail_url = (lqip_thumbnails or {}).get(folder)
+        if article_image_url and thumbnail_url:
+            article_card_thumbnail = make_lqip_card_thumbnail(article_image_url, article_image_alt, thumbnail_url)
+        elif article_image_url:
             article_card_thumbnail = (
-                f'<img src="{article_image_url}" alt="{article_image_alt}" class="article-card-thumbnail" />'
+                f'<img src="{article_image_url}" alt="{article_image_alt}" class="article-card-thumbnail" loading="lazy" decoding="async" />'
             )
         else:
             article_card_thumbnail = ""
@@ -1017,7 +1086,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
     article_list_items_html += "\n</div>"
     return article_list_items_html
 
-def generate_article_list_page(validated_articles: list[tuple[str, dict]]):
+def generate_article_list_page(validated_articles: list[tuple[str, dict]], lqip_thumbnails: dict):
 
     article_list_template = read_file(CONFIG["base_template_paths"].get("article_list"))
     article_list_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("article_list_styling_and_scripts"))
@@ -1025,7 +1094,7 @@ def generate_article_list_page(validated_articles: list[tuple[str, dict]]):
 
     output_path = os.path.join(CONFIG["generated_articles_output_path"], "index.html")
 
-    article_list_items_html = render_article_list_items_html(validated_articles, article_list_item_template)
+    article_list_items_html = render_article_list_items_html(validated_articles, article_list_item_template, lqip_thumbnails)
 
     final_html = render_template(article_list_template, {
         "article_list_styling_and_scripts": article_list_styling_and_scripts,
@@ -1119,7 +1188,7 @@ def render_author_social_links_html(social_links, social_link_template, social_l
 
     return f'<ul class="social-links">{items_html}\n</ul>'
 
-def generate_author_page(author_data: dict, validated_articles: list[tuple[str, dict]], social_links_registry: dict):
+def generate_author_page(author_data: dict, validated_articles: list[tuple[str, dict]], social_links_registry: dict, lqip_thumbnails: dict | None = None):
     author_slug = author_data.get("author_slug", "")
     author_name = author_data.get("author_name", "Unknown Author")
 
@@ -1135,7 +1204,7 @@ def generate_author_page(author_data: dict, validated_articles: list[tuple[str, 
     ]
 
     if author_articles:
-        author_articles_list_items = render_article_list_items_html(author_articles, article_list_item_template)
+        author_articles_list_items = render_article_list_items_html(author_articles, article_list_item_template, lqip_thumbnails)
     else:
         author_articles_list_items = "<p>No articles yet.</p>"
 
@@ -1179,9 +1248,9 @@ def generate_author_page(author_data: dict, validated_articles: list[tuple[str, 
     output_path = os.path.join(CONFIG["generated_articles_output_path"], "authors", author_slug, "index.html")
     write_file(output_path, final_html)
 
-def generate_all_author_pages(validated_articles: list[tuple[str, dict]]):
+def generate_all_author_pages(validated_articles: list[tuple[str, dict]], lqip_thumbnails: dict):
     for author in AUTHORS:
-        generate_author_page(author, validated_articles, SOCIAL_LINKS)
+        generate_author_page(author, validated_articles, SOCIAL_LINKS, lqip_thumbnails)
         print(f"Generated author page: {author.get('author_name', 'Unknown Author')}")
 
 def main():
@@ -1192,11 +1261,13 @@ def main():
 
     validated_articles = startup_checks()
 
-    generate_all_article_pages(validated_articles)
+    lqip_thumbnails = generate_all_lqip_thumbnails(validated_articles)
+
+    generate_all_article_pages(validated_articles, lqip_thumbnails)
     generate_all_article_prints(validated_articles)
-    generate_article_list_page(validated_articles)
+    generate_article_list_page(validated_articles, lqip_thumbnails)
     generate_author_list_page()
-    generate_all_author_pages(validated_articles)
+    generate_all_author_pages(validated_articles, lqip_thumbnails)
 
 
 

@@ -62,6 +62,8 @@ You can edit the article cards layout in the `article_item.html` template compon
     You must include variable/section below in your article list template (In the <head> section, in the middle) -->
     <link rel="stylesheet" href="/artipress_data/style/article_md_elements.css" />
 <link rel="stylesheet" href="/artipress_data/style/article_main_element.css" />
+<link rel="stylesheet" href="/artipress_data/style/lqip.css" />
+<script src="/artipress_data/scripts/lqip.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- === ArtiPress ===
@@ -176,8 +178,11 @@ You can edit the article cards layout in the `article_item.html` template compon
     <hr class="divider-line-horizontal-bottom">
 
     <div class="article-image-container article-content featured-article-image">
-        <img src="/artipress_data/articles/example-article/image1.png" alt="An example image for the article"/>
+    <div class="lqip-wrapper featured-lqip-wrapper">
+        <img src="/articles/example-article/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+        <img src="/artipress_data/articles/example-article/image1.png" alt="An example image for the article" class="lqip-full">
     </div>
+</div>
 
     <div class="article-content">
 
