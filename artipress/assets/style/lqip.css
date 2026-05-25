@@ -1,0 +1,59 @@
+/* Low-Quality Image Placeholder (LQIP) blur-up effect */
+
+.lqip-placeholder {
+    filter: blur(10px);
+    transform: scale(1.1); /* hides blur edge artifacts */
+}
+
+.lqip-full {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.lqip-full.loaded {
+    opacity: 1;
+}
+
+/* Article card thumbnail */
+.artipress-article-card .lqip-wrapper {
+    position: relative;
+    height: 230px;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--artipress-article-card-border-color);
+    border-radius: var(--artipress-article-card-image-border-radius);
+}
+
+.artipress-article-card .lqip-wrapper img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: none;
+    border-radius: 0;
+}
+
+/* Featured article image */
+.featured-lqip-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--image-border-radius);
+}
+
+.featured-lqip-wrapper .lqip-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.featured-lqip-wrapper .lqip-full {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0;
+}

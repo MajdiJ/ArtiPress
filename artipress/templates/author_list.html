@@ -10,7 +10,10 @@ The variables/sections that you must include in your author list template are:
 - `author_list_items`               -> The rendered author card grid HTML. Place where you want the list to appear.
 
 Direct variables also available for use anywhere in this template:
-- `base_url` -> The site base URL (e.g. https://example.com).
+- `base_url`      -> The site base URL (e.g. https://example.com).
+- `website_title` -> The site name from config.
+- `output_path`   -> The output folder name (e.g. articles).
+- `assets_url`    -> URL prefix for shared assets (e.g. /articles/_artipress).
 
 These variables must be put in {html_var(...)} format.
 
@@ -29,16 +32,15 @@ You can edit the author card layout in the `author_list_item.html` template comp
 
     <!-- Site specific meta tags -->
     <title>Authors - ArtiPress</title>
-    <link rel="canonical" href="https://artipress.majdij.com/articles/authors" />
+    <link rel="canonical" href="{html_var(base_url)}/articles/authors" />
     <meta name="description" content="Static site article generator generator and builder without a backened database." />
 
     <!-- Style(s) -->
-    <link rel="stylesheet" href="/articles/_artipress/style/main.css" />
+    <link rel="stylesheet" href="{html_var(assets_url)}/style/main.css" />
 
     <!-- === ArtiPress ===
     You must include variable/section below in your author list template (In the <head> section) -->
-    <link rel="stylesheet" href="/articles/_artipress/style/author_list_cards.css" />
-
+    {html_var(author_list_styling_and_scripts)}
     <!-- END ArtiPress (End of needed section)-->
 
 </head>
@@ -64,25 +66,7 @@ You can edit the author card layout in the `author_list_item.html` template comp
 
         <!-- === ArtiPress ===
         You must include variable/section below in your author list template (In the <body> section, where you want the list of authors to be rendered) -->
-        <div class="artipress-authors-container">
-
-<a href="/articles/authors/john-doe/index.html" class="artipress-author-card">
-    <img src="/articles/_artipress/author-pictures/default.svg" alt="John Doe" class="artipress-author-card-avatar" />
-    <div class="text-content">
-        <h3 class="artipress-author-card-name">John Doe</h3>
-        <p class="artipress-author-card-role">Senior Writer</p>
-    </div>
-</a>
-
-<a href="/articles/authors/majdi-jaigirdar/index.html" class="artipress-author-card">
-    <img src="/articles/_artipress/author-pictures/default.svg" alt="Majdi Jaigirdar" class="artipress-author-card-avatar" />
-    <div class="text-content">
-        <h3 class="artipress-author-card-name">Majdi Jaigirdar</h3>
-        <p class="artipress-author-card-role">Senior Writer</p>
-    </div>
-</a>
-
-</div>
+        {html_var(author_list_items)}
         <!-- END ArtiPress (End of needed section)-->
 
     </main>

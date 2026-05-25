@@ -1,0 +1,237 @@
+<!--
+This is an example article page template.
+You can use this as a base and modify it, or take the variables and sections and pase them into your own template.
+If you do bring/create your own, make sure to update the template path in the config file to point to your new template.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article page template are:
+- `article_page_head_metadata`            -> (head, near top) Title, canonical, meta description, OG tags, Twitter Card. Do not place other meta tags above this.
+- `articles_page_styling_and_scripts`     -> (head, middle) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
+- `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
+
+These variables must be put in {html_var(...)} format.
+
+You can edit the `article_main_element.css` and `article_md_elements.css` styling to fit your site.
+You can edit the article layout in the `article_page_main_article.html` template component.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Tag(s) -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="index, follow">
+
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article list template (In the <head> section, near the top)
+    Make sure not to add any other meta tags / metadata that may override what's added below -->
+    <title>A-Level EPQ: EPQ Navigating the social impacts of AI on education | ArtiPress</title>
+<link rel="canonical" href="https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts" />
+<meta name="description" content="My A-Level EPQ project exploring the social impacts of AI on education." />
+<meta name="keywords" content="Generative AI in education, Artificial intelligence in schools, Impact of AI on student learning, AI and academic integrity, Large Language Models in education, Generative AI ethics, AI for teachers, AI plagiarism concerns, Student use of ChatGPT, AI in lesson planning, ChatGPT in education, Google Bard education use, Large Language Models (LLMs), Snapchat My AI for students, Microsoft Copilot in schools, Personalised learning with AI, Critical thinking and AI, AI for homework help, AI in exam revision, Department for Education AI guidelines, AI survey data education, Qualitative research on AI, Quantitative data on student AI use, Teacher workload reduction AI, Future of AI in classrooms, EPQ on AI in education, Extended Project Qualification, A-level, Personal project, Student research, Majdi Jaigirdar" />
+
+<!-- Article author meta tags will be inserted below -->
+<meta name="author" content="Majdi Jaigirdar" />
+
+<!-- Open Graph (Facebook, LinkedIn, etc.) -->
+<meta property="og:title" content="A-Level EPQ: EPQ Navigating the social impacts of AI on education | ArtiPress">
+<meta property="og:description" content="My A-Level EPQ project exploring the social impacts of AI on education.">
+<meta property="og:image" content="https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png">
+<meta property="og:url" content="https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts">
+<meta property="og:type" content="article">
+
+<!-- Open Graph Article Metadata -->
+<meta property="article:published_time" content="2023-05-15T00:00:00Z" />
+<meta property="article:modified_time" content="" />
+
+<!-- Inser Open Graph Article Authors will be inserted below -->
+<meta property="article:author" content="https://artipress.majdij.com/articles/authors/majdi-jaigirdar" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A-Level EPQ: EPQ Navigating the social impacts of AI on education | ArtiPress">
+<meta name="twitter:description" content="My A-Level EPQ project exploring the social impacts of AI on education.">
+<meta name="twitter:image" content="https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png">
+    <!-- END ArtiPress (End of needed section)-->
+
+    <!-- Style(s) -->
+    <link rel="stylesheet" href="/articles/_artipress/style/main.css" />
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article list template (In the <head> section, in the middle) -->
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
+    <!-- END ArtiPress (End of needed section)-->
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article list template (In the <head> section, at the bottom) -->
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts"
+    },
+    "headline": "A-Level EPQ: EPQ Navigating the social impacts of AI on education",
+    "description": "My A-Level EPQ project exploring the social impacts of AI on education.",
+    "image": [
+        "https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png"
+    ],
+    "author": [
+    {
+        "@type": "Person",
+        "name": "Majdi Jaigirdar",
+        "url": "https://artipress.majdij.com/articles/authors/majdi-jaigirdar"
+    }
+],
+    "publisher": {
+        "@type": "Organization",
+        "name": "ArtiPress",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://artipress.majdij.com/resources/images/logo.png"
+        }
+    },
+    "datePublished": "2023-05-15T00:00:00Z",
+    "dateModified": ""
+    }
+</script>
+    <!-- END ArtiPress (End of needed section)-->
+
+</head>
+
+<body>
+
+    <header class="articles-page-header">
+        <h1><a href="/">ArtiPress</a></h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/articles">All Articles</a></li>
+                <li><a href="/articles/authors">Authors</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="articles-page-main">
+
+        <!-- You are recommended to put the article main content var within a div with a class, and style the article layout/size using that class -->
+
+        <div class="artipress-article-container">
+            <!-- === ArtiPress ===
+            You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+            <article>
+    <header>
+        <h1>A-Level EPQ: EPQ Navigating the social impacts of AI on education</h1>
+        <p class="strap-line">My A-Level EPQ project exploring the social impacts of AI on education.</p>
+        <p class="author-date">
+            By <a href='/articles/authors/majdi-jaigirdar'>Majdi Jaigirdar</a> | Published on 15 May 2023
+        </p>
+    </header>
+
+    <hr class="divider-line-horizontal-top">
+
+    <div class="article-sharing-exporting">
+        <ul>
+            <li>
+                <a href="https://twitter.com/intent/tweet?text=A-Level EPQ: EPQ Navigating the social impacts of AI on education%0Ahttps://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts&quote=A-Level EPQ: EPQ Navigating the social impacts of AI on education/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.threads.net/intent/post?text=A-Level EPQ: EPQ Navigating the social impacts of AI on education%0Ahttps://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/?text=https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/a-level-epq-navigating-ai-education-social-impacts/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
+                </a>
+            </li>
+            <li>
+                <a id="printNew" href="/articles/a-level-epq-navigating-ai-education-social-impacts/print.html" target="_blank" rel="noopener">
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="divider-line-horizontal-bottom">
+
+    <div class="article-image-container article-content featured-article-image">
+    <div class="lqip-wrapper featured-lqip-wrapper">
+        <img src="/articles/a-level-epq-navigating-ai-education-social-impacts/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+        <img src="/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png" alt="Hero image for A-Level EPQ: EPQ Navigating the social impacts of AI on education" class="lqip-full">
+    </div>
+</div>
+
+    <div class="article-content">
+
+        <p>An Extended Project Qualification (EPQ) is an independent research project that allows students to dive deep into a subject beyond the standard A-Level curriculum. For my project, I chose to explore one of the most transformative shifts: <strong>"Navigating the societal impacts of Artificial Intelligence: A focus on education, generative AI and beyond."</strong></p>
+<p>Looking back, the timing of this research feels serendipitous. I was documenting the shift in education just as the first wave of LLMs began to break and before ChatGPT was known widely. I caught the education system at a critical inflection point and reflecting on it now, it was a unique opportunity to analyse the early reactions and adaptation of AI by educators.</p>
+<p>As generative AI tools like ChatGPT began to reshape the academic landscape, I wanted to see the real-world implications for both students and educators. My research focused on the delicate balance between AI as a tool for efficiency and its potential risks to academic integrity and human critical thinking.</p>
+<h3>Key Highlights of my Research:</h3>
+<ul>
+<li><strong>Primary Data Collection:</strong> I conducted original surveys with students to bridge the gap between theoretical AI impacts and actual classroom practice.</li>
+<li><strong>The "Double-Edged Sword":</strong> My report analyses how AI can reduce teacher workload and personalise learning, whilst also creating new challenges in how we define "original" work.</li>
+<li><strong>Future Outlook:</strong> I explored the Department for Education’s (DfE) evolving guidelines and provided a critical analysis of how LLMs (Large Language Models) like Google Bard  (Now Gemini) and ChatGPT are being integrated into study habits.</li>
+</ul>
+<p>This project was a significant milestone in my academic journey. It sharpened my ability to synthesise complex data, evaluate the reliability of rapidly evolving secondary sources, and communicate nuanced ethical arguments skills that are essential in the ever-changing tech landscape.</p>
+<p>The full EPQ report can be viewed below. </p>
+<p><em>(Note: If the PDF does not display correctly in your browser, you can view or download it directly <a href="/resource/documents/Majdi_Jaigirdar_EPQ.pdf">here</a>)</em></p>
+<iframe class="pdf-viewer" src="/resource/documents/Majdi_Jaigirdar_EPQ.pdf">
+</iframe>
+
+<blockquote>
+<p><em>This article is backdated to 2023-05-15 to reflect the completion date of the project during my A-Level studies. It was uploaded to this site on 2025-12-26.</em></p>
+</blockquote>
+
+    </div>
+
+    <hr class="divider-line-horizontal">
+
+    <footer>
+        <p class="author-date">
+            By <a href='/articles/authors/majdi-jaigirdar'>Majdi Jaigirdar</a> | Published on 15 May 2023
+        </p>
+    </footer>
+</article>
+
+            <!-- END ArtiPress (End of needed section)-->
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="container-page-content-width">
+            <p>
+                &copy; 2026 ArtiPress. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

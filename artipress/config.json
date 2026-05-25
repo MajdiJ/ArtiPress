@@ -1,0 +1,36 @@
+{
+    "base_url": "https://artipress.majdij.com",
+    "website_title": "ArtiPress",
+    "meta": {
+        "meta_description": "ArtiPress is a static site generator for articles, designed to create fast and SEO-friendly websites.",
+        "meta_keywords": "static site generator, articles, SEO-friendly, fast websites",
+        "social_sharing_image_url": "https://artipress.majdij.com/resource/image/social_sharing.png",
+        "website_logo_url": "https://artipress.majdij.com/resource/image/logo.png"
+    },
+    "base_template_paths": {
+        "article_list": "artipress/templates/article_list.html",
+        "article_page": "artipress/templates/article_page.html",
+        "article_print": "artipress/templates/article_print.html",
+        "author_page": "artipress/templates/author_page.html",
+        "author_list": "artipress/templates/author_list.html"
+    },
+    "components_template_paths": {
+        "article_page_head_metadata": "artipress/templates/components/article_page_head_metadata.html",
+        "articles_page_styling_and_scripts": "artipress/templates/components/articles_page_styling_and_scripts.html",
+        "article_page_head_application_json_ld": "artipress/templates/components/article_page_head_application_json_ld.html",
+        "article_page_main_article": "artipress/templates/components/article_page_main_article.html",
+        "article_list_styling_and_scripts": "artipress/templates/components/article_list_styling_and_scripts.html",
+        "article_list_item": "artipress/templates/components/article_list_item.html",
+        "author_list_styling_and_scripts": "artipress/templates/components/author_list_styling_and_scripts.html",
+        "author_list_item": "artipress/templates/components/author_list_item.html",
+        "author_page_styling_and_scripts": "artipress/templates/components/author_page_styling_and_scripts.html",
+        "author_social_link": "artipress/templates/components/author_social_link.html"
+    },
+    "input_content_folder": "artipress/content",
+    "shared_assets_source_folder": "artipress/assets",
+    "output_path": "articles",
+    "shared_assets_subfolder": "_artipress",
+    "recently_published_within_hours": 168,
+    "date_format": "{day} %B %Y",
+    "time_format": "%H:%M"
+}

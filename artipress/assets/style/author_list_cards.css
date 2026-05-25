@@ -1,0 +1,80 @@
+/* CSS Variables */
+:root {
+    --artipress-author-card-width: 320px;
+    --gap-between-author-cards: 20px;
+    --artipress-author-card-border-color: hsl(0, 0%, 75%);
+    --artipress-author-card-border-radius: 16px;
+
+    --artipress-author-card-padding: 15px;
+    --artipress-author-card-inner-gap: 15px;
+
+    --artipress-author-card-avatar-size: 70px;
+
+    --author-name-color: black;
+    --author-name-font-size: 1.1rem;
+
+    --author-role-color: hsl(0, 0%, 45%);
+    --author-role-font-size: 0.85rem;
+}
+
+.artipress-authors-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--artipress-author-card-width));
+    gap: var(--gap-between-author-cards);
+    justify-content: center; /* centers the grid columns, not the items within a row */
+}
+
+.artipress-author-card {
+    width: var(--artipress-author-card-width);
+    border: 1px solid transparent;
+    border-radius: var(--artipress-author-card-border-radius);
+    padding: var(--artipress-author-card-padding);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: var(--artipress-author-card-inner-gap);
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+}
+
+.artipress-author-card:hover {
+    background-color: hsl(0, 0%, 95%);
+}
+
+.artipress-author-card:hover .text-content .artipress-author-card-name {
+    text-decoration: underline;
+}
+
+.artipress-author-card .artipress-author-card-avatar {
+    width: var(--artipress-author-card-avatar-size);
+    height: var(--artipress-author-card-avatar-size);
+    border: 1px solid var(--artipress-author-card-border-color);
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.artipress-author-card .text-content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.artipress-author-card .text-content .artipress-author-card-name {
+    margin: 0;
+    font-size: var(--author-name-font-size);
+    color: var(--author-name-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.artipress-author-card .text-content .artipress-author-card-role {
+    margin: 2px 0 0 0;
+    font-size: var(--author-role-font-size);
+    color: var(--author-role-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

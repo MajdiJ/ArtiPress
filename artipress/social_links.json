@@ -1,0 +1,30 @@
+{
+    "twitter": {
+        "name": "Twitter",
+        "icon": "x.png"
+    },
+    "linkedin": {
+        "name": "LinkedIn",
+        "icon": "linkedin.png"
+    },
+    "github": {
+        "name": "GitHub",
+        "icon": "github.png"
+    },
+    "instagram": {
+        "name": "Instagram",
+        "icon": "instagram.png"
+    },
+    "threads": {
+        "name": "Threads",
+        "icon": "threads.png"
+    },
+    "facebook": {
+        "name": "Facebook",
+        "icon": "facebook.webp"
+    },
+    "mail": {
+        "name": "Email",
+        "icon": "mail.svg"
+    }
+}

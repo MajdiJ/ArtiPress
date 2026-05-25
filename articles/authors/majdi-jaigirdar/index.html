@@ -1,21 +1,29 @@
 <!--
-This is an example article list template.
-You can use this as a base and modify it, or take the variables and sections and pase them into your own template.
+This is an example author page template.
+You can use this as a base and modify it, or take the variables and sections and paste them into your own template.
 If you do bring/create your own, make sure to update the template path in the config file to point to your new template.
 
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
-The variables/sections that you must include in your article list template are:
-- `article_list_styling_and_scripts` -> Styling (CSS) and scripts (JS) for the article list. Place in the <head>. Edit as needed.
-- `article_list_items`               -> The rendered article card grid HTML. Place where you want the list to appear.
+The variables/sections that you must include in your author page template are:
+- `author_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the author page. Edit as needed.
+- `author_role_formatted`           -> Pre-rendered <p> tag for the author's role, or empty string if the author has no role.
+- `author_bio_html`                 -> Author bio rendered from markdown to HTML.
+- `author_social_links_formatted`   -> Pre-rendered <ul> of social link items, or empty string if the author has no social links.
+- `author_articles_list_items`      -> Pre-rendered article cards grid for articles written or co-written by this author.
 
 Direct variables also available for use anywhere in this template:
-- `base_url` -> The site base URL (e.g. https://example.com).
+- `author_name`        -> The author's display name.
+- `author_slug`        -> The author's URL slug (e.g. john-doe).
+- `author_bio`         -> The author's bio as plain text (used in meta description).
+- `author_picture_url` -> URL to the author's avatar image.
+- `website_title`      -> The site name from config.
+- `base_url`           -> The site base URL (e.g. https://example.com).
 
 These variables must be put in {html_var(...)} format.
 
-You can edit the `article_list_cards.css` styling to fit your site. Some other styling files are not recommended to be edited.
-You can edit the article card layout in the `article_list_item.html` template component.
+You can edit the `author_page_base.css` styling to fit your site.
+You can edit the social link layout in the `author_social_link.html` template component.
 -->
 
 <!DOCTYPE html>
@@ -28,21 +36,37 @@ You can edit the article card layout in the `article_list_item.html` template co
     <meta name="robots" content="index, follow">
 
     <!-- Site specific meta tags -->
-    <title>Articles - ArtiPress</title>
-    <link rel="canonical" href="https://artipress.majdij.com/articles" />
-    <meta name="description" content="Static site article generator and builder without a backened database." />
+    <title>Majdi Jaigirdar | ArtiPress</title>
+    <link rel="canonical" href="https://artipress.majdij.com/articles/authors/majdi-jaigirdar" />
+    <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+    <meta name="keywords" content="Majdi Jaigirdar, ArtiPress, author, biography" />
+    <meta name="author" content="Majdi Jaigirdar" />
+
+    <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Majdi Jaigirdar | ArtiPress">
+    <meta property="og:description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
+    <meta property="og:image" content="https://artipress.majdij.com/articles/_artipress/author-pictures/default.svg">
+    <meta property="og:url" content="https://artipress.majdij.com/articles/authors/majdi-jaigirdar">
+    <meta property="og:type" content="profile">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Majdi Jaigirdar | ArtiPress">
+    <meta name="twitter:description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
+    <meta name="twitter:image" content="https://artipress.majdij.com/articles/_artipress/author-pictures/default.svg">
 
     <!-- Style(s) -->
     <link rel="stylesheet" href="/articles/_artipress/style/main.css" />
 
     <!-- === ArtiPress ===
-    You must include variable/section below in your article list template (In the <head> section) -->
-    <link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
+    You must include variable/section below in your author page template (In the <head> section) -->
+    <link rel="stylesheet" href="/articles/_artipress/style/author_page_base.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
 <link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
 <script src="/articles/_artipress/scripts/recently_published_label.js" defer></script>
 <script src="/articles/_artipress/scripts/lqip.js" defer></script>
-    <!-- END ArtiPress (End of needed section)-->
 
+    <!-- END ArtiPress (End of needed section)-->
 </head>
 
 <body>
@@ -58,40 +82,55 @@ You can edit the article card layout in the `article_list_item.html` template co
         </nav>
     </header>
 
-    <main class="articles-list-page-main">
+    <main class="author-page-main">
 
-        <div class="page-section page-section-projects" id="projects-header">
-            <h2>Articles</h2>
-        </div>
+        <section class="author-profile">
+            <div class="author-profile-header">
+                <div class="author-avatar-container">
+                    <img src="/articles/_artipress/author-pictures/default.svg" alt="Majdi Jaigirdar" class="author-avatar">
+                </div>
 
-        <!-- === ArtiPress ===
-        You must include variable/section below in your article list template (In the <body> section, where you want the list of articles to be rendered) -->
-        <div class="artipress-articles-container" data-recently-published-hours="168">
+                <div class="author-info">
+                    <h2 class="author-name">Majdi Jaigirdar</h2>
+                    <p class="author-role">Senior Writer</p>
+                </div>
+            </div>
 
-<a href="/articles/example-article-artipress/index.html" class="artipress-article-card" data-published="2026-05-21T00:00:00Z">
-    <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/example-article-artipress/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/articles/example-article-artipress/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
-</div>
-    <div class="text-content">
-        <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Example</span></p>
-        <h3 class="artipress-article-card-title">An example article on Artipress</h3>
-        <p class="artipress-article-card-description">An examplar article to demonstrate the structure and generation of an article in Artipress.</p>
-        <p class="artipress-article-card-author-and-date">John Doe | 21 May 2026</p>
-    </div>
-</a>
-<a href="/articles/example-article/index.html" class="artipress-article-card" data-published="2026-05-14T00:00:00Z">
-    <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/example-article/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/articles/example-article/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
-</div>
-    <div class="text-content">
-        <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Cooking</span></p>
-        <h3 class="artipress-article-card-title">Even cooler article: an example article</h3>
-        <p class="artipress-article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. An example article to demonstrate the structure</p>
-        <p class="artipress-article-card-author-and-date">John Doe | 14 May 2026</p>
-    </div>
-</a>
+            <div class="author-bio"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+            <ul class="social-links">
+<li class="author-social-link">
+    <a href="https://twitter.com/majdijaigirdar" target="_blank" rel="noopener noreferrer"
+        aria-label="Twitter: @majdijaigirdar" title="Twitter: @majdijaigirdar">
+        <img src="/articles/_artipress/icons/x.png" alt="" class="author-social-icon" />
+    </a>
+</li>
+
+<li class="author-social-link">
+    <a href="https://linkedin.com/in/majdi-jaigirdar" target="_blank" rel="noopener noreferrer"
+        aria-label="LinkedIn: majdi-jaigirdar" title="LinkedIn: majdi-jaigirdar">
+        <img src="/articles/_artipress/icons/linkedin.png" alt="" class="author-social-icon" />
+    </a>
+</li>
+
+<li class="author-social-link">
+    <a href="https://github.com/majdij" target="_blank" rel="noopener noreferrer"
+        aria-label="GitHub: majdij" title="GitHub: majdij">
+        <img src="/articles/_artipress/icons/github.png" alt="" class="author-social-icon" />
+    </a>
+</li>
+
+</ul>
+        </section>
+
+        <section class="author-articles">
+            <div class="page-section">
+                <h2>Articles by Majdi Jaigirdar</h2>
+            </div>
+
+            <!-- === ArtiPress ===
+            Pre-rendered article cards grid (uses the same component/styling as the article list page) -->
+            <div class="artipress-articles-container" data-recently-published-hours="168">
+
 <a href="/articles/building-simple-pykv/index.html" class="artipress-article-card" data-published="2025-12-22T00:00:00Z">
     <div class="article-card-thumbnail lqip-wrapper">
     <img src="/articles/building-simple-pykv/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
@@ -147,14 +186,15 @@ You can edit the article card layout in the `article_list_item.html` template co
     </div>
 </a>
 </div>
-        <!-- END ArtiPress (End of needed section)-->
+            <!-- END ArtiPress -->
+        </section>
 
     </main>
 
     <footer>
         <div class="container-page-content-width">
             <p>
-                &copy; 2026 ArtiPress. All rights reserved.
+                &copy; 2026 ArtiPress.
             </p>
         </div>
     </footer>

@@ -1,0 +1,294 @@
+<!--
+This is an example article print template. It is opened in a new tab when a reader clicks the print icon on an article page.
+You can use this as a base and modify it, or bring your own template and update the path in the config file.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article print template are:
+- `articles_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
+
+Direct variables also available for use anywhere in this template:
+- `article_title`                    -> The article title string.
+- `website_title`                    -> The site name from config.
+- `base_url`                         -> The site base URL (e.g. https://example.com).
+- `output_path`   -> The output folder name (e.g. articles).
+- `article_id`                       -> The article slug (e.g. my-article).
+- `article_authors`                  -> Comma-separated plain-text author name(s).
+- `article_published_date`           -> Human-readable published date.
+- `article_edited_date`              -> Human-readable edited date with label prefix, or empty string if not edited.
+
+These variables must be put in {html_var(...)} format.
+
+Note: This page auto-opens the browser print dialogue on load. On screen it shows a short message; the article itself is CSS-hidden until printed.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com - ArtiPress</title>
+
+    <style>
+        /*  PAGE SETUP  */
+        @page {
+            size: A4;
+            margin: 20mm 18mm 25mm 18mm;
+            /* top right bottom left */
+
+            @top-left {
+                content: "Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com | ArtiPress (https://artipress.majdij.com)";
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/developing-my-portfolio-website" "\A" "Majdi Jaigirdar | Published on 25 October 2025 | Edited on 14 December 2025";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+        /* First page — no header or footer */
+        @page :first {
+
+            margin: 15mm 18mm 25mm 18mm;
+
+            @top-left {
+                content: "";
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/developing-my-portfolio-website" "\A" "Majdi Jaigirdar | Published on 25 October 2025 | Edited on 14 December 2025";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+
+        /*  BASIC PRINT BEHAVIOUR  */
+
+        body {
+            font-size: 11pt;
+            line-height: 1.6;
+            orphans: 3;
+            widows: 3;
+        }
+
+        h1,
+        h2,
+        h3 {
+            page-break-after: avoid;
+            /* never leave a heading alone at a page bottom */
+        }
+
+        p {
+            page-break-inside: auto;
+        }
+
+        figure,
+        table,
+        pre,
+        blockquote {
+            page-break-inside: avoid;
+        }
+
+
+        /*  SCREEN VIEW (non-print)  */
+
+        .print-screen-message {
+            display: none;
+        }
+
+        @media screen {
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: sans-serif;
+            }
+
+            .print-screen-message {
+                display: block;
+                text-align: center;
+                max-width: 32rem;
+                padding: 1rem;
+            }
+
+            .article-content {
+                display: none;
+            }
+        }
+    </style>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article list template (In the <head> section, in the middle) -->
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
+    <!-- END ArtiPress (End of needed section)-->
+</head>
+
+<body>
+
+    <div class="print-screen-message">
+        <p>Print article: Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com</p>
+        <p>Your browser should auto open the print dialogue to allow you to print the article.</p>
+        <p>If it doesn't auto open you can <a href="#" onclick="window.print(); return false;">click here to do it manually</a>.</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', function () {
+            window.print();
+        });
+    </script>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+    <div class="article-content">
+        <article>
+    <header>
+        <h1>Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com</h1>
+        <p class="strap-line">Building my personal portfolio website to showcase my projects and skills.</p>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 25 October 2025 | Edited on 14 December 2025
+        </p>
+    </header>
+
+    <hr class="divider-line-horizontal-top">
+
+    <div class="article-sharing-exporting">
+        <ul>
+            <li>
+                <a href="https://twitter.com/intent/tweet?text=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com%0Ahttps://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/developing-my-portfolio-website&quote=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.threads.net/intent/post?text=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com%0Ahttps://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/?text=https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
+                </a>
+            </li>
+            <li>
+                <a id="printNew" href="/articles/developing-my-portfolio-website/print.html" target="_blank" rel="noopener">
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="divider-line-horizontal-bottom">
+
+    <div class="article-image-container article-content featured-article-image">
+        <img src="/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com"/>
+    </div>
+
+    <div class="article-content">
+
+        <p>I’ve always liked making things. From sketching app ideas and building a Minecraft server site for friends to experimenting with Weebly and Wix, wanting full control I moved away from templates, drag-and-drop builders to coding everything by hand. That curiosity pushed me into learning how the web really works.</p>
+<p>This site, <a href="https://majdij.com">MajdiJ.com</a>, is my portfolio and my laboratory. Showcasing my projects, the systems I design, and the practical skills I use to make fast, reliable and accessible websites, apps and software for users.</p>
+<h2>Table of Contents</h2>
+<div class="md-to-html table-of-contents">
+1. [Learning by doing](#learning-by-doing)
+2. [Why I built the site this way](#why-i-built-the-site-this-way)
+3. [Performance, accessibility and SEO](#performance-accessibility-and-seo)
+4. [Accessibility and good practices](#accessibility-and-good-practices)
+5. [Static Site Generator (SSG)](#static-site-generator-ssg)
+6. [What I’m exploring next](#what-im-exploring-next)
+7. [See the work](#see-the-work)
+</div>
+
+<h2>Learning by doing</h2>
+<p>I taught myself web development through courses and video tutorials on <a href="https://teamtreehouse.com/profiles/majdijaigirdar">Team Treehouse</a> and YouTube. With a lot of experimenting I started with HTML, CSS and JavaScript and then expanded into server-side work and deployment. Along the way I picked up Node.js and Express for quick APIs, FastAPI for Python-based services, and Nginx for reverse proxying. More recently I’ve been using <a href="https://www.cloudflare.com/en-gb/learning/what-is-cloudflare/">Cloudflare Workers and Pages</a> to deploy sites at the edge for speed, security and reliability.</p>
+<p>Projects are where you can apply your knowledge. I’ve pushed a mix of public and private sites and services, everything from small static sites to backend APIs. You can see the full list on my <a href="https://majdij.com/projects">Projects</a> page and view other projects I've worked on my <a href="https://github.com/majdiJ">GitHub</a> page.</p>
+<h2>Why I built the site this way</h2>
+<p>For a portfolio, I wanted something that loads fast, is easy to maintain and is accessible worldwide. That's why the frontend is built with vanilla HTML, CSS and JavaScript. Using a lightweight, framework-free approach keeps page weight down and means faster initial loads for visitors and recruiters. I do in the future want to explore frameworks like React or Svelte for more complex projects, but for now simplicity and performance are key.</p>
+<p>Hosting on Cloudflare Workers &amp; Pages gives me edge delivery and simple serverless endpoints. In practice this means static assets are cached close to users, and small dynamic routes can be served without managing a full server. Where a traditional server is needed, for my API servers I use Node.js and FastAPI behind Nginx for routing and proxying.</p>
+<p>I also connect a few third party services where they make sense. Forms use <a href="https://formspree.io/">Formspree</a> so I can simply collect messages without building backend, protected by Google reCAPTCHA to reduce spam. Google Analytics helps me understand how people find and use the site. These are practical choices that save time while keeping control.</p>
+<h2>Performance, accessibility and SEO</h2>
+<p>Performance, accessibility and discoverability are important, they matter for search engine indexing and reaching users. My Lighthouse scores for this website reflect that work:</p>
+<p><strong>Lighthouse scores – Performance 96 | Accessibility 100 | Best Practices 96 | SEO 100</strong><br />
+<a href="https://developer.chrome.com/docs/lighthouse/overview">Lighthouse is a tool made by Google</a> that audits web pages for quality. High scoring sites provide better user experiences and are favoured by search engines.</p>
+<p><img alt="Lighthouse scores screenshot" src="images/image2.png" />
+<em>(Lighthouse scores for main page of MajdiJ.com on desktop)</em></p>
+<ul>
+<li>
+<p><strong>Performance 96</strong><br />
+  Pages load quickly, so users can access content faster. Fast sites also rank better in search.</p>
+</li>
+<li>
+<p><strong>Accessibility 100</strong><br />
+  Inclusive design means fewer barriers for users and allows everyone to access content. It shows I follow semantic HTML, provide alt text, and support keyboard navigation for people using assistive tech.</p>
+</li>
+<li>
+<p><strong>SEO 100</strong><br />
+  The site is easy to find and share on search engines. Proper meta tags, structured data and clean URLs help improve visibility, showing I understand how to optimise for search engines to reach a wider audience.</p>
+</li>
+</ul>
+<h2>Accessibility and good practices</h2>
+<p>I believe accessibility is not an afterthought. I use semantic markup, clear headings and alt descriptions for images. Keyboard navigation where appropriate make the site usable for people who rely on assistive tech. These are practical ways to make sure my work reaches the widest audience.</p>
+<h2>Static Site Generator (SSG)</h2>
+<p>Whilst building the site, I wanted an efficient way to manage content and deploy updates. To do this, I created a custom static site generator (SSG) using Python. This tool automates the process of converting markdown files into HTML pages, applying consistent templates and styles. It saves time and effort when adding new articles or updating existing ones, ensuring that the site remains easy to maintain as it grows.</p>
+<p>I could have used a CMS or an existing SSG like Jekyll or Hugo, but building my own gave me more control and a deeper understanding of how static sites work under the hood. Whilst making a dynamic site with maybe a CMS and database would have been interesting, sometimes simpler is better, especially for a portfolio site where performance and reliability are key. </p>
+<p><em>(New edited section Sunday, 14th December 2025)</em></p>
+<h2>What I’m exploring next</h2>
+<p>I plan to build more complex apps using modern frameworks and web binaries when a project needs them, but I keep returning to the principle of choosing the right tool for the job. I’m also experimenting more with serverless projects, dockerised environments and microservices so I can ship reliable systems that are easy to debug and scale.</p>
+<h2>See the work</h2>
+<p>If you want to see my projects, check my <a href="https://majdij.com/projects">Projects</a> page. For code and more technical details, visit my <a href="https://github.com/majdij">GitHub</a>. If you’d like to get in touch, use the <a href="https://majdij.com/#contact">Contact</a> form on my main MajdiJ.com page.</p>
+<p>Building this website has been a practical way to show what I can do: design, code, deploy and measure a site that people can actually use. I’m always learning, and I’m keen to bring this approach to a team that values clean, accessible and well engineered web and app experiences, front and back end.</p>
+
+    </div>
+
+    <hr class="divider-line-horizontal">
+
+    <footer>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 25 October 2025 | Edited on 14 December 2025
+        </p>
+    </footer>
+</article>
+
+    </div>
+    <!-- END ArtiPress (End of needed section)-->
+
+</body>
+
+</html>
