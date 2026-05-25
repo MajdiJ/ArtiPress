@@ -9,14 +9,15 @@ The variables/sections that you must include in your article print template are:
 - `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
 
 Direct variables also available for use anywhere in this template:
-- `article_title`                    -> The article title string.
-- `website_title`                    -> The site name from config.
-- `base_url`                         -> The site base URL (e.g. https://example.com).
-- `output_path`   -> The output folder name (e.g. articles).
-- `article_id`                       -> The article slug (e.g. my-article).
-- `article_authors`                  -> Comma-separated plain-text author name(s).
-- `article_published_date`           -> Human-readable published date.
-- `article_edited_date`              -> Human-readable edited date with label prefix, or empty string if not edited.
+- `article_title`          -> The article title string.
+- `website_title`          -> The site name from config.
+- `base_url`               -> The site base URL (e.g. https://example.com).
+- `output_path`            -> The output folder name (e.g. articles).
+- `assets_url`             -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`             -> The article slug (e.g. my-article).
+- `article_authors`        -> Comma-separated plain-text author name(s).
+- `article_published_date` -> Human-readable published date.
+- `article_edited_date`    -> Human-readable edited date with label prefix, or empty string if not edited.
 
 These variables must be put in {html_var(...)} format.
 
@@ -218,7 +219,7 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
     <hr class="divider-line-horizontal-bottom">
 
     <div class="article-image-container article-content featured-article-image">
-        <img src="/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com"/>
+        <img src="/articles/developing-my-portfolio-website/images/image1.webp" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com"/>
     </div>
 
     <div class="article-content">
@@ -247,7 +248,7 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
 <p>Performance, accessibility and discoverability are important, they matter for search engine indexing and reaching users. My Lighthouse scores for this website reflect that work:</p>
 <p><strong>Lighthouse scores – Performance 96 | Accessibility 100 | Best Practices 96 | SEO 100</strong><br />
 <a href="https://developer.chrome.com/docs/lighthouse/overview">Lighthouse is a tool made by Google</a> that audits web pages for quality. High scoring sites provide better user experiences and are favoured by search engines.</p>
-<p><img alt="Lighthouse scores screenshot" src="images/image2.png" />
+<p><img alt="Lighthouse scores screenshot" src="images/image2.webp" />
 <em>(Lighthouse scores for main page of MajdiJ.com on desktop)</em></p>
 <ul>
 <li>

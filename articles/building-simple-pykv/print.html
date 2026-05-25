@@ -9,14 +9,15 @@ The variables/sections that you must include in your article print template are:
 - `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
 
 Direct variables also available for use anywhere in this template:
-- `article_title`                    -> The article title string.
-- `website_title`                    -> The site name from config.
-- `base_url`                         -> The site base URL (e.g. https://example.com).
-- `output_path`   -> The output folder name (e.g. articles).
-- `article_id`                       -> The article slug (e.g. my-article).
-- `article_authors`                  -> Comma-separated plain-text author name(s).
-- `article_published_date`           -> Human-readable published date.
-- `article_edited_date`              -> Human-readable edited date with label prefix, or empty string if not edited.
+- `article_title`          -> The article title string.
+- `website_title`          -> The site name from config.
+- `base_url`               -> The site base URL (e.g. https://example.com).
+- `output_path`            -> The output folder name (e.g. articles).
+- `assets_url`             -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`             -> The article slug (e.g. my-article).
+- `article_authors`        -> Comma-separated plain-text author name(s).
+- `article_published_date` -> Human-readable published date.
+- `article_edited_date`    -> Human-readable edited date with label prefix, or empty string if not edited.
 
 These variables must be put in {html_var(...)} format.
 
@@ -218,7 +219,7 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
     <hr class="divider-line-horizontal-bottom">
 
     <div class="article-image-container article-content featured-article-image">
-        <img src="/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server"/>
+        <img src="/articles/building-simple-pykv/images/image1.webp" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server"/>
     </div>
 
     <div class="article-content">

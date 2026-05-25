@@ -11,6 +11,14 @@ The variables/sections that you must include in your article page template are:
 - `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
 - `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
 
+Direct variables also available for use anywhere in this template:
+- `article_title`  -> The article title string.
+- `website_title`  -> The site name from config.
+- `base_url`       -> The site base URL (e.g. https://example.com).
+- `output_path`    -> The output folder name (e.g. articles).
+- `assets_url`     -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`     -> The article slug (e.g. my-article).
+
 These variables must be put in {html_var(...)} format.
 
 You can edit the `article_main_element.css` and `article_md_elements.css` styling to fit your site.

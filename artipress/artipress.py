@@ -54,6 +54,10 @@ RESERVED_FOLDERS_IN_ARTICLES_OUTPUT = [
 LQIP_THUMBNAIL_MAX_WIDTH = 100
 LQIP_THUMBNAIL_FILENAME = "thumbnail.webp"
 
+RASTER_IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".tif")
+WEBP_CONVERSION_MAX_WIDTH = 1200
+WEBP_CONVERSION_QUALITY = 85
+
 CONFIG = {}
 AUTHORS = []
 SOCIAL_LINKS = {}
@@ -168,6 +172,64 @@ def generate_lqip_thumbnail(article_slug: str, article_data: dict) -> str | None
 
 def generate_all_lqip_thumbnails(validated_articles: list[tuple[str, dict]]) -> dict:
     return {slug: generate_lqip_thumbnail(slug, data) for slug, data in validated_articles}
+
+def map_image_path_to_webp(path: str) -> str:
+    if not path or path.startswith(("http://", "https://", "/")):
+        return path
+    lower = path.lower()
+    for ext in RASTER_IMAGE_EXTENSIONS:
+        if lower.endswith(ext):
+            return path[: -len(ext)] + ".webp"
+    return path
+
+def remap_html_images_to_webp(html: str) -> str:
+    def replace(match):
+        prefix, src, suffix = match.group(1), match.group(2), match.group(3)
+        return f'{prefix}{map_image_path_to_webp(src)}{suffix}'
+    return re.sub(r'(<img\b[^>]*?\bsrc=")([^"]+)(")', replace, html, flags=re.IGNORECASE)
+
+def webp_conversion_enabled(article_data: dict) -> bool:
+    return bool(article_data.get("convert_article_images_to_webp", True))
+
+def convert_article_images(article_slug: str, article_data: dict) -> None:
+    if not webp_conversion_enabled(article_data):
+        return
+
+    try:
+        from PIL import Image
+    except ImportError:
+        print(f"Warning: [{article_slug}] Pillow is not installed — WebP image conversion disabled. Run: pip install Pillow")
+        return
+
+    article_output_dir = os.path.join(CONFIG["output_path"], article_slug)
+    if not os.path.exists(article_output_dir):
+        return
+
+    for root, _, files in os.walk(article_output_dir):
+        for filename in files:
+            if not filename.lower().endswith(RASTER_IMAGE_EXTENSIONS):
+                continue
+            src_path = os.path.join(root, filename)
+            dst_path = os.path.join(root, os.path.splitext(filename)[0] + ".webp")
+            try:
+                with Image.open(src_path) as img:
+                    if img.mode in ("P", "LA", "RGBA"):
+                        img = img.convert("RGBA")
+                    else:
+                        img = img.convert("RGB")
+                    width, height = img.size
+                    if width > WEBP_CONVERSION_MAX_WIDTH:
+                        new_height = max(1, round(height * WEBP_CONVERSION_MAX_WIDTH / width))
+                        img = img.resize((WEBP_CONVERSION_MAX_WIDTH, new_height), Image.Resampling.LANCZOS)
+                    img.save(dst_path, "WEBP", quality=WEBP_CONVERSION_QUALITY)
+                if src_path != dst_path:
+                    os.remove(src_path)
+            except Exception as e:
+                print(f"Warning: [{article_slug}] Could not convert '{src_path}' to WebP — {e}")
+
+def convert_all_article_images(validated_articles: list[tuple[str, dict]]) -> None:
+    for slug, data in validated_articles:
+        convert_article_images(slug, data)
 
 def make_lqip_card_thumbnail(full_url: str, alt: str, thumbnail_url: str) -> str:
     return (
@@ -451,7 +513,10 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         ISO_edited_date = article_data.get("date", {}).get("edited", "")
         edited_date_element = f' | Edited on {format_display_date(ISO_edited_date)}'
 
-    article_image_url = resolve_article_image_url(article_slug, article_data.get("article_image_url", ""))
+    raw_article_image_path = article_data.get("article_image_url", "")
+    if webp_conversion_enabled(article_data):
+        raw_article_image_path = map_image_path_to_webp(raw_article_image_path)
+    article_image_url = resolve_article_image_url(article_slug, raw_article_image_path)
     article_image_alt = article_data.get("article_image_alt", "")
     if article_image_url and lqip_thumbnail_url:
         article_image_block = make_lqip_featured_image_block(article_image_url, article_image_alt, lqip_thumbnail_url)
@@ -463,6 +528,10 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         )
     else:
         article_image_block = ""
+
+    article_html_content = markdown_to_html(article_md_content, source_label=article_slug)
+    if webp_conversion_enabled(article_data):
+        article_html_content = remap_html_images_to_webp(article_html_content)
 
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
@@ -484,7 +553,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         "article_edited_date": edited_date_element,
         "website_logo_url": CONFIG.get("website_logo_url", ""),
         "article_image_block": article_image_block,
-        "article_html_content": markdown_to_html(article_md_content, source_label=article_slug),
+        "article_html_content": article_html_content,
     }
 
     # Pass 1: inject component contents and resolve top-level vars in the outer template
@@ -512,7 +581,10 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
     if article_data.get("date", {}).get("edited") not in (None, ""):
         edited_date_text = f' | Edited on {format_display_date(article_data["date"]["edited"])}'
 
-    article_image_url = resolve_article_image_url(article_slug, article_data.get("article_image_url", ""))
+    raw_article_image_path = article_data.get("article_image_url", "")
+    if webp_conversion_enabled(article_data):
+        raw_article_image_path = map_image_path_to_webp(raw_article_image_path)
+    article_image_url = resolve_article_image_url(article_slug, raw_article_image_path)
     article_image_alt = article_data.get("article_image_alt", "")
     if article_image_url:
         article_image_block = (
@@ -522,6 +594,10 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
         )
     else:
         article_image_block = ""
+
+    article_html_content = markdown_to_html(article_md_content, source_label=f"{article_slug} (print)")
+    if webp_conversion_enabled(article_data):
+        article_html_content = remap_html_images_to_webp(article_html_content)
 
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
@@ -536,7 +612,7 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
         "article_edited_date": edited_date_text,
         "article_edited_date_iso": edited_date_text,
         "article_image_block": article_image_block,
-        "article_html_content": markdown_to_html(article_md_content, source_label=f"{article_slug} (print)"),
+        "article_html_content": article_html_content,
     }
 
     # Pass 1: inject component content and resolve top-level template variables
@@ -603,7 +679,10 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
                 article_authors += ", "
             article_authors += author_info.get('author_name', 'Unknown Author')
 
-        article_image_url = resolve_article_image_url(folder, article_data.get("article_image_url", ""))
+        raw_card_image_path = article_data.get("article_image_url", "")
+        if webp_conversion_enabled(article_data):
+            raw_card_image_path = map_image_path_to_webp(raw_card_image_path)
+        article_image_url = resolve_article_image_url(folder, raw_card_image_path)
         article_image_alt = article_data.get("article_image_alt", "")
         thumbnail_url = (lqip_thumbnails or {}).get(folder)
         if article_image_url and thumbnail_url:
@@ -825,6 +904,10 @@ def main():
     # Copy source assets before LQIP/HTML generation so they aren't wiped by the article folder copy
     copy_shared_assets()
     copy_all_article_assets(validated_articles)
+
+    # Convert raster images in each article's output folder to WebP (replacing originals).
+    # Runs after the copy step so it operates on the output copy, leaving the source folder untouched.
+    convert_all_article_images(validated_articles)
 
     lqip_thumbnails = generate_all_lqip_thumbnails(validated_articles)
 

@@ -27,5 +27,6 @@
     "technology"
   ],
   "featured": false,
-  "hide_from_article_list": false
+  "hide_from_article_list": false,
+  "convert_article_images_to_webp": true
 }

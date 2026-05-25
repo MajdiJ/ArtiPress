@@ -11,6 +11,14 @@ The variables/sections that you must include in your article page template are:
 - `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
 - `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
 
+Direct variables also available for use anywhere in this template:
+- `article_title`  -> The article title string.
+- `website_title`  -> The site name from config.
+- `base_url`       -> The site base URL (e.g. https://example.com).
+- `output_path`    -> The output folder name (e.g. articles).
+- `assets_url`     -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`     -> The article slug (e.g. my-article).
+
 These variables must be put in {html_var(...)} format.
 
 You can edit the `article_main_element.css` and `article_md_elements.css` styling to fit your site.
@@ -41,7 +49,7 @@ You can edit the article layout in the `article_page_main_article.html` template
 <!-- Open Graph (Facebook, LinkedIn, etc.) -->
 <meta property="og:title" content="Building Simple-PyKV: A Lightweight Python Key-Value Store server | ArtiPress">
 <meta property="og:description" content="Adventures in creating an API backend for a simple key-value store using Python">
-<meta property="og:image" content="https://artipress.majdij.com/articles/building-simple-pykv/images/image1.png">
+<meta property="og:image" content="https://artipress.majdij.com/articles/building-simple-pykv/images/image1.webp">
 <meta property="og:url" content="https://artipress.majdij.com/articles/building-simple-pykv">
 <meta property="og:type" content="article">
 
@@ -56,7 +64,7 @@ You can edit the article layout in the `article_page_main_article.html` template
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Building Simple-PyKV: A Lightweight Python Key-Value Store server | ArtiPress">
 <meta name="twitter:description" content="Adventures in creating an API backend for a simple key-value store using Python">
-<meta name="twitter:image" content="https://artipress.majdij.com/articles/building-simple-pykv/images/image1.png">
+<meta name="twitter:image" content="https://artipress.majdij.com/articles/building-simple-pykv/images/image1.webp">
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- Style(s) -->
@@ -83,7 +91,7 @@ You can edit the article layout in the `article_page_main_article.html` template
     "headline": "Building Simple-PyKV: A Lightweight Python Key-Value Store server",
     "description": "Adventures in creating an API backend for a simple key-value store using Python",
     "image": [
-        "https://artipress.majdij.com/articles/building-simple-pykv/images/image1.png"
+        "https://artipress.majdij.com/articles/building-simple-pykv/images/image1.webp"
     ],
     "author": [
     {
@@ -184,7 +192,7 @@ You can edit the article layout in the `article_page_main_article.html` template
     <div class="article-image-container article-content featured-article-image">
     <div class="lqip-wrapper featured-lqip-wrapper">
         <img src="/articles/building-simple-pykv/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-        <img src="/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="lqip-full">
+        <img src="/articles/building-simple-pykv/images/image1.webp" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="lqip-full">
     </div>
 </div>
 

@@ -11,6 +11,14 @@ The variables/sections that you must include in your article page template are:
 - `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
 - `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
 
+Direct variables also available for use anywhere in this template:
+- `article_title`  -> The article title string.
+- `website_title`  -> The site name from config.
+- `base_url`       -> The site base URL (e.g. https://example.com).
+- `output_path`    -> The output folder name (e.g. articles).
+- `assets_url`     -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`     -> The article slug (e.g. my-article).
+
 These variables must be put in {html_var(...)} format.
 
 You can edit the `article_main_element.css` and `article_md_elements.css` styling to fit your site.
@@ -41,7 +49,7 @@ You can edit the article layout in the `article_page_main_article.html` template
 <!-- Open Graph (Facebook, LinkedIn, etc.) -->
 <meta property="og:title" content="Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com | ArtiPress">
 <meta property="og:description" content="Building my personal portfolio website to showcase my projects and skills.">
-<meta property="og:image" content="https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.png">
+<meta property="og:image" content="https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.webp">
 <meta property="og:url" content="https://artipress.majdij.com/articles/developing-my-portfolio-website">
 <meta property="og:type" content="article">
 
@@ -56,7 +64,7 @@ You can edit the article layout in the `article_page_main_article.html` template
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com | ArtiPress">
 <meta name="twitter:description" content="Building my personal portfolio website to showcase my projects and skills.">
-<meta name="twitter:image" content="https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.png">
+<meta name="twitter:image" content="https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.webp">
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- Style(s) -->
@@ -83,7 +91,7 @@ You can edit the article layout in the `article_page_main_article.html` template
     "headline": "Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com",
     "description": "Building my personal portfolio website to showcase my projects and skills.",
     "image": [
-        "https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.png"
+        "https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.webp"
     ],
     "author": [
     {
@@ -184,7 +192,7 @@ You can edit the article layout in the `article_page_main_article.html` template
     <div class="article-image-container article-content featured-article-image">
     <div class="lqip-wrapper featured-lqip-wrapper">
         <img src="/articles/developing-my-portfolio-website/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-        <img src="/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="lqip-full">
+        <img src="/articles/developing-my-portfolio-website/images/image1.webp" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="lqip-full">
     </div>
 </div>
 
@@ -214,7 +222,7 @@ You can edit the article layout in the `article_page_main_article.html` template
 <p>Performance, accessibility and discoverability are important, they matter for search engine indexing and reaching users. My Lighthouse scores for this website reflect that work:</p>
 <p><strong>Lighthouse scores – Performance 96 | Accessibility 100 | Best Practices 96 | SEO 100</strong><br />
 <a href="https://developer.chrome.com/docs/lighthouse/overview">Lighthouse is a tool made by Google</a> that audits web pages for quality. High scoring sites provide better user experiences and are favoured by search engines.</p>
-<p><img alt="Lighthouse scores screenshot" src="images/image2.png" />
+<p><img alt="Lighthouse scores screenshot" src="images/image2.webp" />
 <em>(Lighthouse scores for main page of MajdiJ.com on desktop)</em></p>
 <ul>
 <li>
