@@ -11,6 +11,9 @@ The variables/sections that you must include in your article page template are:
 - `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
 - `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
 
+Optional variables/sections:
+- `related_articles` -> (main, after the article) A <section> containing the "Related articles" heading and card grid. Empty string when `related_articles_count` is 0 in config or there are no other articles to show.
+
 Direct variables also available for use anywhere in this template:
 - `article_title`  -> The article title string.
 - `website_title`  -> The site name from config.
@@ -74,8 +77,10 @@ You can edit the article layout in the `article_page_main_article.html` template
     You must include variable/section below in your article list template (In the <head> section, in the middle) -->
     <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
 <link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
 <link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
 <script src="/articles/_artipress/scripts/lqip.js" defer></script>
+<script src="/articles/_artipress/scripts/recently_published_label.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- === ArtiPress ===
@@ -228,6 +233,61 @@ You can edit the article layout in the `article_page_main_article.html` template
 
             <!-- END ArtiPress (End of needed section)-->
         </div>
+
+        <!-- === ArtiPress ===
+        Optional: drop in the related-articles section here. Renders as empty string when disabled or when no candidates exist. -->
+        <section class="artipress-related-articles">
+    <h2 class="artipress-related-articles-heading">Related articles</h2>
+    <div class="artipress-articles-container" data-recently-published-hours="168">
+
+<a href="/articles/article-without-image/index.html" class="artipress-article-card" data-published="2023-05-14T00:00:00Z">
+    
+    <div class="text-content">
+        <p class="artipress-article-card-labels"><span class="artipress-article-card-label">A-Level</span><span class="artipress-article-card-label">NEA</span></p>
+        <h3 class="artipress-article-card-title">Article without image</h3>
+        <p class="artipress-article-card-description">This is an article without an image.</p>
+        <p class="artipress-article-card-author-and-date">Majdi Jaigirdar | 14 May 2023</p>
+    </div>
+</a>
+<a href="/articles/a-level-epq-navigating-ai-education-social-impacts/index.html" class="artipress-article-card" data-published="2023-05-15T00:00:00Z">
+    <div class="article-card-thumbnail lqip-wrapper">
+    <img src="/articles/a-level-epq-navigating-ai-education-social-impacts/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.webp" alt="Hero image for A-Level EPQ: EPQ Navigating the social impacts of AI on education" class="lqip-full" loading="lazy" decoding="async">
+</div>
+    <div class="text-content">
+        <p class="artipress-article-card-labels"><span class="artipress-article-card-label">A-Level</span><span class="artipress-article-card-label">EPQ</span></p>
+        <h3 class="artipress-article-card-title">A-Level EPQ: EPQ Navigating the social impacts of AI on education</h3>
+        <p class="artipress-article-card-description">My A-Level EPQ project exploring the social impacts of AI on education.</p>
+        <p class="artipress-article-card-author-and-date">Majdi Jaigirdar | 15 May 2023</p>
+    </div>
+</a>
+<a href="/articles/example-article-artipress/index.html" class="artipress-article-card" data-published="2026-05-21T00:00:00Z">
+    <div class="article-card-thumbnail lqip-wrapper">
+    <img src="/articles/example-article-artipress/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/example-article-artipress/images/image1.webp" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
+</div>
+    <div class="text-content">
+        <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Example</span></p>
+        <h3 class="artipress-article-card-title">An example article on Artipress</h3>
+        <p class="artipress-article-card-description">An examplar article to demonstrate the structure and generation of an article in Artipress.</p>
+        <p class="artipress-article-card-author-and-date">John Doe | 21 May 2026</p>
+    </div>
+</a>
+<a href="/articles/example-article/index.html" class="artipress-article-card" data-published="2026-05-14T00:00:00Z">
+    <div class="article-card-thumbnail lqip-wrapper">
+    <img src="/articles/example-article/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/example-article/images/image1.webp" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
+</div>
+    <div class="text-content">
+        <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Cooking</span></p>
+        <h3 class="artipress-article-card-title">Even cooler article: an example article</h3>
+        <p class="artipress-article-card-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. An example article to demonstrate the structure</p>
+        <p class="artipress-article-card-author-and-date">John Doe | 14 May 2026</p>
+    </div>
+</a>
+</div>
+</section>
+        <!-- END ArtiPress -->
 
     </main>
 

@@ -11,6 +11,9 @@ The variables/sections that you must include in your article page template are:
 - `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
 - `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
 
+Optional variables/sections:
+- `related_articles` -> (main, after the article) A <section> containing the "Related articles" heading and card grid. Empty string when `related_articles_count` is 0 in config or there are no other articles to show.
+
 Direct variables also available for use anywhere in this template:
 - `article_title`  -> The article title string.
 - `website_title`  -> The site name from config.
@@ -79,6 +82,11 @@ You can edit the article layout in the `article_page_main_article.html` template
             {html_var(article_page_main_article)}
             <!-- END ArtiPress (End of needed section)-->
         </div>
+
+        <!-- === ArtiPress ===
+        Optional: drop in the related-articles section here. Renders as empty string when disabled or when no candidates exist. -->
+        {html_var(related_articles)}
+        <!-- END ArtiPress -->
 
     </main>
 

@@ -32,5 +32,6 @@
     "shared_assets_subfolder": "_artipress",
     "recently_published_within_hours": 168,
     "date_format": "{day} %B %Y",
-    "time_format": "%H:%M"
+    "time_format": "%H:%M",
+    "related_articles_count": 4
 }

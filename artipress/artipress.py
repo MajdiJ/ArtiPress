@@ -25,6 +25,7 @@ CONFIG_DEFAULTS = {
     "recently_published_within_hours": 168,
     "date_format": "{day} %B %Y",
     "time_format": "%H:%M",
+    "related_articles_count": 3,
 }
 REQUIRED_JSON_CONFIG_FIELDS = [
     "base_template_paths.article_list",
@@ -497,7 +498,76 @@ def startup_checks() -> list[tuple[str, dict]]:
     return validate_article_folders(article_folders)
 
 
-def generate_article_page(article_slug: str, article_data: dict, output_path: str, lqip_thumbnail_url: str | None = None):
+def select_related_articles(current_slug: str, current_data: dict, all_articles: list[tuple[str, dict]]) -> list[tuple[str, dict]]:
+    """
+    Pick up to `related_articles_count` articles related to the current one.
+
+    Order: manual `related_slugs` (author wins) -> keyword/label overlap (desc count, ties by recency)
+    -> most-recent remaining. Hidden articles are skipped by the auto stages but allowed in manual picks.
+    """
+    count = CONFIG.get("related_articles_count", 3)
+    if count <= 0:
+        return []
+
+    by_slug = {slug: data for slug, data in all_articles}
+    selected: list[str] = []
+    # Asymmetric: only blocks auto-stage suggestions; manual related_slugs still win.
+    excluded = set(current_data.get("excluded_related_slugs") or [])
+
+    def add(slug: str) -> bool:
+        if slug == current_slug or slug in selected or slug not in by_slug:
+            return False
+        selected.append(slug)
+        return len(selected) >= count
+
+    for slug in current_data.get("related_slugs") or []:
+        if add(slug):
+            return [(s, by_slug[s]) for s in selected]
+
+    current_terms = {
+        term.lower() for term in
+        (current_data.get("article_keywords_list") or []) + (current_data.get("article_labels") or [])
+    }
+    overlap_pool = []
+    for slug, data in all_articles:
+        if slug == current_slug or slug in selected or slug in excluded or data.get("hide_from_article_list", False):
+            continue
+        other_terms = {
+            term.lower() for term in
+            (data.get("article_keywords_list") or []) + (data.get("article_labels") or [])
+        }
+        overlap = len(current_terms & other_terms)
+        if overlap > 0:
+            published = (data.get("date") or {}).get("published") or ""
+            overlap_pool.append((overlap, published, slug))
+
+    overlap_pool.sort(key=lambda x: (x[0], x[1]), reverse=True)
+    for _, _, slug in overlap_pool:
+        if add(slug):
+            return [(s, by_slug[s]) for s in selected]
+
+    # all_articles is already sorted most-recent-first by validate_article_folders
+    for slug, data in all_articles:
+        if slug in excluded or data.get("hide_from_article_list", False):
+            continue
+        if add(slug):
+            break
+
+    return [(s, by_slug[s]) for s in selected]
+
+def render_related_articles_section(current_slug: str, current_data: dict, all_articles: list[tuple[str, dict]], article_list_item_template: str, lqip_thumbnails: dict) -> str:
+    related = select_related_articles(current_slug, current_data, all_articles)
+    if not related:
+        return ""
+    cards_html = render_article_list_items_html(related, article_list_item_template, lqip_thumbnails, include_hidden=True)
+    return (
+        '<section class="artipress-related-articles">\n'
+        '    <h2 class="artipress-related-articles-heading">Related articles</h2>\n'
+        f'    {cards_html}\n'
+        '</section>'
+    )
+
+def generate_article_page(article_slug: str, article_data: dict, output_path: str, lqip_thumbnail_url: str | None = None, validated_articles: list[tuple[str, dict]] | None = None, lqip_thumbnails: dict | None = None):
 
     article_page_template = read_file(CONFIG["base_template_paths"].get("article_page"))
     article_md_content = read_file(os.path.join(CONFIG["input_content_folder"], article_slug, "article.md"))
@@ -533,6 +603,14 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
     if webp_conversion_enabled(article_data):
         article_html_content = remap_html_images_to_webp(article_html_content)
 
+    if validated_articles is not None:
+        article_list_item_template = read_file(CONFIG["components_template_paths"].get("article_list_item"))
+        related_articles_html = render_related_articles_section(
+            article_slug, article_data, validated_articles, article_list_item_template, lqip_thumbnails or {}
+        )
+    else:
+        related_articles_html = ""
+
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
         "website_title": CONFIG["website_title"],
@@ -554,6 +632,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         "website_logo_url": CONFIG.get("website_logo_url", ""),
         "article_image_block": article_image_block,
         "article_html_content": article_html_content,
+        "related_articles": related_articles_html,
     }
 
     # Pass 1: inject component contents and resolve top-level vars in the outer template
@@ -630,7 +709,7 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
 def generate_all_article_pages(validated_articles: list[tuple[str, dict]], lqip_thumbnails: dict):
     for folder, article_data in validated_articles:
         output_path = os.path.join(CONFIG["output_path"], folder, "index.html")
-        generate_article_page(folder, article_data, output_path, lqip_thumbnails.get(folder))
+        generate_article_page(folder, article_data, output_path, lqip_thumbnails.get(folder), validated_articles, lqip_thumbnails)
 
 def copy_all_article_assets(validated_articles: list[tuple[str, dict]]):
     for folder, _ in validated_articles:
@@ -641,13 +720,14 @@ def generate_all_article_prints(validated_articles: list[tuple[str, dict]]):
         output_path = os.path.join(CONFIG["output_path"], folder, "print.html")
         generate_article_print(folder, article_data, output_path)
 
-def render_article_list_items_html(validated_articles, article_list_item_template, lqip_thumbnails: dict | None = None):
+def render_article_list_items_html(validated_articles, article_list_item_template, lqip_thumbnails: dict | None = None, include_hidden: bool = False):
     """
     Render the grid of article cards used on both the article list page and individual author pages.
 
     Args:
         validated_articles: list of (folder, article_data) tuples.
         article_list_item_template: raw template string for a single card.
+        include_hidden: if True, render articles with hide_from_article_list=true too (used by related-articles when the author manually opted them in).
     Returns:
         HTML string wrapping the cards in an .artipress-articles-container div.
     """
@@ -655,7 +735,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
 
     for folder, article_data in validated_articles:
 
-        if article_data.get("hide_from_article_list", False):
+        if not include_hidden and article_data.get("hide_from_article_list", False):
             continue
 
         article_labels = ""
