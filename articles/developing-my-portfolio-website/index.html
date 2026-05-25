@@ -5,12 +5,16 @@ If you do bring/create your own, make sure to update the template path in the co
 
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
-The variables/sections that you must include in your article list template are:
-- 
+The variables/sections that you must include in your article page template are:
+- `article_page_head_metadata`            -> (head, near top) Title, canonical, meta description, OG tags, Twitter Card. Do not place other meta tags above this.
+- `articles_page_styling_and_scripts`     -> (head, middle) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
+- `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
+
 These variables must be put in {html_var(...)} format.
 
-You can edit the `article_list_section.css` styling to fit your site. Some other styling files are not recommended to be edited.
-You can edit the article cards layout in the `article_item.html` template component.
+You can edit the `article_main_element.css` and `article_md_elements.css` styling to fit your site.
+You can edit the article layout in the `article_page_main_article.html` template component.
 -->
 
 <!DOCTYPE html>
@@ -37,7 +41,7 @@ You can edit the article cards layout in the `article_item.html` template compon
 <!-- Open Graph (Facebook, LinkedIn, etc.) -->
 <meta property="og:title" content="Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com | ArtiPress">
 <meta property="og:description" content="Building my personal portfolio website to showcase my projects and skills.">
-<meta property="og:image" content="https://artipress.majdij.com/artipress_data/articles/developing-my-portfolio-website/images/image1.png">
+<meta property="og:image" content="https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.png">
 <meta property="og:url" content="https://artipress.majdij.com/articles/developing-my-portfolio-website">
 <meta property="og:type" content="article">
 
@@ -52,18 +56,18 @@ You can edit the article cards layout in the `article_item.html` template compon
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com | ArtiPress">
 <meta name="twitter:description" content="Building my personal portfolio website to showcase my projects and skills.">
-<meta name="twitter:image" content="https://artipress.majdij.com/artipress_data/articles/developing-my-portfolio-website/images/image1.png">
+<meta name="twitter:image" content="https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.png">
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- Style(s) -->
-    <link rel="stylesheet" href="/artipress_data/style/main.css" />
+    <link rel="stylesheet" href="/articles/_artipress/style/main.css" />
 
     <!-- === ArtiPress ===
     You must include variable/section below in your article list template (In the <head> section, in the middle) -->
-    <link rel="stylesheet" href="/artipress_data/style/article_md_elements.css" />
-<link rel="stylesheet" href="/artipress_data/style/article_main_element.css" />
-<link rel="stylesheet" href="/artipress_data/style/lqip.css" />
-<script src="/artipress_data/scripts/lqip.js" defer></script>
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- === ArtiPress ===
@@ -79,7 +83,7 @@ You can edit the article cards layout in the `article_item.html` template compon
     "headline": "Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com",
     "description": "Building my personal portfolio website to showcase my projects and skills.",
     "image": [
-        "https://artipress.majdij.com/artipress_data/articles/developing-my-portfolio-website/images/image1.png"
+        "https://artipress.majdij.com/articles/developing-my-portfolio-website/images/image1.png"
     ],
     "author": [
     {
@@ -139,37 +143,37 @@ You can edit the article cards layout in the `article_item.html` template compon
         <ul>
             <li>
                 <a href="https://twitter.com/intent/tweet?text=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com%0Ahttps://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/x.png" alt="Twitter/x Icon" />
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/developing-my-portfolio-website&quote=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/facebook.webp" alt="Facebook Icon" />
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/linkedin.png" alt="LinkedIn Icon" />
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.threads.net/intent/post?text=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com%0Ahttps://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/threads.png" alt="Threads Icon" />
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://wa.me/?text=https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/whatsapp.png" alt="WhatsApp Icon" />
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
                 </a>
             </li>
             <li>
                 <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
-                    <img src="/artipress_data/images/social-icons/link.svg" alt="Copy Link Icon" />
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
                 </a>
             </li>
             <li>
                 <a id="printNew" href="/articles/developing-my-portfolio-website/print.html" target="_blank" rel="noopener">
-                    <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
                 </a>
             </li>
         </ul>
@@ -179,8 +183,8 @@ You can edit the article cards layout in the `article_item.html` template compon
 
     <div class="article-image-container article-content featured-article-image">
     <div class="lqip-wrapper featured-lqip-wrapper">
-        <img src="/articles/developing-my-portfolio-website/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-        <img src="/artipress_data/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="lqip-full">
+        <img src="/articles/developing-my-portfolio-website/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+        <img src="/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="lqip-full">
     </div>
 </div>
 
@@ -210,7 +214,7 @@ You can edit the article cards layout in the `article_item.html` template compon
 <p>Performance, accessibility and discoverability are important, they matter for search engine indexing and reaching users. My Lighthouse scores for this website reflect that work:</p>
 <p><strong>Lighthouse scores – Performance 96 | Accessibility 100 | Best Practices 96 | SEO 100</strong><br />
 <a href="https://developer.chrome.com/docs/lighthouse/overview">Lighthouse is a tool made by Google</a> that audits web pages for quality. High scoring sites provide better user experiences and are favoured by search engines.</p>
-<p><img alt="Lighthouse scores screenshot" src="/artipress_data/articles/developing-my-portfolio-website/images/image2.png" />
+<p><img alt="Lighthouse scores screenshot" src="images/image2.png" />
 <em>(Lighthouse scores for main page of MajdiJ.com on desktop)</em></p>
 <ul>
 <li>
@@ -237,7 +241,7 @@ You can edit the article cards layout in the `article_item.html` template compon
 <h2>See the work</h2>
 <p>If you want to see my projects, check my <a href="https://majdij.com/projects">Projects</a> page. For code and more technical details, visit my <a href="https://github.com/majdij">GitHub</a>. If you’d like to get in touch, use the <a href="https://majdij.com/#contact">Contact</a> form on my main MajdiJ.com page.</p>
 <p>Building this website has been a practical way to show what I can do: design, code, deploy and measure a site that people can actually use. I’m always learning, and I’m keen to bring this approach to a team that values clean, accessible and well engineered web and app experiences, front and back end.</p>
-        
+
     </div>
 
     <hr class="divider-line-horizontal">
@@ -248,6 +252,7 @@ You can edit the article cards layout in the `article_item.html` template compon
         </p>
     </footer>
 </article>
+
             <!-- END ArtiPress (End of needed section)-->
         </div>
 

@@ -5,12 +5,16 @@ If you do bring/create your own, make sure to update the template path in the co
 
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
-The variables/sections that you must include in your article list template are:
-- 
+The variables/sections that you must include in your article page template are:
+- `article_page_head_metadata`            -> (head, near top) Title, canonical, meta description, OG tags, Twitter Card. Do not place other meta tags above this.
+- `articles_page_styling_and_scripts`     -> (head, middle) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
+- `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
+
 These variables must be put in {html_var(...)} format.
 
-You can edit the `article_list_section.css` styling to fit your site. Some other styling files are not recommended to be edited.
-You can edit the article cards layout in the `article_item.html` template component.
+You can edit the `article_main_element.css` and `article_md_elements.css` styling to fit your site.
+You can edit the article layout in the `article_page_main_article.html` template component.
 -->
 
 <!DOCTYPE html>
@@ -37,7 +41,7 @@ You can edit the article cards layout in the `article_item.html` template compon
 <!-- Open Graph (Facebook, LinkedIn, etc.) -->
 <meta property="og:title" content="An example article on Artipress | ArtiPress">
 <meta property="og:description" content="An examplar article to demonstrate the structure and generation of an article in Artipress.">
-<meta property="og:image" content="https://artipress.majdij.com/artipress_data/articles/example-article-artipress/resources/images/image1.png">
+<meta property="og:image" content="https://artipress.majdij.com/articles/example-article-artipress/images/image1.png">
 <meta property="og:url" content="https://artipress.majdij.com/articles/example-article-artipress">
 <meta property="og:type" content="article">
 
@@ -52,18 +56,18 @@ You can edit the article cards layout in the `article_item.html` template compon
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="An example article on Artipress | ArtiPress">
 <meta name="twitter:description" content="An examplar article to demonstrate the structure and generation of an article in Artipress.">
-<meta name="twitter:image" content="https://artipress.majdij.com/artipress_data/articles/example-article-artipress/resources/images/image1.png">
+<meta name="twitter:image" content="https://artipress.majdij.com/articles/example-article-artipress/images/image1.png">
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- Style(s) -->
-    <link rel="stylesheet" href="/artipress_data/style/main.css" />
+    <link rel="stylesheet" href="/articles/_artipress/style/main.css" />
 
     <!-- === ArtiPress ===
     You must include variable/section below in your article list template (In the <head> section, in the middle) -->
-    <link rel="stylesheet" href="/artipress_data/style/article_md_elements.css" />
-<link rel="stylesheet" href="/artipress_data/style/article_main_element.css" />
-<link rel="stylesheet" href="/artipress_data/style/lqip.css" />
-<script src="/artipress_data/scripts/lqip.js" defer></script>
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- === ArtiPress ===
@@ -79,7 +83,7 @@ You can edit the article cards layout in the `article_item.html` template compon
     "headline": "An example article on Artipress",
     "description": "An examplar article to demonstrate the structure and generation of an article in Artipress.",
     "image": [
-        "https://artipress.majdij.com/artipress_data/articles/example-article-artipress/resources/images/image1.png"
+        "https://artipress.majdij.com/articles/example-article-artipress/images/image1.png"
     ],
     "author": [
     {
@@ -139,37 +143,37 @@ You can edit the article cards layout in the `article_item.html` template compon
         <ul>
             <li>
                 <a href="https://twitter.com/intent/tweet?text=An example article on Artipress%0Ahttps://artipress.majdij.com/articles/example-article-artipress/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/x.png" alt="Twitter/x Icon" />
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/example-article-artipress&quote=An example article on Artipress/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/facebook.webp" alt="Facebook Icon" />
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/example-article-artipress/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/linkedin.png" alt="LinkedIn Icon" />
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.threads.net/intent/post?text=An example article on Artipress%0Ahttps://artipress.majdij.com/articles/example-article-artipress/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/threads.png" alt="Threads Icon" />
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://wa.me/?text=https://artipress.majdij.com/articles/example-article-artipress/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/whatsapp.png" alt="WhatsApp Icon" />
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
                 </a>
             </li>
             <li>
                 <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/example-article-artipress/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
-                    <img src="/artipress_data/images/social-icons/link.svg" alt="Copy Link Icon" />
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
                 </a>
             </li>
             <li>
                 <a id="printNew" href="/articles/example-article-artipress/print.html" target="_blank" rel="noopener">
-                    <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
                 </a>
             </li>
         </ul>
@@ -179,8 +183,8 @@ You can edit the article cards layout in the `article_item.html` template compon
 
     <div class="article-image-container article-content featured-article-image">
     <div class="lqip-wrapper featured-lqip-wrapper">
-        <img src="/articles/example-article-artipress/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-        <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="An example image for the article" class="lqip-full">
+        <img src="/articles/example-article-artipress/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+        <img src="/articles/example-article-artipress/images/image1.png" alt="An example image for the article" class="lqip-full">
     </div>
 </div>
 
@@ -295,7 +299,7 @@ echo &quot;Lorem ipsum dolor sit amet&quot;
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 <hr />
 <p><em>Fin. Lorem ipsum dolor sit amet.</em></p>
-        
+
     </div>
 
     <hr class="divider-line-horizontal">
@@ -306,6 +310,7 @@ echo &quot;Lorem ipsum dolor sit amet&quot;
         </p>
     </footer>
 </article>
+
             <!-- END ArtiPress (End of needed section)-->
         </div>
 

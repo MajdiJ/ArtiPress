@@ -1,0 +1,27 @@
+<title>{html_var(article_title)} | {html_var(website_title)}</title>
+<link rel="canonical" href="{html_var(base_url)}/{html_var(output_path)}/{html_var(article_id)}" />
+<meta name="description" content="{html_var(article_strap_line)}" />
+<meta name="keywords" content="{html_var(article_keywords_list)}" />
+
+<!-- Article author meta tags will be inserted below -->
+{html_var(author_meta_tags)}
+
+<!-- Open Graph (Facebook, LinkedIn, etc.) -->
+<meta property="og:title" content="{html_var(article_title)} | {html_var(website_title)}">
+<meta property="og:description" content="{html_var(article_strap_line)}">
+<meta property="og:image" content="{html_var(base_url)}{html_var(article_featured_image)}">
+<meta property="og:url" content="{html_var(base_url)}/articles/{html_var(article_id)}">
+<meta property="og:type" content="article">
+
+<!-- Open Graph Article Metadata -->
+<meta property="article:published_time" content="{html_var(article_published_date_iso)}" />
+<meta property="article:modified_time" content="{html_var(article_edited_date_iso)}" />
+
+<!-- Inser Open Graph Article Authors will be inserted below -->
+{html_var(og_meta_tags_authors)}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{html_var(article_title)} | {html_var(website_title)}">
+<meta name="twitter:description" content="{html_var(article_strap_line)}">
+<meta name="twitter:image" content="{html_var(base_url)}{html_var(article_featured_image)}">

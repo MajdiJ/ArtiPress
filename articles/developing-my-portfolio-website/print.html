@@ -1,3 +1,28 @@
+<!--
+This is an example article print template. It is opened in a new tab when a reader clicks the print icon on an article page.
+You can use this as a base and modify it, or bring your own template and update the path in the config file.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article print template are:
+- `articles_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
+
+Direct variables also available for use anywhere in this template:
+- `article_title`                    -> The article title string.
+- `website_title`                    -> The site name from config.
+- `base_url`                         -> The site base URL (e.g. https://example.com).
+- `output_path`   -> The output folder name (e.g. articles).
+- `article_id`                       -> The article slug (e.g. my-article).
+- `article_authors`                  -> Comma-separated plain-text author name(s).
+- `article_published_date`           -> Human-readable published date.
+- `article_edited_date`              -> Human-readable edited date with label prefix, or empty string if not edited.
+
+These variables must be put in {html_var(...)} format.
+
+Note: This page auto-opens the browser print dialogue on load. On screen it shows a short message; the article itself is CSS-hidden until printed.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,10 +140,10 @@
 
     <!-- === ArtiPress ===
     You must include variable/section below in your article list template (In the <head> section, in the middle) -->
-    <link rel="stylesheet" href="/artipress_data/style/article_md_elements.css" />
-<link rel="stylesheet" href="/artipress_data/style/article_main_element.css" />
-<link rel="stylesheet" href="/artipress_data/style/lqip.css" />
-<script src="/artipress_data/scripts/lqip.js" defer></script>
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 </head>
 
@@ -154,37 +179,37 @@
         <ul>
             <li>
                 <a href="https://twitter.com/intent/tweet?text=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com%0Ahttps://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/x.png" alt="Twitter/x Icon" />
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/developing-my-portfolio-website&quote=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/facebook.webp" alt="Facebook Icon" />
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/linkedin.png" alt="LinkedIn Icon" />
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.threads.net/intent/post?text=Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com%0Ahttps://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/threads.png" alt="Threads Icon" />
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://wa.me/?text=https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/whatsapp.png" alt="WhatsApp Icon" />
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
                 </a>
             </li>
             <li>
                 <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/developing-my-portfolio-website/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
-                    <img src="/artipress_data/images/social-icons/link.svg" alt="Copy Link Icon" />
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
                 </a>
             </li>
             <li>
                 <a id="printNew" href="/articles/developing-my-portfolio-website/print.html" target="_blank" rel="noopener">
-                    <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
                 </a>
             </li>
         </ul>
@@ -193,7 +218,7 @@
     <hr class="divider-line-horizontal-bottom">
 
     <div class="article-image-container article-content featured-article-image">
-        <img src="/artipress_data/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com"/>
+        <img src="/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com"/>
     </div>
 
     <div class="article-content">
@@ -222,7 +247,7 @@
 <p>Performance, accessibility and discoverability are important, they matter for search engine indexing and reaching users. My Lighthouse scores for this website reflect that work:</p>
 <p><strong>Lighthouse scores – Performance 96 | Accessibility 100 | Best Practices 96 | SEO 100</strong><br />
 <a href="https://developer.chrome.com/docs/lighthouse/overview">Lighthouse is a tool made by Google</a> that audits web pages for quality. High scoring sites provide better user experiences and are favoured by search engines.</p>
-<p><img alt="Lighthouse scores screenshot" src="/artipress_data/articles/developing-my-portfolio-website/images/image2.png" />
+<p><img alt="Lighthouse scores screenshot" src="images/image2.png" />
 <em>(Lighthouse scores for main page of MajdiJ.com on desktop)</em></p>
 <ul>
 <li>
@@ -249,7 +274,7 @@
 <h2>See the work</h2>
 <p>If you want to see my projects, check my <a href="https://majdij.com/projects">Projects</a> page. For code and more technical details, visit my <a href="https://github.com/majdij">GitHub</a>. If you’d like to get in touch, use the <a href="https://majdij.com/#contact">Contact</a> form on my main MajdiJ.com page.</p>
 <p>Building this website has been a practical way to show what I can do: design, code, deploy and measure a site that people can actually use. I’m always learning, and I’m keen to bring this approach to a team that values clean, accessible and well engineered web and app experiences, front and back end.</p>
-        
+
     </div>
 
     <hr class="divider-line-horizontal">
@@ -260,6 +285,7 @@
         </p>
     </footer>
 </article>
+
     </div>
     <!-- END ArtiPress (End of needed section)-->
 

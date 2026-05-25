@@ -1,3 +1,28 @@
+<!--
+This is an example article print template. It is opened in a new tab when a reader clicks the print icon on an article page.
+You can use this as a base and modify it, or bring your own template and update the path in the config file.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article print template are:
+- `articles_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
+
+Direct variables also available for use anywhere in this template:
+- `article_title`                    -> The article title string.
+- `website_title`                    -> The site name from config.
+- `base_url`                         -> The site base URL (e.g. https://example.com).
+- `output_path`   -> The output folder name (e.g. articles).
+- `article_id`                       -> The article slug (e.g. my-article).
+- `article_authors`                  -> Comma-separated plain-text author name(s).
+- `article_published_date`           -> Human-readable published date.
+- `article_edited_date`              -> Human-readable edited date with label prefix, or empty string if not edited.
+
+These variables must be put in {html_var(...)} format.
+
+Note: This page auto-opens the browser print dialogue on load. On screen it shows a short message; the article itself is CSS-hidden until printed.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,10 +140,10 @@
 
     <!-- === ArtiPress ===
     You must include variable/section below in your article list template (In the <head> section, in the middle) -->
-    <link rel="stylesheet" href="/artipress_data/style/article_md_elements.css" />
-<link rel="stylesheet" href="/artipress_data/style/article_main_element.css" />
-<link rel="stylesheet" href="/artipress_data/style/lqip.css" />
-<script src="/artipress_data/scripts/lqip.js" defer></script>
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 </head>
 
@@ -154,37 +179,37 @@
         <ul>
             <li>
                 <a href="https://twitter.com/intent/tweet?text=A-Level CS NEA: School register system for lower income countries%0Ahttps://artipress.majdij.com/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/x.png" alt="Twitter/x Icon" />
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/a-level-cs-nea-school-register-system-for-lower-income-countries&quote=A-Level CS NEA: School register system for lower income countries/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/facebook.webp" alt="Facebook Icon" />
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/linkedin.png" alt="LinkedIn Icon" />
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.threads.net/intent/post?text=A-Level CS NEA: School register system for lower income countries%0Ahttps://artipress.majdij.com/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/threads.png" alt="Threads Icon" />
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://wa.me/?text=https://artipress.majdij.com/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/whatsapp.png" alt="WhatsApp Icon" />
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
                 </a>
             </li>
             <li>
                 <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
-                    <img src="/artipress_data/images/social-icons/link.svg" alt="Copy Link Icon" />
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
                 </a>
             </li>
             <li>
                 <a id="printNew" href="/articles/a-level-cs-nea-school-register-system-for-lower-income-countries/print.html" target="_blank" rel="noopener">
-                    <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
                 </a>
             </li>
         </ul>
@@ -217,7 +242,7 @@
 <blockquote>
 <p><em>This article reflects the completion of my AQA A-Level Computer Science NEA project. It was originally completed in early 2024 and uploaded to this site on 2025-12-26.</em></p>
 </blockquote>
-        
+
     </div>
 
     <hr class="divider-line-horizontal">
@@ -228,6 +253,7 @@
         </p>
     </footer>
 </article>
+
     </div>
     <!-- END ArtiPress (End of needed section)-->
 

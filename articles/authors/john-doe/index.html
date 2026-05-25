@@ -6,11 +6,19 @@ If you do bring/create your own, make sure to update the template path in the co
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
 The variables/sections that you must include in your author page template are:
-- `author_page_styling_and_scripts` -> Styling (CSS) and any needed script(s) (JS) for the author page. Edit as needed.
+- `author_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the author page. Edit as needed.
 - `author_role_formatted`           -> Pre-rendered <p> tag for the author's role, or empty string if the author has no role.
 - `author_bio_html`                 -> Author bio rendered from markdown to HTML.
 - `author_social_links_formatted`   -> Pre-rendered <ul> of social link items, or empty string if the author has no social links.
 - `author_articles_list_items`      -> Pre-rendered article cards grid for articles written or co-written by this author.
+
+Direct variables also available for use anywhere in this template:
+- `author_name`        -> The author's display name.
+- `author_slug`        -> The author's URL slug (e.g. john-doe).
+- `author_bio`         -> The author's bio as plain text (used in meta description).
+- `author_picture_url` -> URL to the author's avatar image.
+- `website_title`      -> The site name from config.
+- `base_url`           -> The site base URL (e.g. https://example.com).
 
 These variables must be put in {html_var(...)} format.
 
@@ -37,7 +45,7 @@ You can edit the social link layout in the `author_social_link.html` template co
     <!-- Open Graph (Facebook, LinkedIn, etc.) -->
     <meta property="og:title" content="John Doe | ArtiPress">
     <meta property="og:description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
-    <meta property="og:image" content="https://artipress.majdij.com/artipress_data/authors/author_pictures/default.svg">
+    <meta property="og:image" content="https://artipress.majdij.com/articles/_artipress/author-pictures/default.svg">
     <meta property="og:url" content="https://artipress.majdij.com/articles/authors/john-doe">
     <meta property="og:type" content="profile">
 
@@ -45,16 +53,18 @@ You can edit the social link layout in the `author_social_link.html` template co
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="John Doe | ArtiPress">
     <meta name="twitter:description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">
-    <meta name="twitter:image" content="https://artipress.majdij.com/artipress_data/authors/author_pictures/default.svg">
+    <meta name="twitter:image" content="https://artipress.majdij.com/articles/_artipress/author-pictures/default.svg">
 
     <!-- Style(s) -->
-    <link rel="stylesheet" href="/artipress_data/style/main.css" />
+    <link rel="stylesheet" href="/articles/_artipress/style/main.css" />
 
     <!-- === ArtiPress ===
     You must include variable/section below in your author page template (In the <head> section) -->
-    <link rel="stylesheet" href="/artipress_data/style/author_page_base.css" />
-<link rel="stylesheet" href="/artipress_data/style/article_list_cards.css" />
-<script src="/artipress_data/scripts/recently_published_label.js" defer></script>
+    <link rel="stylesheet" href="/articles/_artipress/style/author_page_base.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/recently_published_label.js" defer></script>
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
 
     <!-- END ArtiPress (End of needed section)-->
 </head>
@@ -77,7 +87,7 @@ You can edit the social link layout in the `author_social_link.html` template co
         <section class="author-profile">
             <div class="author-profile-header">
                 <div class="author-avatar-container">
-                    <img src="/artipress_data/authors/author_pictures/default.svg" alt="John Doe" class="author-avatar">
+                    <img src="/articles/_artipress/author-pictures/default.svg" alt="John Doe" class="author-avatar">
                 </div>
 
                 <div class="author-info">
@@ -91,21 +101,21 @@ You can edit the social link layout in the `author_social_link.html` template co
 <li class="author-social-link">
     <a href="https://twitter.com/john_doe" target="_blank" rel="noopener noreferrer"
         aria-label="Twitter: @john_doe" title="Twitter: @john_doe">
-        <img src="/artipress_data/images/social-icons/x.png" alt="" class="author-social-icon" />
+        <img src="/articles/_artipress/icons/x.png" alt="" class="author-social-icon" />
     </a>
 </li>
 
 <li class="author-social-link">
     <a href="https://linkedin.com/in/john_doe" target="_blank" rel="noopener noreferrer"
         aria-label="LinkedIn: john-doe" title="LinkedIn: john-doe">
-        <img src="/artipress_data/images/social-icons/linkedin.png" alt="" class="author-social-icon" />
+        <img src="/articles/_artipress/icons/linkedin.png" alt="" class="author-social-icon" />
     </a>
 </li>
 
 <li class="author-social-link">
     <a href="https://github.com/john_doe" target="_blank" rel="noopener noreferrer"
         aria-label="GitHub: john_doe" title="GitHub: john_doe">
-        <img src="/artipress_data/images/social-icons/github.png" alt="" class="author-social-icon" />
+        <img src="/articles/_artipress/icons/github.png" alt="" class="author-social-icon" />
     </a>
 </li>
 
@@ -123,8 +133,8 @@ You can edit the social link layout in the `author_social_link.html` template co
 
 <a href="/articles/example-article-artipress/index.html" class="artipress-article-card" data-published="2026-05-21T00:00:00Z">
     <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/example-article-artipress/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
+    <img src="/articles/example-article-artipress/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/example-article-artipress/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
 </div>
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Example</span></p>
@@ -135,8 +145,8 @@ You can edit the social link layout in the `author_social_link.html` template co
 </a>
 <a href="/articles/example-article/index.html" class="artipress-article-card" data-published="2026-05-14T00:00:00Z">
     <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/example-article/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/artipress_data/articles/example-article/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
+    <img src="/articles/example-article/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/example-article/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
 </div>
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Cooking</span></p>

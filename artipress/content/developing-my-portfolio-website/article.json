@@ -1,0 +1,43 @@
+{
+  "article_title": "Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com",
+  "author_slugs": [
+    "majdi-jaigirdar"
+  ],
+  "article_image_url": "images/image1.png",
+  "article_image_alt": "Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com",
+  "article_strap_line": "Building my personal portfolio website to showcase my projects and skills.",
+  "date": {
+    "published": "2025-10-25T00:00:00Z",
+    "edited": "2025-12-14T00:00:00Z"
+  },
+  "article_labels": [],
+  "article_keywords_list": [
+    "portfolio",
+    "web development",
+    "personal website",
+    "software engineering",
+    "frontend development",
+    "backend development",
+    "full stack developer",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Node.js",
+    "FastAPI",
+    "Python",
+    "static site generator",
+    "SSG",
+    "Cloudflare Workers",
+    "Cloudflare Pages",
+    "serverless",
+    "performance optimization",
+    "accessibility",
+    "SEO",
+    "Lighthouse scores",
+    "edge computing",
+    "web performance",
+    "developer projects"
+  ],
+  "featured": true,
+  "hide_from_article_list": false
+}

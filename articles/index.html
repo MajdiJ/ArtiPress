@@ -6,14 +6,16 @@ If you do bring/create your own, make sure to update the template path in the co
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
 The variables/sections that you must include in your article list template are:
-- `articles_list_styling` -> This variable contains the styling (CSS) needed for the article list part. You can edit this styling.
-- `articles_list_scripts` -> This variable contains any needed script(s) (JS) needed for the article list part. You can edit these scripts.
-- `articles_list` -> This variable contains the actual list of articles in HTML format. You must include this variable where you want the list of articles to be rendered.
+- `article_list_styling_and_scripts` -> Styling (CSS) and scripts (JS) for the article list. Place in the <head>. Edit as needed.
+- `article_list_items`               -> The rendered article card grid HTML. Place where you want the list to appear.
+
+Direct variables also available for use anywhere in this template:
+- `base_url` -> The site base URL (e.g. https://example.com).
 
 These variables must be put in {html_var(...)} format.
 
-You can edit the `article_list_section.css` styling to fit your site. Some other styling files are not recommended to be edited.
-You can edit the article cards layout in the `article_item.html` template component.
+You can edit the `article_list_cards.css` styling to fit your site. Some other styling files are not recommended to be edited.
+You can edit the article card layout in the `article_list_item.html` template component.
 -->
 
 <!DOCTYPE html>
@@ -31,14 +33,14 @@ You can edit the article cards layout in the `article_item.html` template compon
     <meta name="description" content="Static site article generator and builder without a backened database." />
 
     <!-- Style(s) -->
-    <link rel="stylesheet" href="/artipress_data/style/main.css" />
+    <link rel="stylesheet" href="/articles/_artipress/style/main.css" />
 
     <!-- === ArtiPress ===
     You must include variable/section below in your article list template (In the <head> section) -->
-    <link rel="stylesheet" href="/artipress_data/style/article_list_cards.css" />
-<link rel="stylesheet" href="/artipress_data/style/lqip.css" />
-<script src="/artipress_data/scripts/recently_published_label.js" defer></script>
-<script src="/artipress_data/scripts/lqip.js" defer></script>
+    <link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/recently_published_label.js" defer></script>
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 
 </head>
@@ -68,8 +70,8 @@ You can edit the article cards layout in the `article_item.html` template compon
 
 <a href="/articles/example-article-artipress/index.html" class="artipress-article-card" data-published="2026-05-21T00:00:00Z">
     <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/example-article-artipress/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/artipress_data/articles/example-article-artipress/resources/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
+    <img src="/articles/example-article-artipress/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/example-article-artipress/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
 </div>
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Example</span></p>
@@ -80,8 +82,8 @@ You can edit the article cards layout in the `article_item.html` template compon
 </a>
 <a href="/articles/example-article/index.html" class="artipress-article-card" data-published="2026-05-14T00:00:00Z">
     <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/example-article/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/artipress_data/articles/example-article/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
+    <img src="/articles/example-article/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/example-article/images/image1.png" alt="An example image for the article" class="lqip-full" loading="lazy" decoding="async">
 </div>
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">Artipress</span><span class="artipress-article-card-label">Cooking</span></p>
@@ -92,8 +94,8 @@ You can edit the article cards layout in the `article_item.html` template compon
 </a>
 <a href="/articles/building-simple-pykv/index.html" class="artipress-article-card" data-published="2025-12-22T00:00:00Z">
     <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/building-simple-pykv/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/artipress_data/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="lqip-full" loading="lazy" decoding="async">
+    <img src="/articles/building-simple-pykv/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="lqip-full" loading="lazy" decoding="async">
 </div>
     <div class="text-content">
         <div class="artipress-article-card-labels-empty"></div>
@@ -104,8 +106,8 @@ You can edit the article cards layout in the `article_item.html` template compon
 </a>
 <a href="/articles/developing-my-portfolio-website/index.html" class="artipress-article-card" data-published="2025-10-25T00:00:00Z">
     <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/developing-my-portfolio-website/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/artipress_data/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="lqip-full" loading="lazy" decoding="async">
+    <img src="/articles/developing-my-portfolio-website/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/developing-my-portfolio-website/images/image1.png" alt="Hero image for Developing My Personal Portfolio Website with Modern Web Tech: MajdiJ.com" class="lqip-full" loading="lazy" decoding="async">
 </div>
     <div class="text-content">
         <div class="artipress-article-card-labels-empty"></div>
@@ -116,8 +118,8 @@ You can edit the article cards layout in the `article_item.html` template compon
 </a>
 <a href="/articles/a-level-epq-navigating-ai-education-social-impacts/index.html" class="artipress-article-card" data-published="2023-05-15T00:00:00Z">
     <div class="article-card-thumbnail lqip-wrapper">
-    <img src="/articles/a-level-epq-navigating-ai-education-social-impacts/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-    <img src="/artipress_data/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png" alt="Hero image for A-Level EPQ: EPQ Navigating the social impacts of AI on education" class="lqip-full" loading="lazy" decoding="async">
+    <img src="/articles/a-level-epq-navigating-ai-education-social-impacts/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+    <img src="/articles/a-level-epq-navigating-ai-education-social-impacts/images/image1.png" alt="Hero image for A-Level EPQ: EPQ Navigating the social impacts of AI on education" class="lqip-full" loading="lazy" decoding="async">
 </div>
     <div class="text-content">
         <p class="artipress-article-card-labels"><span class="artipress-article-card-label">A-Level</span><span class="artipress-article-card-label">EPQ</span></p>

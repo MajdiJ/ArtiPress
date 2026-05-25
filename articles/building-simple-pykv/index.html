@@ -5,12 +5,16 @@ If you do bring/create your own, make sure to update the template path in the co
 
 If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
 
-The variables/sections that you must include in your article list template are:
-- 
+The variables/sections that you must include in your article page template are:
+- `article_page_head_metadata`            -> (head, near top) Title, canonical, meta description, OG tags, Twitter Card. Do not place other meta tags above this.
+- `articles_page_styling_and_scripts`     -> (head, middle) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_head_application_json_ld` -> (head, bottom) JSON-LD structured data script tag for SEO.
+- `article_page_main_article`             -> (main) The full article content — header, sharing bar, image, body, footer.
+
 These variables must be put in {html_var(...)} format.
 
-You can edit the `article_list_section.css` styling to fit your site. Some other styling files are not recommended to be edited.
-You can edit the article cards layout in the `article_item.html` template component.
+You can edit the `article_main_element.css` and `article_md_elements.css` styling to fit your site.
+You can edit the article layout in the `article_page_main_article.html` template component.
 -->
 
 <!DOCTYPE html>
@@ -37,7 +41,7 @@ You can edit the article cards layout in the `article_item.html` template compon
 <!-- Open Graph (Facebook, LinkedIn, etc.) -->
 <meta property="og:title" content="Building Simple-PyKV: A Lightweight Python Key-Value Store server | ArtiPress">
 <meta property="og:description" content="Adventures in creating an API backend for a simple key-value store using Python">
-<meta property="og:image" content="https://artipress.majdij.com/artipress_data/articles/building-simple-pykv/images/image1.png">
+<meta property="og:image" content="https://artipress.majdij.com/articles/building-simple-pykv/images/image1.png">
 <meta property="og:url" content="https://artipress.majdij.com/articles/building-simple-pykv">
 <meta property="og:type" content="article">
 
@@ -52,18 +56,18 @@ You can edit the article cards layout in the `article_item.html` template compon
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Building Simple-PyKV: A Lightweight Python Key-Value Store server | ArtiPress">
 <meta name="twitter:description" content="Adventures in creating an API backend for a simple key-value store using Python">
-<meta name="twitter:image" content="https://artipress.majdij.com/artipress_data/articles/building-simple-pykv/images/image1.png">
+<meta name="twitter:image" content="https://artipress.majdij.com/articles/building-simple-pykv/images/image1.png">
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- Style(s) -->
-    <link rel="stylesheet" href="/artipress_data/style/main.css" />
+    <link rel="stylesheet" href="/articles/_artipress/style/main.css" />
 
     <!-- === ArtiPress ===
     You must include variable/section below in your article list template (In the <head> section, in the middle) -->
-    <link rel="stylesheet" href="/artipress_data/style/article_md_elements.css" />
-<link rel="stylesheet" href="/artipress_data/style/article_main_element.css" />
-<link rel="stylesheet" href="/artipress_data/style/lqip.css" />
-<script src="/artipress_data/scripts/lqip.js" defer></script>
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
     <!-- END ArtiPress (End of needed section)-->
 
     <!-- === ArtiPress ===
@@ -79,7 +83,7 @@ You can edit the article cards layout in the `article_item.html` template compon
     "headline": "Building Simple-PyKV: A Lightweight Python Key-Value Store server",
     "description": "Adventures in creating an API backend for a simple key-value store using Python",
     "image": [
-        "https://artipress.majdij.com/artipress_data/articles/building-simple-pykv/images/image1.png"
+        "https://artipress.majdij.com/articles/building-simple-pykv/images/image1.png"
     ],
     "author": [
     {
@@ -139,37 +143,37 @@ You can edit the article cards layout in the `article_item.html` template compon
         <ul>
             <li>
                 <a href="https://twitter.com/intent/tweet?text=Building Simple-PyKV: A Lightweight Python Key-Value Store server%0Ahttps://artipress.majdij.com/articles/building-simple-pykv/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/x.png" alt="Twitter/x Icon" />
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/building-simple-pykv&quote=Building Simple-PyKV: A Lightweight Python Key-Value Store server/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/facebook.webp" alt="Facebook Icon" />
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/building-simple-pykv/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/linkedin.png" alt="LinkedIn Icon" />
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://www.threads.net/intent/post?text=Building Simple-PyKV: A Lightweight Python Key-Value Store server%0Ahttps://artipress.majdij.com/articles/building-simple-pykv/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/threads.png" alt="Threads Icon" />
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
                 </a>
             </li>
             <li>
                 <a href="https://wa.me/?text=https://artipress.majdij.com/articles/building-simple-pykv/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
-                    <img src="/artipress_data/images/social-icons/whatsapp.png" alt="WhatsApp Icon" />
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
                 </a>
             </li>
             <li>
                 <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/building-simple-pykv/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
-                    <img src="/artipress_data/images/social-icons/link.svg" alt="Copy Link Icon" />
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
                 </a>
             </li>
             <li>
                 <a id="printNew" href="/articles/building-simple-pykv/print.html" target="_blank" rel="noopener">
-                    <img src="/artipress_data/images/social-icons/print.svg" alt="Print Icon" />
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
                 </a>
             </li>
         </ul>
@@ -179,8 +183,8 @@ You can edit the article cards layout in the `article_item.html` template compon
 
     <div class="article-image-container article-content featured-article-image">
     <div class="lqip-wrapper featured-lqip-wrapper">
-        <img src="/articles/building-simple-pykv/resources/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
-        <img src="/artipress_data/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="lqip-full">
+        <img src="/articles/building-simple-pykv/images/thumbnail.webp" alt="" class="lqip-placeholder" aria-hidden="true">
+        <img src="/articles/building-simple-pykv/images/image1.png" alt="Hero image for Building Simple-PyKV: A Lightweight Python Key-Value Store server" class="lqip-full">
     </div>
 </div>
 
@@ -334,7 +338,7 @@ As of now, there is no testing implemented. Adding a comprehensive testing code 
 </ul>
 <p>Simple-PyKV is licensed under the Apache License 2.0. See the LICENSE file for details. Click above link for the full license text.<br>
 <strong>Note:</strong> Trademarks and logos are not included in the license.</p>
-        
+
     </div>
 
     <hr class="divider-line-horizontal">
@@ -345,6 +349,7 @@ As of now, there is no testing implemented. Adding a comprehensive testing code 
         </p>
     </footer>
 </article>
+
             <!-- END ArtiPress (End of needed section)-->
         </div>
 
