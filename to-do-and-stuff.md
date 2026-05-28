@@ -1,0 +1,1 @@
+Change how resources and set/structured in articles like {article slug}/resources/images/...etc

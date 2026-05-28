@@ -1,0 +1,35 @@
+{
+  "article_title": "Gotchas and how ArtiPress catches them",
+  "author_slugs": [
+    "majdi-jaigirdar"
+  ],
+  "article_image_url": "",
+  "article_image_alt": "",
+  "article_strap_line": "The validation pass that runs before any file is written, the warnings that follow, and what each error message actually means.",
+  "date": {
+    "published": "2026-05-28T00:00:00Z"
+  },
+  "article_labels": [
+    "ArtiPress",
+    "Reference"
+  ],
+  "article_keywords_list": [
+    "artipress",
+    "validation",
+    "errors",
+    "debugging",
+    "gotchas",
+    "ARTIPRESS_DEBUG",
+    "warnings",
+    "troubleshooting",
+    "common issues",
+    "fail fast"
+  ],
+  "related_slugs": [
+    "writing-your-first-article"
+  ],
+  "excluded_related_slugs": [],
+  "featured": false,
+  "hide_from_article_list": false,
+  "convert_article_images_to_webp": true
+}

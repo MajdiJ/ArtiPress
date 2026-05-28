@@ -1,0 +1,273 @@
+<!--
+This is an example article print template. It is opened in a new tab when a reader clicks the print icon on an article page.
+You can use this as a base and modify it, or bring your own template and update the path in the config file.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article print template are:
+- `articles_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
+
+Direct variables also available for use anywhere in this template:
+- `article_title`          -> The article title string.
+- `website_title`          -> The site name from config.
+- `base_url`               -> The site base URL (e.g. https://example.com).
+- `output_path`            -> The output folder name (e.g. articles).
+- `assets_url`             -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`             -> The article slug (e.g. my-article).
+- `article_authors`        -> Comma-separated plain-text author name(s).
+- `article_published_date` -> Human-readable published date.
+- `article_edited_date`    -> Human-readable edited date with label prefix, or empty string if not edited.
+
+These variables must be put in {html_var(...)} format.
+
+Note: This page auto-opens the browser print dialogue on load. On screen it shows a short message; the article itself is CSS-hidden until printed.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Why I built ArtiPress - ArtiPress</title>
+
+    <style>
+        /*  PAGE SETUP  */
+        @page {
+            size: A4;
+            margin: 20mm 18mm 25mm 18mm;
+            /* top right bottom left */
+
+            @top-left {
+                content: "Why I built ArtiPress | ArtiPress (https://artipress.majdij.com)";
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/why-i-built-artipress" "\A" "Majdi Jaigirdar | Published on 28 May 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+        /* First page — no header or footer */
+        @page :first {
+
+            margin: 15mm 18mm 25mm 18mm;
+
+            @top-left {
+                content: "";
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/why-i-built-artipress" "\A" "Majdi Jaigirdar | Published on 28 May 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+
+        /*  BASIC PRINT BEHAVIOUR  */
+
+        body {
+            font-size: 11pt;
+            line-height: 1.6;
+            orphans: 3;
+            widows: 3;
+        }
+
+        h1,
+        h2,
+        h3 {
+            page-break-after: avoid;
+            /* never leave a heading alone at a page bottom */
+        }
+
+        p {
+            page-break-inside: auto;
+        }
+
+        figure,
+        table,
+        pre,
+        blockquote {
+            page-break-inside: avoid;
+        }
+
+
+        /*  SCREEN VIEW (non-print)  */
+
+        .print-screen-message {
+            display: none;
+        }
+
+        @media screen {
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: sans-serif;
+            }
+
+            .print-screen-message {
+                display: block;
+                text-align: center;
+                max-width: 32rem;
+                padding: 1rem;
+            }
+
+            .article-content {
+                display: none;
+            }
+        }
+    </style>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article print template (In the <head> section, in the middle) -->
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
+<script src="/articles/_artipress/scripts/recently_published_label.js" defer></script>
+    <!-- END ArtiPress (End of needed section)-->
+</head>
+
+<body>
+
+    <div class="print-screen-message">
+        <p>Print article: Why I built ArtiPress</p>
+        <p>Your browser should auto open the print dialogue to allow you to print the article.</p>
+        <p>If it doesn't auto open you can <a href="#" onclick="window.print(); return false;">click here to do it manually</a>.</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', function () {
+            window.print();
+        });
+    </script>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+    <div class="article-content">
+        <article>
+    <header>
+        <h1>Why I built ArtiPress</h1>
+        <p class="strap-line">The origin story: keeping HTML, list pages, and SEO tags in sync by hand is tedious, and a full backend is overkill.</p>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 28 May 2026
+        </p>
+    </header>
+
+    <hr class="divider-line-horizontal-top">
+
+    <div class="article-sharing-exporting">
+        <ul>
+            <li>
+                <a href="https://twitter.com/intent/tweet?text=Why I built ArtiPress%0Ahttps://artipress.majdij.com/articles/why-i-built-artipress/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/why-i-built-artipress&quote=Why I built ArtiPress/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/why-i-built-artipress/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.threads.net/intent/post?text=Why I built ArtiPress%0Ahttps://artipress.majdij.com/articles/why-i-built-artipress/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/?text=https://artipress.majdij.com/articles/why-i-built-artipress/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/why-i-built-artipress/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
+                </a>
+            </li>
+            <li>
+                <a id="printNew" href="/articles/why-i-built-artipress/print.html" target="_blank" rel="noopener">
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="divider-line-horizontal-bottom">
+
+    
+
+    <div class="article-content">
+
+        <blockquote>
+<p>This article serves two purposes: showing how ArtiPress turns a Markdown file and an article.json into a finished article page, and giving the list view, article page, and author page something real to render while you work on the design and layout.</p>
+</blockquote>
+<p>I built ArtiPress because I wanted articles on my portfolio site and none of the existing options fit the way I already worked. My site is static, deployed to Cloudflare Pages. The HTML, CSS, and assets live in a repo, I push a commit, and the site is live a minute later. That workflow is the whole reason I like maintaining the site. I didn't want articles to drag in a different one.</p>
+<h2>The problem with hand-rolled HTML</h2>
+<p>The honest first attempt was just writing each article as its own HTML file. That works for one. It doesn't work for several.</p>
+<p>The moment you have more than a couple of articles, you're keeping the same information in sync across four or five places. The title sits in the article's <code>&lt;h1&gt;</code>, in the <code>&lt;title&gt;</code> tag, in the meta description, in the Open Graph card, in the JSON-LD block, and on a card somewhere on a list page. Change the title and you're now editing six files to keep them consistent. Miss one and the social preview says one thing while the page says another.</p>
+<p>The same applies to author bylines, cover images, publish dates, and keyword tags. Each article is a small consistency problem, and the list page is a bigger one. I tried to keep it tidy for a while, then accepted I was going to forget a tag somewhere and ship a broken share preview to LinkedIn.</p>
+<h2>Why not a backend</h2>
+<p>The natural next step is to put a CMS behind it. Ghost, WordPress, a headless CMS plus a static frontend. They all solve the consistency problem. None of them fit a personal site that gets traffic in the low hundreds a week.</p>
+<p>A backend means a server to keep running, updates to apply, a database to back up, and an admin login I'd forget the password to. It's a lot of moving parts to host a handful of posts I write a few times a year. The maintenance surface is bigger than the thing being maintained.</p>
+<p>A headless CMS gets rid of the server, but it puts my article content behind someone else's login and rate limits. If the service raises its prices or shuts down, the articles are stuck behind an export step. Markdown files in a git repo don't have that problem.</p>
+<h2>Why Python, Markdown, and JSON</h2>
+<p>There are good static site generators that already exist. I looked at them. The reason I didn't use one is that most of them want to own the whole site. They give you a theme system, a routing layer, and a build pipeline, and in exchange you reorganise your project around their conventions. That's a fair trade if you're starting fresh. It's a bad trade if you already have a site you're happy with and you only want to add an <code>articles/</code> section to it.</p>
+<p>ArtiPress is small on purpose. The article body is Markdown because Markdown is the format I want to write in. The metadata is a separate JSON file because mixing config into frontmatter makes both harder to validate. The output is plain HTML in a folder you commit alongside the rest of your site. The generator is a Python script because Python was already installed on my machine, and because Pillow handles the image conversion without me writing it.</p>
+<p>The result drops into an existing repo without asking the rest of the site to change. The header, footer, and styling come from templates I edit directly. The output goes wherever I tell it to. Nothing about the site outside the <code>articles/</code> folder is touched.</p>
+<h2>What got cut</h2>
+<p>A surprising amount of the work on ArtiPress was deciding what not to build.</p>
+<ul>
+<li><strong>No drafts, no scheduled publishing.</strong> A file is either in <code>content/</code> or it isn't. Git branches are the draft system.</li>
+<li><strong>No comments, likes, or any read-time interactivity.</strong> That needs a backend, and a backend is what the whole project is avoiding.</li>
+<li><strong>No plugin system.</strong> Plugins are a tax you pay forever on a feature you might use once. The templates are editable and the source is small enough to fork. That's the extension story.</li>
+<li><strong>No live preview server.</strong> Open the generated HTML in a browser. That's the preview.</li>
+<li><strong>No theme marketplace.</strong> The templates ship as a working example and you edit them. Designing for someone else's site is harder than designing for your own, so I didn't try.</li>
+</ul>
+<p>Every one of those is a reasonable feature. None of them are reasonable features for the size of project I wanted to maintain alone. Cutting them is the reason ArtiPress fits in a single folder and reads top to bottom.</p>
+<h2>Where it goes from here</h2>
+<p>ArtiPress does what I needed it to do, which means the bar for adding to it is high. New features have to earn their place by being either things I want for my own site or things that catch real errors before they ship. The validation pass keeps growing in that direction. The template and styling system probably won't.</p>
+<p>If that scope sounds like a fit for your site too, the rest of the articles here cover how to use it. If it sounds too small, that's the right reaction, and a heavier tool is probably the right answer for you.</p>
+
+    </div>
+
+    <hr class="divider-line-horizontal">
+
+    <footer>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 28 May 2026
+        </p>
+    </footer>
+</article>
+
+    </div>
+    <!-- END ArtiPress (End of needed section)-->
+
+</body>
+
+</html>

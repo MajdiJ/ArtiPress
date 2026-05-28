@@ -1,0 +1,446 @@
+<!--
+This is an example article print template. It is opened in a new tab when a reader clicks the print icon on an article page.
+You can use this as a base and modify it, or bring your own template and update the path in the config file.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article print template are:
+- `articles_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
+
+Direct variables also available for use anywhere in this template:
+- `article_title`          -> The article title string.
+- `website_title`          -> The site name from config.
+- `base_url`               -> The site base URL (e.g. https://example.com).
+- `output_path`            -> The output folder name (e.g. articles).
+- `assets_url`             -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`             -> The article slug (e.g. my-article).
+- `article_authors`        -> Comma-separated plain-text author name(s).
+- `article_published_date` -> Human-readable published date.
+- `article_edited_date`    -> Human-readable edited date with label prefix, or empty string if not edited.
+
+These variables must be put in {html_var(...)} format.
+
+Note: This page auto-opens the browser print dialogue on load. On screen it shows a short message; the article itself is CSS-hidden until printed.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Markdown & styling reference - ArtiPress</title>
+
+    <style>
+        /*  PAGE SETUP  */
+        @page {
+            size: A4;
+            margin: 20mm 18mm 25mm 18mm;
+            /* top right bottom left */
+
+            @top-left {
+                content: "Markdown & styling reference | ArtiPress (https://artipress.majdij.com)";
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/markdown-and-styling-reference" "\A" "Majdi Jaigirdar | Published on 28 May 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+        /* First page — no header or footer */
+        @page :first {
+
+            margin: 15mm 18mm 25mm 18mm;
+
+            @top-left {
+                content: "";
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/markdown-and-styling-reference" "\A" "Majdi Jaigirdar | Published on 28 May 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+
+        /*  BASIC PRINT BEHAVIOUR  */
+
+        body {
+            font-size: 11pt;
+            line-height: 1.6;
+            orphans: 3;
+            widows: 3;
+        }
+
+        h1,
+        h2,
+        h3 {
+            page-break-after: avoid;
+            /* never leave a heading alone at a page bottom */
+        }
+
+        p {
+            page-break-inside: auto;
+        }
+
+        figure,
+        table,
+        pre,
+        blockquote {
+            page-break-inside: avoid;
+        }
+
+
+        /*  SCREEN VIEW (non-print)  */
+
+        .print-screen-message {
+            display: none;
+        }
+
+        @media screen {
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: sans-serif;
+            }
+
+            .print-screen-message {
+                display: block;
+                text-align: center;
+                max-width: 32rem;
+                padding: 1rem;
+            }
+
+            .article-content {
+                display: none;
+            }
+        }
+    </style>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article print template (In the <head> section, in the middle) -->
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
+<script src="/articles/_artipress/scripts/recently_published_label.js" defer></script>
+    <!-- END ArtiPress (End of needed section)-->
+</head>
+
+<body>
+
+    <div class="print-screen-message">
+        <p>Print article: Markdown & styling reference</p>
+        <p>Your browser should auto open the print dialogue to allow you to print the article.</p>
+        <p>If it doesn't auto open you can <a href="#" onclick="window.print(); return false;">click here to do it manually</a>.</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', function () {
+            window.print();
+        });
+    </script>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+    <div class="article-content">
+        <article>
+    <header>
+        <h1>Markdown & styling reference</h1>
+        <p class="strap-line">Every Markdown element ArtiPress renders, on one page. Use it as a syntax lookup or as a visual regression target when editing CSS.</p>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 28 May 2026
+        </p>
+    </header>
+
+    <hr class="divider-line-horizontal-top">
+
+    <div class="article-sharing-exporting">
+        <ul>
+            <li>
+                <a href="https://twitter.com/intent/tweet?text=Markdown & styling reference%0Ahttps://artipress.majdij.com/articles/markdown-and-styling-reference/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/markdown-and-styling-reference&quote=Markdown & styling reference/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/markdown-and-styling-reference/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.threads.net/intent/post?text=Markdown & styling reference%0Ahttps://artipress.majdij.com/articles/markdown-and-styling-reference/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/?text=https://artipress.majdij.com/articles/markdown-and-styling-reference/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/markdown-and-styling-reference/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
+                </a>
+            </li>
+            <li>
+                <a id="printNew" href="/articles/markdown-and-styling-reference/print.html" target="_blank" rel="noopener">
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="divider-line-horizontal-bottom">
+
+    
+
+    <div class="article-content">
+
+        <blockquote>
+<p>This article serves two purposes: showing how ArtiPress turns a Markdown file and an article.json into a finished article page, and giving the list view, article page, and author page something real to render while you work on the design and layout.</p>
+</blockquote>
+<p>A single page that exercises every Markdown element ArtiPress renders. Use it as a syntax lookup when writing, or as a visual regression target when you edit <code>article_md_elements.css</code> and want to see what changed.</p>
+<p>This article has no <code>article_image_url</code> set, deliberately. That makes it the live test case for how the article-list card and the article page degrade when no cover image is provided. Both should still look correct.</p>
+<p>The Markdown extensions enabled in <code>artipress.py</code> are <code>tables</code>, <code>fenced_code</code>, <code>footnotes</code>, <code>sane_lists</code>, and <code>md_in_html</code>. Anything outside that set renders as raw Markdown text. See the <strong>Strikethrough</strong> section near the bottom for an example.</p>
+<h2>Headings</h2>
+<p>The page template already produces an <code>&lt;h1&gt;</code> from <code>article_title</code>, so the body starts at <code>&lt;h2&gt;</code>. Use <code>##</code> through <code>######</code> in your Markdown. Writing a <code>#</code> triggers ArtiPress's auto-shift safety net (it shifts everything down a level and prints a warning), so the convention is to start at <code>##</code> from the beginning.</p>
+<h3>This is an h3</h3>
+<p>The next level down.</p>
+<h4>This is an h4</h4>
+<p>A subsection of a subsection.</p>
+<h5>This is an h5</h5>
+<h5>sized for deeper outlines.</h5>
+<h6>This is an h6</h6>
+<p>The smallest renderable heading. The auto-shift logic clamps at six, so even a shifted <code>&lt;h6&gt;</code> stays at <code>&lt;h6&gt;</code>.</p>
+<h2>Paragraphs and emphasis</h2>
+<p>A normal paragraph reads like this. Inside a paragraph, words can be <em>italic</em>, <strong>bold</strong>, or <strong><em>bold and italic</em></strong>. Underscores work too: <em>italic</em> and <strong>bold</strong>.</p>
+<p><code>Inline code</code> is wrapped in single backticks. Multiple <code>inline</code> snippets in <code>one</code> paragraph behave as you'd expect.</p>
+<p>Links come in two forms. A <a href="https://github.com/majdiJ/ArtiPress">direct link to the README</a> puts the URL right in the text. A <a href="https://github.com/majdiJ/ArtiPress">reference-style link</a> resolves to a definition further down. Both render to the same <code>&lt;a&gt;</code> tag.</p>
+<h2>Lists</h2>
+<h3>Unordered</h3>
+<ul>
+<li>First item</li>
+<li>Second item, with a slightly longer label so wrapping behaviour is visible</li>
+<li>Third item</li>
+</ul>
+<h3>Ordered</h3>
+<ol>
+<li>First step</li>
+<li>Second step</li>
+<li>Third step</li>
+</ol>
+<h3>Nested</h3>
+<ul>
+<li>Top-level item<ul>
+<li>A nested unordered child</li>
+<li>Another nested child<ul>
+<li>And one deeper still</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Second top-level item<ol>
+<li>A nested ordered child</li>
+<li>A second nested ordered child</li>
+</ol>
+</li>
+<li>Third top-level item</li>
+</ul>
+<p>Indenting nested items by four spaces is the safest convention. The <code>sane_lists</code> extension is enabled, which makes the parser stricter about list boundaries and less surprising when lists sit next to paragraphs.</p>
+<h2>Blockquotes</h2>
+<blockquote>
+<p>A standard blockquote. The strap line at the top of every demo article uses this element.</p>
+</blockquote>
+<p>Blockquotes nest:</p>
+<blockquote>
+<p>The outer quote.</p>
+<blockquote>
+<p>The inner quote, indented one level.</p>
+<blockquote>
+<p>A third level if you really need it.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2>Code blocks</h2>
+<p>Inline code looks like <code>this</code>. Fenced code blocks use triple backticks.</p>
+<p>Without a language hint:</p>
+<pre><code>def hello():
+    return &quot;world&quot;
+</code></pre>
+<p>With a language hint (the renderer adds a <code>language-*</code> class for the styling to hook into):</p>
+<pre><code class="language-python">def hello() -&gt; str:
+    return &quot;world&quot;
+</code></pre>
+<pre><code class="language-json">{
+  &quot;article_title&quot;: &quot;Example&quot;,
+  &quot;author_slugs&quot;: [&quot;majdi-jaigirdar&quot;],
+  &quot;article_strap_line&quot;: &quot;A one-line summary.&quot;,
+  &quot;date&quot;: { &quot;published&quot;: &quot;2026-05-28T00:00:00Z&quot; }
+}
+</code></pre>
+<pre><code class="language-sh">python artipress/artipress.py
+</code></pre>
+<h2>Tables</h2>
+<p>A basic table:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>article_title</code></td>
+<td>string</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>author_slugs</code></td>
+<td>array</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>article_strap_line</code></td>
+<td>string</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>date.published</code></td>
+<td>ISO 8601</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>article_image_url</code></td>
+<td>string</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>article_labels</code></td>
+<td>array</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>With column alignment (left, centre, right):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Left aligned</th>
+<th style="text-align: center;">Centre aligned</th>
+<th style="text-align: right;">Right aligned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">a</td>
+<td style="text-align: center;">b</td>
+<td style="text-align: right;">c</td>
+</tr>
+<tr>
+<td style="text-align: left;">a longer cell</td>
+<td style="text-align: center;">also longer</td>
+<td style="text-align: right;">aligned right</td>
+</tr>
+<tr>
+<td style="text-align: left;">short</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: right;">42</td>
+</tr>
+</tbody>
+</table>
+<h2>Horizontal rules</h2>
+<p>Three dashes on their own line:</p>
+<hr />
+<p>Three asterisks:</p>
+<hr />
+<p>Three underscores:</p>
+<hr />
+<p>All three render to the same <code>&lt;hr&gt;</code> element. Pick whichever is easiest to read in source.</p>
+<h2>Images</h2>
+<p>Block images use the standard Markdown syntax. Any path that doesn't start with <code>http(s)://</code> or <code>/</code> is treated as relative to the article folder, copied into the output, and (with <code>convert_article_images_to_webp</code> left at its default <code>true</code>) converted to WebP. The <code>&lt;img src&gt;</code> in the generated HTML is rewritten to the <code>.webp</code> path so the link still works:</p>
+<pre><code class="language-markdown">![Alt text describing the image](images/diagram.png)
+</code></pre>
+<p>Omitting the alt text produces an empty <code>alt=""</code> attribute. That's correct for purely decorative images, and incorrect for anything carrying meaning. Assistive technologies will skip it:</p>
+<pre><code class="language-markdown">![](images/decorative-flourish.png)
+</code></pre>
+<p>A remote image is passed through unchanged. No copying, no WebP conversion, no LQIP. The <code>&lt;img src&gt;</code> is exactly the URL you wrote:</p>
+<p><img alt="ArtiPress logo" src="https://artipress.majdij.com/resource/image/logo.png" /></p>
+<p>Inline images sit inside a paragraph rather than on their own line. They use the same syntax, <img alt="tiny inline copy" src="https://artipress.majdij.com/resource/image/logo.png" />, they just happen to land next to text. The CSS for <code>.article-md img</code> controls how this looks; constrain <code>max-height</code> there if inline images get unruly.</p>
+<h2>Footnotes</h2>
+<p>The <code>footnotes</code> extension is enabled, so footnote syntax is supported<sup id="fnref:demo-footnote"><a class="footnote-ref" href="#fn:demo-footnote">1</a></sup>. The footnote definitions can sit anywhere in the document. They collect at the bottom of the rendered page regardless of where you write them<sup id="fnref:second-one"><a class="footnote-ref" href="#fn:second-one">2</a></sup>.</p>
+<h2>Inline HTML</h2>
+<p><code>md_in_html</code> is enabled, which lets HTML and Markdown share the page. A <code>&lt;div&gt;</code> that opts back in to Markdown processing via <code>markdown="1"</code>:</p>
+<div class="example-callout">
+<p><strong>This paragraph lives inside a <code>&lt;div&gt;</code>.</strong> The <code>markdown="1"</code> attribute tells the parser to keep processing Markdown inside the element, so the bold above and the <code>inline code</code> here still render.</p>
+</div>
+<p>A <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> block, useful for collapsible asides:</p>
+<details>
+<summary>Click to expand</summary>
+This content is inside a <code>&lt;details&gt;</code> element. The surrounding tags don't opt in to Markdown, so the contents are treated as raw HTML. Write Markdown inside here and it will not render.
+</details>
+
+<h2>Strikethrough (not rendered)</h2>
+<p>Strikethrough is <strong>not</strong> enabled in ArtiPress's default extension set. Writing <code>~~text~~</code> does not produce a <code>&lt;del&gt;</code> element; the tildes render as literal characters:</p>
+<p>~~This entire sentence is wrapped in double tildes and still renders normally.~~</p>
+<p>If you want strikethrough, add a Markdown extension that provides it (for example <code>pymdownx.tilde</code> from <code>pymdown-extensions</code>) to the <code>_MD_EXTENSIONS</code> list in <code>artipress.py</code>. The same approach applies to anything else missing from the default set. Task lists, attribute lists, definition lists, and so on are all available as opt-in extensions.</p>
+<h2>End of reference</h2>
+<p>Everything above runs through the same pipeline as any other article. Change the styling in <code>artipress/assets/style/article_md_elements.css</code>, rerun the generator, reload this page, and every element on the list will show the change in one place. That makes this article useful in two directions: as a syntax lookup when you're writing, and as the page to open first when you're editing CSS.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:demo-footnote">
+<p>Like this. Footnote bodies can contain <strong>inline formatting</strong> and <code>inline code</code>.&#160;<a class="footnote-backref" href="#fnref:demo-footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:second-one">
+<p>A second footnote, to show how the back-reference arrows render in sequence.&#160;<a class="footnote-backref" href="#fnref:second-one" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+    </div>
+
+    <hr class="divider-line-horizontal">
+
+    <footer>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 28 May 2026
+        </p>
+    </footer>
+</article>
+
+    </div>
+    <!-- END ArtiPress (End of needed section)-->
+
+</body>
+
+</html>

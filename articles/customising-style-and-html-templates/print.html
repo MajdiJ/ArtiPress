@@ -1,0 +1,344 @@
+<!--
+This is an example article print template. It is opened in a new tab when a reader clicks the print icon on an article page.
+You can use this as a base and modify it, or bring your own template and update the path in the config file.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article print template are:
+- `articles_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
+
+Direct variables also available for use anywhere in this template:
+- `article_title`          -> The article title string.
+- `website_title`          -> The site name from config.
+- `base_url`               -> The site base URL (e.g. https://example.com).
+- `output_path`            -> The output folder name (e.g. articles).
+- `assets_url`             -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`             -> The article slug (e.g. my-article).
+- `article_authors`        -> Comma-separated plain-text author name(s).
+- `article_published_date` -> Human-readable published date.
+- `article_edited_date`    -> Human-readable edited date with label prefix, or empty string if not edited.
+
+These variables must be put in {html_var(...)} format.
+
+Note: This page auto-opens the browser print dialogue on load. On screen it shows a short message; the article itself is CSS-hidden until printed.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Customising style and HTML templates - ArtiPress</title>
+
+    <style>
+        /*  PAGE SETUP  */
+        @page {
+            size: A4;
+            margin: 20mm 18mm 25mm 18mm;
+            /* top right bottom left */
+
+            @top-left {
+                content: "Customising style and HTML templates | ArtiPress (https://artipress.majdij.com)";
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/customising-style-and-html-templates" "\A" "Majdi Jaigirdar | Published on 28 May 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+        /* First page — no header or footer */
+        @page :first {
+
+            margin: 15mm 18mm 25mm 18mm;
+
+            @top-left {
+                content: "";
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/customising-style-and-html-templates" "\A" "Majdi Jaigirdar | Published on 28 May 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+
+        /*  BASIC PRINT BEHAVIOUR  */
+
+        body {
+            font-size: 11pt;
+            line-height: 1.6;
+            orphans: 3;
+            widows: 3;
+        }
+
+        h1,
+        h2,
+        h3 {
+            page-break-after: avoid;
+            /* never leave a heading alone at a page bottom */
+        }
+
+        p {
+            page-break-inside: auto;
+        }
+
+        figure,
+        table,
+        pre,
+        blockquote {
+            page-break-inside: avoid;
+        }
+
+
+        /*  SCREEN VIEW (non-print)  */
+
+        .print-screen-message {
+            display: none;
+        }
+
+        @media screen {
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: sans-serif;
+            }
+
+            .print-screen-message {
+                display: block;
+                text-align: center;
+                max-width: 32rem;
+                padding: 1rem;
+            }
+
+            .article-content {
+                display: none;
+            }
+        }
+    </style>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article print template (In the <head> section, in the middle) -->
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
+<script src="/articles/_artipress/scripts/recently_published_label.js" defer></script>
+    <!-- END ArtiPress (End of needed section)-->
+</head>
+
+<body>
+
+    <div class="print-screen-message">
+        <p>Print article: Customising style and HTML templates</p>
+        <p>Your browser should auto open the print dialogue to allow you to print the article.</p>
+        <p>If it doesn't auto open you can <a href="#" onclick="window.print(); return false;">click here to do it manually</a>.</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', function () {
+            window.print();
+        });
+    </script>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+    <div class="article-content">
+        <article>
+    <header>
+        <h1>Customising style and HTML templates</h1>
+        <p class="strap-line">Where the templates and CSS live, the variable system that wires them up, and how to swap any of it out for your own files.</p>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 28 May 2026
+        </p>
+    </header>
+
+    <hr class="divider-line-horizontal-top">
+
+    <div class="article-sharing-exporting">
+        <ul>
+            <li>
+                <a href="https://twitter.com/intent/tweet?text=Customising style and HTML templates%0Ahttps://artipress.majdij.com/articles/customising-style-and-html-templates/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/customising-style-and-html-templates&quote=Customising style and HTML templates/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/customising-style-and-html-templates/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.threads.net/intent/post?text=Customising style and HTML templates%0Ahttps://artipress.majdij.com/articles/customising-style-and-html-templates/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/?text=https://artipress.majdij.com/articles/customising-style-and-html-templates/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/customising-style-and-html-templates/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
+                </a>
+            </li>
+            <li>
+                <a id="printNew" href="/articles/customising-style-and-html-templates/print.html" target="_blank" rel="noopener">
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="divider-line-horizontal-bottom">
+
+    
+
+    <div class="article-content">
+
+        <blockquote>
+<p>This article serves two purposes: showing how ArtiPress turns a Markdown file and an article.json into a finished article page, and giving the list view, article page, and author page something real to render while you work on the design and layout.</p>
+</blockquote>
+<p>After your first generator run, the next thing you'll want is to make ArtiPress look like the rest of your site. This walks through the template and styling layout: where each file lives, how the variable substitution works, and which knobs to turn for which kind of change.</p>
+<p>ArtiPress is structured so the generator doesn't care where any of these files live. Every template path is a setting in <code>config.json</code>. Move a file, point the config at the new location, and the build keeps working. The defaults are sensible starting points, not magic conventions.</p>
+<h2>The template layout</h2>
+<p>There are two folders to know about, both inside <code>artipress/templates/</code>.</p>
+<p><code>artipress/templates/</code> itself holds the <strong>base templates</strong>, one per page type the generator produces:</p>
+<ul>
+<li><code>article_list.html</code>: the article list page (the root of the output folder).</li>
+<li><code>article_page.html</code>: an individual article page.</li>
+<li><code>article_print.html</code>: the print-friendly view of an article.</li>
+<li><code>author_list.html</code>: the author index page.</li>
+<li><code>author_page.html</code>: an individual author page.</li>
+</ul>
+<p>These are the files where your site's header, navigation, and footer live. Editing them is how you make ArtiPress's pages look like part of your existing site.</p>
+<p><code>artipress/templates/components/</code> holds smaller, reusable pieces that the base templates pull in:</p>
+<ul>
+<li><code>article_page_head_metadata.html</code>: title tag, canonical URL, meta description, Open Graph, and Twitter card tags.</li>
+<li><code>articles_page_styling_and_scripts.html</code>: the <code>&lt;link rel="stylesheet"&gt;</code> and <code>&lt;script&gt;</code> lines for article pages.</li>
+<li><code>article_page_head_application_json_ld.html</code>: the JSON-LD structured-data script.</li>
+<li><code>article_page_main_article.html</code>: the article body layout (header, sharing bar, image block, content, footer).</li>
+<li><code>article_list_item.html</code>: a single card on the article list (also used inside the "Related articles" section).</li>
+<li><code>article_list_styling_and_scripts.html</code>: styles and scripts for the list page.</li>
+<li><code>author_list_item.html</code> and <code>author_list_styling_and_scripts.html</code>: the author index counterparts.</li>
+<li><code>author_page_styling_and_scripts.html</code>: styles and scripts for an individual author page.</li>
+<li><code>author_social_link.html</code>: a single social-link icon in the author profile.</li>
+</ul>
+<p>The general rule: if the change you want is about the chrome around the article (header, nav, footer, sidebars), edit the base templates. If it's about the structure inside a particular block (the layout of a card, the order of items in the metadata block, what shows in the sharing bar), edit the matching component.</p>
+<h2>The variable system</h2>
+<p>Every template is a plain HTML file with one extra syntax: <code>{html_var(some_name)}</code>. The generator does a regex pass over each template before writing the output, replacing every <code>{html_var(...)}</code> with the corresponding value.</p>
+<p>A template can use two kinds of variables.</p>
+<p><strong>Direct variables</strong> are simple strings or numbers that come from <code>article.json</code> and <code>config.json</code>. The article page template can use any of these directly:</p>
+<ul>
+<li><code>{html_var(article_title)}</code>: the article title.</li>
+<li><code>{html_var(article_strap_line)}</code>: the strap line / meta description.</li>
+<li><code>{html_var(article_authors)}</code>: the rendered HTML for the byline (linked author names).</li>
+<li><code>{html_var(article_published_date)}</code>: the formatted published date.</li>
+<li><code>{html_var(article_id)}</code>: the article slug.</li>
+<li><code>{html_var(base_url)}</code>: the site base URL from <code>config.json</code>.</li>
+<li><code>{html_var(website_title)}</code>: the site name from <code>config.json</code>.</li>
+<li><code>{html_var(output_path)}</code>: the output folder name (e.g. <code>articles</code>).</li>
+<li><code>{html_var(assets_url)}</code>: the URL prefix where shared CSS, JS, and icons are served from (e.g. <code>/articles/_artipress</code>).</li>
+</ul>
+<p><strong>Component variables</strong> are larger pieces of HTML that the generator builds by rendering a component template and substituting it in. The article page template uses:</p>
+<ul>
+<li><code>{html_var(article_page_head_metadata)}</code>: the full <code>&lt;meta&gt;</code> block.</li>
+<li><code>{html_var(articles_page_styling_and_scripts)}</code>: the styles and scripts.</li>
+<li><code>{html_var(article_page_head_application_json_ld)}</code>: the JSON-LD block.</li>
+<li><code>{html_var(article_page_main_article)}</code>: the article body.</li>
+<li><code>{html_var(related_articles)}</code>: the optional related-articles section (an empty string when disabled or when there are no candidates).</li>
+</ul>
+<p>Substitution runs in two passes. The first injects component contents and resolves direct variables in the outer template. The second resolves any <code>{html_var(...)}</code> references that lived <em>inside</em> the injected component contents. So a component can use its own variables (resolved when the component is rendered standalone, e.g. in <code>articles_page_styling_and_scripts.html</code>) and the outer template's variables (resolved on the second pass).</p>
+<p>A useful side effect: if you reference an unknown variable, the generator fails loudly with the template's name and the variable that was missing. There's no silent fallback. Typo a name and you'll see it on the next run.</p>
+<h2>Editing components vs editing base templates</h2>
+<p>A worked example. Say you want to remove the WhatsApp icon from the article's sharing bar. The sharing bar lives inside the <code>&lt;article&gt;</code> block, so it's a component-level change. Open <code>artipress/templates/components/article_page_main_article.html</code>, delete the <code>&lt;li&gt;</code> block containing the WhatsApp link, save. Done. The next generator run produces pages without it.</p>
+<p>Now say you want to add a sidebar to every article page that shows your recent posts from a different part of your site. That's chrome around the article, so it's a base-template change. Open <code>artipress/templates/article_page.html</code>, add your <code>&lt;aside&gt;</code> next to the <code>&lt;main&gt;</code>, save, regenerate.</p>
+<p>The split holds for the author and list pages too. The base template owns the page shell; the component owns the repeating structure inside it.</p>
+<h2>Where CSS lives</h2>
+<p>All CSS is in <code>artipress/assets/style/</code>:</p>
+<ul>
+<li><code>main.css</code>: global layout, typography defaults, and anything that should apply across every page.</li>
+<li><code>article_md_elements.css</code>: styles for the elements rendered from Markdown (headings, paragraphs, lists, code blocks, tables, blockquotes). This is the file to edit when you want headings or code blocks to look different.</li>
+<li><code>article_main_element.css</code>: the layout of the article page itself (header, byline, sharing bar, footer).</li>
+<li><code>article_list_cards.css</code>: the card layout on the article list page and the related-articles section.</li>
+<li><code>author_list_cards.css</code>: the card layout on the author index page.</li>
+<li><code>author_page_base.css</code>: the layout of an individual author page.</li>
+<li><code>lqip.css</code>: the styles that make the low-resolution placeholder image fade out as the full image loads.</li>
+</ul>
+<p>The split is by scope. <code>main.css</code> is loaded on every page; the others are loaded only on the pages that need them. The generator copies the whole <code>artipress/assets/</code> folder into the output as <code>articles/_artipress/</code>, so the templates reference styles via <code>{html_var(assets_url)}/style/...</code>.</p>
+<p>If you want to add your own CSS file, drop it in <code>artipress/assets/style/</code> and add a <code>&lt;link rel="stylesheet"&gt;</code> to whichever component pulls in the styles for the page you want it on. Usually that's <code>articles_page_styling_and_scripts.html</code> for article pages, or <code>article_list_styling_and_scripts.html</code> for the list page.</p>
+<h2>Pointing the config at custom files</h2>
+<p>If you want to keep ArtiPress on its own update cadence, don't edit the files in <code>artipress/templates/</code> directly. Make copies somewhere else in your repo and point the config at the copies. Every template path lives in <code>artipress/config.json</code> under <code>base_template_paths</code> or <code>components_template_paths</code>:</p>
+<pre><code class="language-json">{
+  &quot;base_template_paths&quot;: {
+    &quot;article_list&quot;: &quot;artipress/templates/article_list.html&quot;,
+    &quot;article_page&quot;: &quot;site/templates/articles/page.html&quot;,
+    &quot;article_print&quot;: &quot;artipress/templates/article_print.html&quot;,
+    &quot;author_page&quot;: &quot;artipress/templates/author_page.html&quot;,
+    &quot;author_list&quot;: &quot;artipress/templates/author_list.html&quot;
+  },
+  &quot;components_template_paths&quot;: {
+    &quot;article_page_head_metadata&quot;: &quot;artipress/templates/components/article_page_head_metadata.html&quot;,
+    ...
+  }
+}
+</code></pre>
+<p>That example points <code>article_page</code> at a custom file at <code>site/templates/articles/page.html</code> while leaving every other path on the defaults. The generator resolves each path relative to the project root.</p>
+<p>The path checks happen at startup. If any file pointed at by the config is missing, the generator stops before any work happens, naming the key and the path that failed. That makes it safe to move templates around: a typo or missing file is caught immediately, not after a half-finished build.</p>
+<h2>A practical order of operations</h2>
+<p>For most sites, the customisation order that wastes the least time is roughly:</p>
+<ol>
+<li>Edit the base templates first to plug in your site's header, nav, and footer. The article list and article page templates are the highest-leverage edits. Start there.</li>
+<li>Open the article list page and a sample article page in a browser. Make sure your chrome is rendering and is positioned the way you want it.</li>
+<li>Tune <code>main.css</code> for typography and global colour. Most other styling decisions will hang off the choices you make here.</li>
+<li>Open the <a href="/articles/markdown-and-styling-reference/">Markdown &amp; styling reference</a> and use it as a live regression page while you edit <code>article_md_elements.css</code>. Every renderable element is on that one page.</li>
+<li>Adjust the component templates if you need to change the structure inside a card, the order of items in a header, or which icons appear in the sharing bar.</li>
+<li>Only point <code>config.json</code> at custom paths once you've decided you want to keep ArtiPress's defaults pristine. Until then, editing the files in place is fine. They're yours.</li>
+</ol>
+<p>Everything above is reversible. The generator never edits the templates or CSS. It only reads them. You can iterate as aggressively as you like.</p>
+
+    </div>
+
+    <hr class="divider-line-horizontal">
+
+    <footer>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 28 May 2026
+        </p>
+    </footer>
+</article>
+
+    </div>
+    <!-- END ArtiPress (End of needed section)-->
+
+</body>
+
+</html>

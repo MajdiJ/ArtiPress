@@ -1,0 +1,314 @@
+<!--
+This is an example article print template. It is opened in a new tab when a reader clicks the print icon on an article page.
+You can use this as a base and modify it, or bring your own template and update the path in the config file.
+
+If you try and preview this template without running the generator, you will see the variable names in curly brackets. These are the variables that ArtiPress will replace with actual values.
+
+The variables/sections that you must include in your article print template are:
+- `articles_page_styling_and_scripts` -> (head) Styling (CSS) and scripts (JS) for the article page. Edit as needed.
+- `article_page_main_article`         -> (body) The full article content. Place inside .article-content so it can be hidden on screen.
+
+Direct variables also available for use anywhere in this template:
+- `article_title`          -> The article title string.
+- `website_title`          -> The site name from config.
+- `base_url`               -> The site base URL (e.g. https://example.com).
+- `output_path`            -> The output folder name (e.g. articles).
+- `assets_url`             -> URL prefix for shared assets (e.g. /articles/_artipress).
+- `article_id`             -> The article slug (e.g. my-article).
+- `article_authors`        -> Comma-separated plain-text author name(s).
+- `article_published_date` -> Human-readable published date.
+- `article_edited_date`    -> Human-readable edited date with label prefix, or empty string if not edited.
+
+These variables must be put in {html_var(...)} format.
+
+Note: This page auto-opens the browser print dialogue on load. On screen it shows a short message; the article itself is CSS-hidden until printed.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>How related articles work - ArtiPress</title>
+
+    <style>
+        /*  PAGE SETUP  */
+        @page {
+            size: A4;
+            margin: 20mm 18mm 25mm 18mm;
+            /* top right bottom left */
+
+            @top-left {
+                content: "How related articles work | ArtiPress (https://artipress.majdij.com)";
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/how-related-articles-work" "\A" "Majdi Jaigirdar | Published on 28 May 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+        /* First page — no header or footer */
+        @page :first {
+
+            margin: 15mm 18mm 25mm 18mm;
+
+            @top-left {
+                content: "";
+            }
+
+            @bottom-left {
+                content: "https://artipress.majdij.com/articles/how-related-articles-work" "\A" "Majdi Jaigirdar | Published on 28 May 2026";
+                white-space: pre;
+                font-size: 8pt;
+                color: #888;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 8pt;
+                color: #888;
+            }
+        }
+
+
+        /*  BASIC PRINT BEHAVIOUR  */
+
+        body {
+            font-size: 11pt;
+            line-height: 1.6;
+            orphans: 3;
+            widows: 3;
+        }
+
+        h1,
+        h2,
+        h3 {
+            page-break-after: avoid;
+            /* never leave a heading alone at a page bottom */
+        }
+
+        p {
+            page-break-inside: auto;
+        }
+
+        figure,
+        table,
+        pre,
+        blockquote {
+            page-break-inside: avoid;
+        }
+
+
+        /*  SCREEN VIEW (non-print)  */
+
+        .print-screen-message {
+            display: none;
+        }
+
+        @media screen {
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: sans-serif;
+            }
+
+            .print-screen-message {
+                display: block;
+                text-align: center;
+                max-width: 32rem;
+                padding: 1rem;
+            }
+
+            .article-content {
+                display: none;
+            }
+        }
+    </style>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article print template (In the <head> section, in the middle) -->
+    <link rel="stylesheet" href="/articles/_artipress/style/article_md_elements.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_main_element.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/article_list_cards.css" />
+<link rel="stylesheet" href="/articles/_artipress/style/lqip.css" />
+<script src="/articles/_artipress/scripts/lqip.js" defer></script>
+<script src="/articles/_artipress/scripts/recently_published_label.js" defer></script>
+    <!-- END ArtiPress (End of needed section)-->
+</head>
+
+<body>
+
+    <div class="print-screen-message">
+        <p>Print article: How related articles work</p>
+        <p>Your browser should auto open the print dialogue to allow you to print the article.</p>
+        <p>If it doesn't auto open you can <a href="#" onclick="window.print(); return false;">click here to do it manually</a>.</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', function () {
+            window.print();
+        });
+    </script>
+
+    <!-- === ArtiPress ===
+    You must include variable/section below in your article page template (In the <main> section, where you want the article content to appear) -->
+    <div class="article-content">
+        <article>
+    <header>
+        <h1>How related articles work</h1>
+        <p class="strap-line">The three stages ArtiPress uses to pick the cards under each article: manual pins, keyword overlap, then recency. And how to override each one.</p>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 28 May 2026
+        </p>
+    </header>
+
+    <hr class="divider-line-horizontal-top">
+
+    <div class="article-sharing-exporting">
+        <ul>
+            <li>
+                <a href="https://twitter.com/intent/tweet?text=How related articles work%0Ahttps://artipress.majdij.com/articles/how-related-articles-work/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/how-related-articles-work&quote=How related articles work/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://artipress.majdij.com/articles/how-related-articles-work/?utm_source=linkedin&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/linkedin.png" alt="LinkedIn Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://www.threads.net/intent/post?text=How related articles work%0Ahttps://artipress.majdij.com/articles/how-related-articles-work/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="https://wa.me/?text=https://artipress.majdij.com/articles/how-related-articles-work/?utm_source=whatsapp&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                    <img src="/articles/_artipress/icons/whatsapp.png" alt="WhatsApp Icon" />
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="navigator.clipboard.writeText('https://artipress.majdij.com/articles/how-related-articles-work/?utm_source=copy_button&utm_medium=site&utm_content=post').then(() => alert('Link copied!'));return false;">
+                    <img src="/articles/_artipress/icons/link.svg" alt="Copy Link Icon" />
+                </a>
+            </li>
+            <li>
+                <a id="printNew" href="/articles/how-related-articles-work/print.html" target="_blank" rel="noopener">
+                    <img src="/articles/_artipress/icons/print.svg" alt="Print Icon" />
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="divider-line-horizontal-bottom">
+
+    
+
+    <div class="article-content">
+
+        <blockquote>
+<p>This article serves two purposes: showing how ArtiPress turns a Markdown file and an article.json into a finished article page, and giving the list view, article page, and author page something real to render while you work on the design and layout.</p>
+</blockquote>
+<p>The "Related articles" section at the bottom of every article page is built by a small ranking function. This is a walkthrough of how it picks, in what order, and which fields you set in <code>article.json</code> (and <code>config.json</code>) to override its choices.</p>
+<p>The two articles pinned to the bottom of <em>this</em> page were chosen manually, using the mechanism described below. The third and fourth cards (if you see them) were filled in by the keyword-overlap stage. Treat the section as a live demo.</p>
+<h2>The three stages, in order</h2>
+<p>ArtiPress fills each article's "Related articles" section by working through three stages and stopping as soon as it has enough cards. The target is set by <code>related_articles_count</code> in <code>config.json</code>. The demo site uses <code>4</code>. The default if you don't set it is <code>3</code>.</p>
+<p>The stages run in this order:</p>
+<ol>
+<li><strong>Manual pins.</strong> Slugs in the current article's <code>related_slugs</code> field, in the order you wrote them.</li>
+<li><strong>Keyword and label overlap.</strong> Other articles ranked by how many keywords/labels they share with this one.</li>
+<li><strong>Most recent.</strong> Anything still missing is filled with the most recently published articles.</li>
+</ol>
+<p>The first stage that produces enough hits wins. If you pin four articles and <code>related_articles_count</code> is four, stages two and three never run.</p>
+<p>The current article is always skipped, and the same slug is never added twice. Everything else is a question of which stage picks it.</p>
+<h2>Stage 1: manual pins (<code>related_slugs</code>)</h2>
+<p><code>related_slugs</code> is an array of article slugs you want forced into the section, in the order you want them shown:</p>
+<pre><code class="language-json">&quot;related_slugs&quot;: [&quot;welcome-to-artipress&quot;, &quot;writing-your-first-article&quot;]
+</code></pre>
+<p>Use this when you know better than the keyword scorer does. A few cases come up often:</p>
+<ul>
+<li>The two articles are part of a series and you want the next instalment to lead.</li>
+<li>One article cites another directly and that link should always surface.</li>
+<li>The keyword overlap would pick something technically related but topically wrong (two posts that both use the keyword "python" but cover very different things, say).</li>
+</ul>
+<p>Two behaviours worth knowing. Manual pins <strong>can include hidden articles</strong>: articles with <code>hide_from_article_list: true</code> are normally invisible to the related-articles algorithm, but a manual pin overrides that. It's how you reference a deliberately unlisted article from another article without making it public. Second, manual pins <strong>beat <code>excluded_related_slugs</code></strong>. If a slug appears in both, the manual pin wins. The exclusion list only blocks the automatic stages.</p>
+<p>If a slug in <code>related_slugs</code> does not match any real article folder, it's silently ignored. Mistype it and your article just falls back to whatever stage two would have picked.</p>
+<h2>Stage 2: keyword and label overlap</h2>
+<p>If manual pins don't fill the slot count, ArtiPress scores every other article against the current one and ranks them by how much they have in common.</p>
+<p>The score is the size of the set intersection between two sets:</p>
+<ul>
+<li>The current article's set: <code>article_keywords_list</code> ∪ <code>article_labels</code>, lowercased.</li>
+<li>Each candidate article's set: same fields, same treatment.</li>
+</ul>
+<p>So if this article's keywords are <code>["artipress", "related articles", "manual pins"]</code> and a candidate article's keywords are <code>["artipress", "tutorial", "markdown"]</code>, they share <code>artipress</code> and the score is 1. Duplicates within an article don't double-count. Both lists are merged into a <code>set</code> before the overlap is calculated.</p>
+<p>Ties are broken by publication date, newer wins. So among articles that share the same number of terms with the current one, the most recently published comes first.</p>
+<p>A few rules apply to which candidates are even considered:</p>
+<ul>
+<li>Articles with <code>hide_from_article_list: true</code> are skipped.</li>
+<li>Articles listed in the current article's <code>excluded_related_slugs</code> are skipped.</li>
+<li>Articles with <strong>zero</strong> overlapping terms are skipped (a score of 0 doesn't count as a candidate; it falls through to stage 3).</li>
+</ul>
+<p>The practical takeaway: keywords matter. The same word in two articles' <code>article_keywords_list</code> is what makes them related as far as ArtiPress is concerned. If two related articles aren't finding each other, the fastest fix is to add a couple of shared keywords. If two unrelated articles keep pairing up, the fix is to remove the keyword that links them or add the other one to your <code>excluded_related_slugs</code>.</p>
+<p>Labels count the same as keywords for the purpose of overlap. That's occasionally useful. A label is shorter and shows up on the card, so it has two jobs. But it also means a generic label like "Reference" will pull in everything else marked "Reference" too.</p>
+<h2>Stage 3: recency fallback</h2>
+<p>If stages 1 and 2 between them haven't produced <code>related_articles_count</code> cards, ArtiPress fills the rest by walking the full article list (already sorted most-recent-first by the validation pass) and adding articles one at a time until the section is full.</p>
+<p><code>excluded_related_slugs</code> and <code>hide_from_article_list: true</code> are still respected here. The current article and anything already picked are still skipped.</p>
+<p>Stage 3 is the reason a brand-new article with no keywords will still have a populated "Related articles" section. It falls all the way through and grabs the four most recent posts. That's usually fine for a single article. It's not a great long-term solution. Filling the keywords list is what makes stage 2 do useful work.</p>
+<h2><code>excluded_related_slugs</code>: blocking specific matches</h2>
+<p><code>excluded_related_slugs</code> is the opposite of <code>related_slugs</code>. Listing a slug here removes it from consideration by stages 2 and 3 of the current article only:</p>
+<pre><code class="language-json">&quot;excluded_related_slugs&quot;: [&quot;example-article-artipress&quot;]
+</code></pre>
+<p>Reach for it when the keyword scorer keeps surfacing a particular article that doesn't belong in this context. The most common reason: two articles share a generic keyword like "markdown" or "python" without actually being about the same topic.</p>
+<p>The exclusion is one-directional. Putting article B in article A's exclusion list doesn't stop A from appearing under B. You'd need to add A to B's exclusion list separately. The asymmetry is intentional: relevance can be one-way.</p>
+<p>And, again: a slug in both <code>related_slugs</code> and <code>excluded_related_slugs</code> will still appear. Manual pins beat exclusions.</p>
+<h2>Turning the section off entirely</h2>
+<p>If you want no "Related articles" section anywhere on the site, set:</p>
+<pre><code class="language-json">&quot;related_articles_count&quot;: 0
+</code></pre>
+<p>in <code>config.json</code>. ArtiPress treats <code>0</code> as a hard off-switch and skips the work entirely. The section is left blank and the template's <code>{html_var(related_articles)}</code> resolves to an empty string, which collapses out of the page.</p>
+<p>There's no per-article way to hide the section on one page. Setting <code>related_articles_count</code> to 0 in <code>config.json</code> is global. If you want a single article without related cards, the workaround is to pin one article via <code>related_slugs</code> and add the rest to <code>excluded_related_slugs</code>. But at that point you're fighting the feature. Turning it off site-wide is usually the right call.</p>
+<h2>A quick mental model</h2>
+<p>When you're deciding what to put in <code>article.json</code>, the order of operations to keep in your head is:</p>
+<ol>
+<li>If you have specific articles that should always appear: put them in <code>related_slugs</code>.</li>
+<li>Make sure <code>article_keywords_list</code> is filled with terms that genuinely describe the article. Stage 2 lives or dies on this list.</li>
+<li>If a specific article keeps wrongly pairing up with this one, add it to <code>excluded_related_slugs</code>.</li>
+<li>If you don't care about the section site-wide, set <code>related_articles_count: 0</code> and stop thinking about any of this.</li>
+</ol>
+<p>For most articles you'll only ever touch step 2. Steps 1 and 3 are escape hatches for the cases where the keyword scorer isn't enough on its own.</p>
+
+    </div>
+
+    <hr class="divider-line-horizontal">
+
+    <footer>
+        <p class="author-date">
+            By Majdi Jaigirdar | Published on 28 May 2026
+        </p>
+    </footer>
+</article>
+
+    </div>
+    <!-- END ArtiPress (End of needed section)-->
+
+</body>
+
+</html>

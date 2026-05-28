@@ -1,0 +1,35 @@
+{
+  "article_title": "How ArtiPress is built for SEO and social sharing",
+  "author_slugs": [
+    "majdi-jaigirdar"
+  ],
+  "article_image_url": "",
+  "article_image_alt": "",
+  "article_strap_line": "Every meta tag, Open Graph property, Twitter card, and JSON-LD field ArtiPress emits, and which field of article.json each one comes from.",
+  "date": {
+    "published": "2026-05-28T00:00:00Z"
+  },
+  "article_labels": [
+    "ArtiPress",
+    "Reference"
+  ],
+  "article_keywords_list": [
+    "artipress",
+    "seo",
+    "social sharing",
+    "open graph",
+    "twitter card",
+    "json-ld",
+    "structured data",
+    "canonical url",
+    "meta tags",
+    "metadata"
+  ],
+  "related_slugs": [
+    "welcome-to-artipress"
+  ],
+  "excluded_related_slugs": [],
+  "featured": false,
+  "hide_from_article_list": false,
+  "convert_article_images_to_webp": true
+}

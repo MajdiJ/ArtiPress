@@ -1004,6 +1004,51 @@ def generate_all_author_pages(validated_articles: list[tuple[str, dict]], lqip_t
     for author in AUTHORS:
         generate_author_page(author, validated_articles, SOCIAL_LINKS, lqip_thumbnails)
 
+
+def _remove_path(path: str) -> None:
+    if os.path.isdir(path) and not os.path.islink(path):
+        shutil.rmtree(path)
+    else:
+        os.remove(path)
+
+def cleanup_stale_output(validated_articles: list[tuple[str, dict]]) -> list[str]:
+    """
+    Delete any file or folder in output_path that wasn't produced by this run:
+    leftovers from articles or authors whose source has since been removed or renamed.
+    Must run only after generation succeeds, so a mid-build failure can't nuke the output.
+    """
+    output_root = CONFIG["output_path"]
+    if not os.path.isdir(output_root):
+        return []
+
+    article_slugs = {slug for slug, _ in validated_articles}
+    author_slugs = {a.get("author_slug") for a in AUTHORS if a.get("author_slug")}
+
+    expected_at_root = (
+        {"index.html", CONFIG["shared_assets_subfolder"]}
+        | set(RESERVED_FOLDERS_IN_ARTICLES_OUTPUT)
+        | article_slugs
+    )
+    expected_in_authors = {"index.html"} | author_slugs
+
+    removed: list[str] = []
+
+    for entry in os.scandir(output_root):
+        if entry.name in expected_at_root:
+            continue
+        _remove_path(entry.path)
+        removed.append(entry.name)
+
+    authors_dir = os.path.join(output_root, "authors")
+    if os.path.isdir(authors_dir):
+        for entry in os.scandir(authors_dir):
+            if entry.name in expected_in_authors:
+                continue
+            _remove_path(entry.path)
+            removed.append(f"authors/{entry.name}")
+
+    return removed
+
 def main():
     global CONFIG, AUTHORS, SOCIAL_LINKS
 
@@ -1042,6 +1087,10 @@ def main():
 
     generate_all_author_pages(validated_articles, lqip_thumbnails)
     progress(f"Generated {len(AUTHORS)} author pages")
+
+    removed = cleanup_stale_output(validated_articles)
+    if removed:
+        progress(f"Removed {len(removed)} stale output entr{'y' if len(removed) == 1 else 'ies'}: {', '.join(removed)}")
 
     elapsed = time.perf_counter() - started
     print(

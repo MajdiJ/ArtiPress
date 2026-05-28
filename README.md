@@ -78,6 +78,26 @@ Write the article body in standard Markdown. Headings should be `##` and lower �
 
 Images can reference files from the `images/` folder: `![alt text](images/my-image.png)`. ArtiPress converts them to WebP automatically. WebP is better suited for the web than formats like PNG or JPEG — it produces significantly smaller file sizes at comparable quality, and ArtiPress also caps the resolution on conversion, so images load faster without noticeably affecting how they look on screen.
 
+### Resources (images, videos, files)
+
+Anything inside the article folder that isn't `article.md` or `article.json` is copied verbatim into the output, with the subfolder layout preserved. Reference resources by relative path from the article folder.
+
+There's no enforced structure, but a shallow, conventional layout keeps things predictable:
+
+```
+artipress/content/my-article-slug/
+├── article.json
+├── article.md
+├── images/        ← cover image and any inline images
+├── videos/        ← optional, only if you have video clips
+└── files/         ← optional, for PDFs and other downloads
+```
+
+Nest deeper if an article needs it (e.g. `images/diagrams/`, `images/screenshots/`) — the paths in your Markdown just have to resolve. Two things worth knowing:
+
+- The LQIP placeholder is always written to `{slug}/images/` in the output. Keeping the cover image in `images/` keeps the source and the generated thumbnail in the same folder.
+- Full URLs (`https://…`) and site-absolute paths (`/…`) are passed through untouched, so you can host assets elsewhere if you prefer.
+
 ## Authors
 
 Authors are defined in `artipress/authors.json`:

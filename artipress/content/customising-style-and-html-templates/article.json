@@ -1,0 +1,36 @@
+{
+  "article_title": "Customising style and HTML templates",
+  "author_slugs": [
+    "majdi-jaigirdar"
+  ],
+  "article_image_url": "",
+  "article_image_alt": "",
+  "article_strap_line": "Where the templates and CSS live, the variable system that wires them up, and how to swap any of it out for your own files.",
+  "date": {
+    "published": "2026-05-28T00:00:00Z"
+  },
+  "article_labels": [
+    "ArtiPress",
+    "Reference"
+  ],
+  "article_keywords_list": [
+    "artipress",
+    "templates",
+    "html",
+    "css",
+    "styling",
+    "customisation",
+    "variables",
+    "base_template_paths",
+    "components",
+    "override"
+  ],
+  "related_slugs": [
+    "writing-your-first-article",
+    "markdown-and-styling-reference"
+  ],
+  "excluded_related_slugs": [],
+  "featured": false,
+  "hide_from_article_list": false,
+  "convert_article_images_to_webp": true
+}

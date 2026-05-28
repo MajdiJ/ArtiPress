@@ -1,17 +1,17 @@
 {
-  "article_title": "An example article on Artipress",
+  "article_title": "An example article on ArtiPress",
   "author_slugs": [
     "john-doe"
   ],
   "article_image_url": "images/image1.png",
-  "article_image_alt": "An example image for the article",
-  "article_strap_line": "An examplar article to demonstrate the structure and generation of an article in Artipress.",
+  "article_image_alt": "An example cover image for the article",
+  "article_strap_line": "A demo article that puts every Markdown element ArtiPress renders into real prose, rather than listing them out.",
   "date": {
     "published": "2026-05-21T00:00:00Z",
     "edited": "2026-05-21T00:00:00Z"
   },
   "article_labels": [
-    "Artipress",
+    "ArtiPress",
     "Example"
   ],
   "article_keywords_list": [
@@ -26,7 +26,9 @@
     "programming",
     "technology"
   ],
-  "related_slugs": [],
+  "related_slugs": [
+    "markdown-and-styling-reference"
+  ],
   "excluded_related_slugs": [],
   "featured": false,
   "hide_from_article_list": false,

@@ -1,107 +1,122 @@
-The following is an example article written in Markdown format, demonstrating various features such as headings, formatting, lists, code blocks, tables, images, links, and blockquotes. This article is structured to showcase the capabilities of Markdown for creating rich content.
+> This article serves two purposes: showing how ArtiPress turns a Markdown file and an article.json into a finished article page, and giving the list view, article page, and author page something real to render while you work on the design and layout.
 
-## Introduction
+A demonstration article that puts every Markdown element ArtiPress renders into real prose, rather than listing them out. The [Markdown & styling reference](/articles/markdown-and-styling-reference/) is the exhaustive catalogue. This one is closer to what a normal post actually looks like.
 
-**Lorem ipsum dolor sit amet**, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. *Ut enim ad minim veniam*, quis nostrud exercitation ullamco laboris.
+## What you write versus what you see
+
+Markdown gets out of the way. You write **bold** when you want a phrase to land. You write *italic* when you want a softer kind of emphasis, the sort that makes a reader slow down without quite realising why. ***Both at once*** when the moment calls for it. Inline `code` sits in the middle of a sentence without breaking the line height.
+
+The default styling tries to be quiet enough that you can read past it. Most of the work of writing well in Markdown happens at the word level, not in the formatting.
 
 ---
 
-## Section Two: Typography
+## A quote, for atmosphere
 
-This paragraph uses ***bold and italic*** together. You can also use ~~strikethrough~~ for deleted content. Inline `code snippets` look like this.
-
-> "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+> The first draft of anything is shit.
 >
-> — *Cicero, probably*
+> — *Ernest Hemingway, probably*
 
 ---
 
-## Section Three: Lists
+## Lists
 
-### Unordered List
+A short unordered list:
 
-- Lorem ipsum dolor sit amet
-- Consectetur adipiscing elit
-  - Sed do eiusmod tempor
-  - Incididunt ut labore
-- Ut enim ad minim veniam
+- One item.
+- A second item, slightly longer so wrapping behaviour is visible.
+    - A nested child.
+    - Another nested child.
+- A third top-level item.
 
-### Ordered List
+A short ordered list:
 
-1. First, lorem ipsum dolor sit amet
-2. Second, consectetur adipiscing elit
-3. Third, sed do eiusmod tempor incididunt
-4. Fourth, ut labore et dolore magna aliqua
+1. Open the article folder.
+2. Edit the Markdown file.
+3. Run the generator.
+4. Reload the page.
 
-### Task List
+A task list. ArtiPress's default extensions don't include task lists, so the checkboxes render as literal `[x]` and `[ ]` rather than actual checkboxes:
 
-- [x] Lorem ipsum dolor sit amet
-- [x] Consectetur adipiscing elit
-- [ ] Sed do eiusmod tempor incididunt
-- [ ] Ut enim ad minim veniam
+- [x] Set up the repo.
+- [x] Write the first article.
+- [ ] Write a second article.
+- [ ] Replace this list with something real.
 
 ---
 
-## Section Four: Code
+## Code
 
-Inline code: `const lorem = "ipsum";`
+Inline first: `const greet = name => "Hello, " + name`. Then a fenced block with a language hint, so the styling can colour it:
 
 ```javascript
-// Lorem ipsum function
-function loremIpsum(words) {
-  const lorem = ["lorem", "ipsum", "dolor", "sit", "amet"];
-  return Array.from({ length: words }, (_, i) => lorem[i % lorem.length]).join(" ");
+function greet(name) {
+  return `Hello, ${name}`;
 }
 
-console.log(loremIpsum(5));
+console.log(greet("world"));
 ```
 
 ```bash
-# Run the lorem generator
-echo "Lorem ipsum dolor sit amet"
+# Build the site
+python artipress/artipress.py
 ```
 
 ---
 
-## Section Five: Table
+## A table
 
-| Name         | Role          | Status     | Score |
-|--------------|---------------|------------|-------|
-| Lorem Ipsum  | Developer     | ✅ Active  | 98    |
-| Dolor Sit    | Designer      | ✅ Active  | 87    |
-| Amet Consec  | Manager       | ⏸ Paused  | 74    |
-| Tur Adipisc  | Analyst       | ❌ Inactive| 61    |
+The shape of the `article.json` schema, as a worked example:
 
----
-
-## Section Six: Images
-
-![A serene placeholder landscape](https://picsum.photos/seed/lorem/800/400)
-
-*Fig. 1 — Lorem ipsum landscape, circa nullam.*
+| Field | Type | Required |
+|---|---|---|
+| `article_title` | string | Yes |
+| `author_slugs` | array | Yes |
+| `date.published` | ISO 8601 | Yes |
+| `article_image_url` | string | No |
+| `article_keywords_list` | array | No |
 
 ---
 
-## Section Seven: Links & Footnotes
+## An image
 
-Visit [Lorem Ipsum Generator](https://www.lipsum.com) for more placeholder text. You can also reference [Wikipedia's article on Lorem Ipsum](https://en.wikipedia.org/wiki/Lorem_ipsum).
+![A placeholder landscape](https://picsum.photos/seed/lorem/800/400)
+
+*Fig. 1 — a stand-in cover image while you decide on real ones.*
 
 ---
 
-## Section Eight: Nested Blockquotes
+## Links and footnotes
 
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+A direct link to the [README](https://github.com/majdiJ/ArtiPress) and a link to the [Markdown reference page](/articles/markdown-and-styling-reference/). External and internal both work; the path resolution is the same.
+
+Footnotes are supported via the `footnotes` extension[^example]. They collect at the bottom of the rendered page regardless of where you define them.
+
+[^example]: Like this. Footnote bodies can contain **inline formatting** and `inline code`.
+
+---
+
+## Nested blockquotes
+
+Quotes nest as deeply as you want them to. The styling on each level should make the indentation visible without making the text harder to read:
+
+> An outer thought.
 >
-> > Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+> > A reply to the outer thought.
 > >
-> > > Ut enim ad minim veniam, quis nostrud exercitation.
+> > > And a further reply to that one.
 
 ---
 
-## Section Nine: Horizontal Rules & Closing
+## Strikethrough (not rendered)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+For completeness: ~~strikethrough~~ isn't enabled in the default extension set. The tildes appear as literal characters. The reference article covers the opt-in extension that adds it.
+
+---
+
+## Closing
+
+Three asterisks for a horizontal rule:
 
 ***
 
-*Fin. Lorem ipsum dolor sit amet.*
+*That's the loop. Write, save, regenerate. The rest is editing.*

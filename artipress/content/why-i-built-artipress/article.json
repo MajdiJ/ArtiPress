@@ -1,0 +1,35 @@
+{
+  "article_title": "Why I built ArtiPress",
+  "author_slugs": [
+    "majdi-jaigirdar"
+  ],
+  "article_image_url": "",
+  "article_image_alt": "",
+  "article_strap_line": "The origin story: keeping HTML, list pages, and SEO tags in sync by hand is tedious, and a full backend is overkill.",
+  "date": {
+    "published": "2026-05-28T00:00:00Z"
+  },
+  "article_labels": [
+    "ArtiPress",
+    "Origin Story"
+  ],
+  "article_keywords_list": [
+    "artipress",
+    "origin story",
+    "static site generator",
+    "ssg",
+    "markdown",
+    "python",
+    "personal website",
+    "portfolio",
+    "cloudflare pages",
+    "scope"
+  ],
+  "related_slugs": [
+    "welcome-to-artipress"
+  ],
+  "excluded_related_slugs": [],
+  "featured": false,
+  "hide_from_article_list": false,
+  "convert_article_images_to_webp": true
+}

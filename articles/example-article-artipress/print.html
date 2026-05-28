@@ -29,7 +29,7 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
 
 <head>
     <meta charset="UTF-8" />
-    <title>An example article on Artipress - ArtiPress</title>
+    <title>An example article on ArtiPress - ArtiPress</title>
 
     <style>
         /*  PAGE SETUP  */
@@ -39,7 +39,7 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
             /* top right bottom left */
 
             @top-left {
-                content: "An example article on Artipress | ArtiPress (https://artipress.majdij.com)";
+                content: "An example article on ArtiPress | ArtiPress (https://artipress.majdij.com)";
                 font-size: 8pt;
                 color: #888;
             }
@@ -153,7 +153,7 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
 <body>
 
     <div class="print-screen-message">
-        <p>Print article: An example article on Artipress</p>
+        <p>Print article: An example article on ArtiPress</p>
         <p>Your browser should auto open the print dialogue to allow you to print the article.</p>
         <p>If it doesn't auto open you can <a href="#" onclick="window.print(); return false;">click here to do it manually</a>.</p>
     </div>
@@ -169,8 +169,8 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
     <div class="article-content">
         <article>
     <header>
-        <h1>An example article on Artipress</h1>
-        <p class="strap-line">An examplar article to demonstrate the structure and generation of an article in Artipress.</p>
+        <h1>An example article on ArtiPress</h1>
+        <p class="strap-line">A demo article that puts every Markdown element ArtiPress renders into real prose, rather than listing them out.</p>
         <p class="author-date">
             By John Doe | Published on 21 May 2026 | Edited on 21 May 2026
         </p>
@@ -181,12 +181,12 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
     <div class="article-sharing-exporting">
         <ul>
             <li>
-                <a href="https://twitter.com/intent/tweet?text=An example article on Artipress%0Ahttps://artipress.majdij.com/articles/example-article-artipress/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                <a href="https://twitter.com/intent/tweet?text=An example article on ArtiPress%0Ahttps://artipress.majdij.com/articles/example-article-artipress/?utm_source=x&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
                     <img src="/articles/_artipress/icons/x.png" alt="Twitter/x Icon" />
                 </a>
             </li>
             <li>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/example-article-artipress&quote=An example article on Artipress/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://artipress.majdij.com/articles/example-article-artipress&quote=An example article on ArtiPress/?utm_source=facebook&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
                     <img src="/articles/_artipress/icons/facebook.webp" alt="Facebook Icon" />
                 </a>
             </li>
@@ -196,7 +196,7 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
                 </a>
             </li>
             <li>
-                <a href="https://www.threads.net/intent/post?text=An example article on Artipress%0Ahttps://artipress.majdij.com/articles/example-article-artipress/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.threads.net/intent/post?text=An example article on ArtiPress%0Ahttps://artipress.majdij.com/articles/example-article-artipress/?utm_source=threads&utm_medium=social&utm_content=post" target="_blank" rel="noopener noreferrer">
                     <img src="/articles/_artipress/icons/threads.png" alt="Threads Icon" />
                 </a>
             </li>
@@ -221,120 +221,137 @@ Note: This page auto-opens the browser print dialogue on load. On screen it show
     <hr class="divider-line-horizontal-bottom">
 
     <div class="article-image-container article-content featured-article-image">
-        <img src="/articles/example-article-artipress/images/image1.webp" alt="An example image for the article"/>
+        <img src="/articles/example-article-artipress/images/image1.webp" alt="An example cover image for the article"/>
     </div>
 
     <div class="article-content">
 
-        <p>The following is an example article written in Markdown format, demonstrating various features such as headings, formatting, lists, code blocks, tables, images, links, and blockquotes. This article is structured to showcase the capabilities of Markdown for creating rich content.</p>
-<h2>Introduction</h2>
-<p><strong>Lorem ipsum dolor sit amet</strong>, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <em>Ut enim ad minim veniam</em>, quis nostrud exercitation ullamco laboris.</p>
+        <blockquote>
+<p>This article serves two purposes: showing how ArtiPress turns a Markdown file and an article.json into a finished article page, and giving the list view, article page, and author page something real to render while you work on the design and layout.</p>
+</blockquote>
+<p>A demonstration article that puts every Markdown element ArtiPress renders into real prose, rather than listing them out. The <a href="/articles/markdown-and-styling-reference/">Markdown &amp; styling reference</a> is the exhaustive catalogue. This one is closer to what a normal post actually looks like.</p>
+<h2>What you write versus what you see</h2>
+<p>Markdown gets out of the way. You write <strong>bold</strong> when you want a phrase to land. You write <em>italic</em> when you want a softer kind of emphasis, the sort that makes a reader slow down without quite realising why. <strong><em>Both at once</em></strong> when the moment calls for it. Inline <code>code</code> sits in the middle of a sentence without breaking the line height.</p>
+<p>The default styling tries to be quiet enough that you can read past it. Most of the work of writing well in Markdown happens at the word level, not in the formatting.</p>
 <hr />
-<h2>Section Two: Typography</h2>
-<p>This paragraph uses <strong><em>bold and italic</em></strong> together. You can also use ~~strikethrough~~ for deleted content. Inline <code>code snippets</code> look like this.</p>
+<h2>A quote, for atmosphere</h2>
 <blockquote>
-<p>"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."</p>
-<p>— <em>Cicero, probably</em></p>
+<p>The first draft of anything is shit.</p>
+<p>— <em>Ernest Hemingway, probably</em></p>
 </blockquote>
 <hr />
-<h2>Section Three: Lists</h2>
-<h3>Unordered List</h3>
+<h2>Lists</h2>
+<p>A short unordered list:</p>
 <ul>
-<li>Lorem ipsum dolor sit amet</li>
-<li>Consectetur adipiscing elit</li>
-<li>Sed do eiusmod tempor</li>
-<li>Incididunt ut labore</li>
-<li>Ut enim ad minim veniam</li>
+<li>One item.</li>
+<li>A second item, slightly longer so wrapping behaviour is visible.<ul>
+<li>A nested child.</li>
+<li>Another nested child.</li>
 </ul>
-<h3>Ordered List</h3>
+</li>
+<li>A third top-level item.</li>
+</ul>
+<p>A short ordered list:</p>
 <ol>
-<li>First, lorem ipsum dolor sit amet</li>
-<li>Second, consectetur adipiscing elit</li>
-<li>Third, sed do eiusmod tempor incididunt</li>
-<li>Fourth, ut labore et dolore magna aliqua</li>
+<li>Open the article folder.</li>
+<li>Edit the Markdown file.</li>
+<li>Run the generator.</li>
+<li>Reload the page.</li>
 </ol>
-<h3>Task List</h3>
+<p>A task list. ArtiPress's default extensions don't include task lists, so the checkboxes render as literal <code>[x]</code> and <code>[ ]</code> rather than actual checkboxes:</p>
 <ul>
-<li>[x] Lorem ipsum dolor sit amet</li>
-<li>[x] Consectetur adipiscing elit</li>
-<li>[ ] Sed do eiusmod tempor incididunt</li>
-<li>[ ] Ut enim ad minim veniam</li>
+<li>[x] Set up the repo.</li>
+<li>[x] Write the first article.</li>
+<li>[ ] Write a second article.</li>
+<li>[ ] Replace this list with something real.</li>
 </ul>
 <hr />
-<h2>Section Four: Code</h2>
-<p>Inline code: <code>const lorem = "ipsum";</code></p>
-<pre><code class="language-javascript">// Lorem ipsum function
-function loremIpsum(words) {
-  const lorem = [&quot;lorem&quot;, &quot;ipsum&quot;, &quot;dolor&quot;, &quot;sit&quot;, &quot;amet&quot;];
-  return Array.from({ length: words }, (_, i) =&gt; lorem[i % lorem.length]).join(&quot; &quot;);
+<h2>Code</h2>
+<p>Inline first: <code>const greet = name =&gt; "Hello, " + name</code>. Then a fenced block with a language hint, so the styling can colour it:</p>
+<pre><code class="language-javascript">function greet(name) {
+  return `Hello, ${name}`;
 }
 
-console.log(loremIpsum(5));
+console.log(greet(&quot;world&quot;));
 </code></pre>
-<pre><code class="language-bash"># Run the lorem generator
-echo &quot;Lorem ipsum dolor sit amet&quot;
+<pre><code class="language-bash"># Build the site
+python artipress/artipress.py
 </code></pre>
 <hr />
-<h2>Section Five: Table</h2>
+<h2>A table</h2>
+<p>The shape of the <code>article.json</code> schema, as a worked example:</p>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Role</th>
-<th>Status</th>
-<th>Score</th>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Lorem Ipsum</td>
-<td>Developer</td>
-<td>✅ Active</td>
-<td>98</td>
+<td><code>article_title</code></td>
+<td>string</td>
+<td>Yes</td>
 </tr>
 <tr>
-<td>Dolor Sit</td>
-<td>Designer</td>
-<td>✅ Active</td>
-<td>87</td>
+<td><code>author_slugs</code></td>
+<td>array</td>
+<td>Yes</td>
 </tr>
 <tr>
-<td>Amet Consec</td>
-<td>Manager</td>
-<td>⏸ Paused</td>
-<td>74</td>
+<td><code>date.published</code></td>
+<td>ISO 8601</td>
+<td>Yes</td>
 </tr>
 <tr>
-<td>Tur Adipisc</td>
-<td>Analyst</td>
-<td>❌ Inactive</td>
-<td>61</td>
+<td><code>article_image_url</code></td>
+<td>string</td>
+<td>No</td>
+</tr>
+<tr>
+<td><code>article_keywords_list</code></td>
+<td>array</td>
+<td>No</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2>Section Six: Images</h2>
-<p><img alt="A serene placeholder landscape" src="https://picsum.photos/seed/lorem/800/400" /></p>
-<p><em>Fig. 1 — Lorem ipsum landscape, circa nullam.</em></p>
+<h2>An image</h2>
+<p><img alt="A placeholder landscape" src="https://picsum.photos/seed/lorem/800/400" /></p>
+<p><em>Fig. 1 — a stand-in cover image while you decide on real ones.</em></p>
 <hr />
-<h2>Section Seven: Links &amp; Footnotes</h2>
-<p>Visit <a href="https://www.lipsum.com">Lorem Ipsum Generator</a> for more placeholder text. You can also reference <a href="https://en.wikipedia.org/wiki/Lorem_ipsum">Wikipedia's article on Lorem Ipsum</a>.</p>
+<h2>Links and footnotes</h2>
+<p>A direct link to the <a href="https://github.com/majdiJ/ArtiPress">README</a> and a link to the <a href="/articles/markdown-and-styling-reference/">Markdown reference page</a>. External and internal both work; the path resolution is the same.</p>
+<p>Footnotes are supported via the <code>footnotes</code> extension<sup id="fnref:example"><a class="footnote-ref" href="#fn:example">1</a></sup>. They collect at the bottom of the rendered page regardless of where you define them.</p>
 <hr />
-<h2>Section Eight: Nested Blockquotes</h2>
+<h2>Nested blockquotes</h2>
+<p>Quotes nest as deeply as you want them to. The styling on each level should make the indentation visible without making the text harder to read:</p>
 <blockquote>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+<p>An outer thought.</p>
 <blockquote>
-<p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<p>A reply to the outer thought.</p>
 <blockquote>
-<p>Ut enim ad minim veniam, quis nostrud exercitation.</p>
+<p>And a further reply to that one.</p>
 </blockquote>
 </blockquote>
 </blockquote>
 <hr />
-<h2>Section Nine: Horizontal Rules &amp; Closing</h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<h2>Strikethrough (not rendered)</h2>
+<p>For completeness: ~~strikethrough~~ isn't enabled in the default extension set. The tildes appear as literal characters. The reference article covers the opt-in extension that adds it.</p>
 <hr />
-<p><em>Fin. Lorem ipsum dolor sit amet.</em></p>
+<h2>Closing</h2>
+<p>Three asterisks for a horizontal rule:</p>
+<hr />
+<p><em>That's the loop. Write, save, regenerate. The rest is editing.</em></p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:example">
+<p>Like this. Footnote bodies can contain <strong>inline formatting</strong> and <code>inline code</code>.&#160;<a class="footnote-backref" href="#fnref:example" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
     </div>
 

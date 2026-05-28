@@ -1,0 +1,33 @@
+{
+  "article_title": "Welcome to ArtiPress",
+  "author_slugs": [
+    "majdi-jaigirdar"
+  ],
+  "article_image_url": "",
+  "article_image_alt": "",
+  "article_strap_line": "What ArtiPress is, who it's for, and what it generates. Start here before exploring the rest of the demo.",
+  "date": {
+    "published": "2026-05-28T00:00:00Z"
+  },
+  "article_labels": [
+    "ArtiPress",
+    "Welcome"
+  ],
+  "article_keywords_list": [
+    "artipress",
+    "welcome",
+    "introduction",
+    "static site generator",
+    "ssg",
+    "markdown",
+    "python",
+    "articles",
+    "personal website",
+    "demo"
+  ],
+  "related_slugs": [],
+  "excluded_related_slugs": [],
+  "featured": false,
+  "hide_from_article_list": false,
+  "convert_article_images_to_webp": true
+}

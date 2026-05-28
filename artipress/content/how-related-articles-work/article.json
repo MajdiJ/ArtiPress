@@ -1,0 +1,36 @@
+{
+  "article_title": "How related articles work",
+  "author_slugs": [
+    "majdi-jaigirdar"
+  ],
+  "article_image_url": "",
+  "article_image_alt": "",
+  "article_strap_line": "The three stages ArtiPress uses to pick the cards under each article: manual pins, keyword overlap, then recency. And how to override each one.",
+  "date": {
+    "published": "2026-05-28T00:00:00Z"
+  },
+  "article_labels": [
+    "ArtiPress",
+    "Reference"
+  ],
+  "article_keywords_list": [
+    "artipress",
+    "related articles",
+    "related_slugs",
+    "excluded_related_slugs",
+    "keywords",
+    "labels",
+    "manual pins",
+    "config",
+    "reference",
+    "article matching"
+  ],
+  "related_slugs": [
+    "welcome-to-artipress",
+    "writing-your-first-article"
+  ],
+  "excluded_related_slugs": [],
+  "featured": false,
+  "hide_from_article_list": false,
+  "convert_article_images_to_webp": true
+}
