@@ -31,7 +31,7 @@ ENV/
 *~
 
 # Generated output
-# articles/
+articles/
 
 # Logs
 *.log

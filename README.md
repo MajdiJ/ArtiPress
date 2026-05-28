@@ -9,6 +9,17 @@ I built this for my own portfolio website, which runs as a static site on Cloudf
 - Python 3.10+
 - Dependencies: `pip install -r requirements.txt` (Pillow and Markdown)
 
+## Trying it locally
+
+This repo ships with example articles in `artipress/content/`, but the generated `articles/` output folder is gitignored. To preview the demo site, install the dependencies and run the generator:
+
+```sh
+pip install -r requirements.txt
+python artipress/artipress.py
+```
+
+Then open `articles/index.html` in your browser.
+
 ## Setup
 
 1. Copy the `artipress/` folder into the root of your website repo.
