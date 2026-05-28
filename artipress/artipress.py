@@ -2,7 +2,10 @@ import json
 import os
 import re
 import shutil
+import sys
+import time
 from datetime import datetime
+from typing import NoReturn
 
 import markdown as md_lib
 
@@ -63,6 +66,22 @@ CONFIG = {}
 AUTHORS = []
 SOCIAL_LINKS = {}
 
+_WARNING_COUNT = 0
+_IMAGE_CONVERSION_COUNT = 0
+
+
+def progress(msg: str) -> None:
+    print(f"→ {msg}", flush=True)
+
+def warn(msg: str, slug: str | None = None) -> None:
+    global _WARNING_COUNT
+    _WARNING_COUNT += 1
+    prefix = f"Warning: [{slug}] " if slug else "Warning: "
+    print(f"{prefix}{msg}", file=sys.stderr)
+
+def fail(context: str, reason: str) -> NoReturn:
+    raise SystemExit(f"Error: {context}: {reason}")
+
 
 def assets_url() -> str:
     return f"/{CONFIG['output_path']}/{CONFIG['shared_assets_subfolder']}"
@@ -102,13 +121,12 @@ def copy_shared_assets():
     dst = os.path.join(CONFIG["output_path"], CONFIG["shared_assets_subfolder"])
 
     if not os.path.exists(src):
-        print(f"Warning: shared_assets_source_folder not found at '{src}' — skipping asset copy")
+        warn(f"shared_assets_source_folder not found at '{src}' — skipping asset copy")
         return
 
     if os.path.exists(dst):
         shutil.rmtree(dst)
     shutil.copytree(src, dst)
-    print(f"Copied shared assets: {src} -> {dst}")
 
 def copy_article_assets(article_slug: str):
     src = os.path.join(CONFIG["input_content_folder"], article_slug)
@@ -134,24 +152,19 @@ def generate_lqip_thumbnail(article_slug: str, article_data: dict) -> str | None
     if not article_data.get("make_low_res_thumbnail", True):
         return None
 
-    try:
-        from PIL import Image
-    except ImportError:
-        print(f"Warning: [{article_slug}] Pillow is not installed — LQIP thumbnails disabled. Run: pip install Pillow")
-        return None
+    from PIL import Image
 
     article_image_path = article_data.get("article_image_url", "")
     if not article_image_path:
         return None
     if article_image_path.startswith(("http://", "https://")):
-        print(f"Warning: [{article_slug}] LQIP skipped — article_image_url is a remote URL")
+        warn("LQIP skipped — article_image_url is a remote URL", slug=article_slug)
         return None
 
     # article_image_url is now a path relative to the article's source folder
     source_path = os.path.join(CONFIG["input_content_folder"], article_slug, article_image_path.lstrip("/"))
     if not os.path.exists(source_path):
-        print(f"Warning: [{article_slug}] Article image not found at '{source_path}' — skipping LQIP thumbnail")
-        return None
+        fail(f"article '{article_slug}'", f"article_image_url points to a missing file: {source_path}")
 
     output_dir = os.path.join(CONFIG["output_path"], article_slug, "images")
     output_path = os.path.join(output_dir, LQIP_THUMBNAIL_FILENAME)
@@ -168,8 +181,7 @@ def generate_lqip_thumbnail(article_slug: str, article_data: dict) -> str | None
             thumbnail.save(output_path, "WEBP", quality=60)
             return thumbnail_url
     except Exception as e:
-        print(f"Warning: [{article_slug}] Could not generate LQIP thumbnail for '{source_path}' — {e}. Falling back to single image.")
-        return None
+        fail(f"article '{article_slug}'", f"could not generate LQIP thumbnail for '{source_path}' — {e}")
 
 def generate_all_lqip_thumbnails(validated_articles: list[tuple[str, dict]]) -> dict:
     return {slug: generate_lqip_thumbnail(slug, data) for slug, data in validated_articles}
@@ -193,14 +205,12 @@ def webp_conversion_enabled(article_data: dict) -> bool:
     return bool(article_data.get("convert_article_images_to_webp", True))
 
 def convert_article_images(article_slug: str, article_data: dict) -> None:
+    global _IMAGE_CONVERSION_COUNT
+
     if not webp_conversion_enabled(article_data):
         return
 
-    try:
-        from PIL import Image
-    except ImportError:
-        print(f"Warning: [{article_slug}] Pillow is not installed — WebP image conversion disabled. Run: pip install Pillow")
-        return
+    from PIL import Image
 
     article_output_dir = os.path.join(CONFIG["output_path"], article_slug)
     if not os.path.exists(article_output_dir):
@@ -225,8 +235,9 @@ def convert_article_images(article_slug: str, article_data: dict) -> None:
                     img.save(dst_path, "WEBP", quality=WEBP_CONVERSION_QUALITY)
                 if src_path != dst_path:
                     os.remove(src_path)
+                _IMAGE_CONVERSION_COUNT += 1
             except Exception as e:
-                print(f"Warning: [{article_slug}] Could not convert '{src_path}' to WebP — {e}")
+                fail(f"article '{article_slug}'", f"could not convert '{src_path}' to WebP — {e}")
 
 def convert_all_article_images(validated_articles: list[tuple[str, dict]]) -> None:
     for slug, data in validated_articles:
@@ -401,9 +412,9 @@ def read_file(path: str) -> str:
         with open(path, "r", encoding="utf-8") as f:
             return f.read()
     except FileNotFoundError:
-        raise FileNotFoundError(f"No file found at: {path}")
+        fail(f"read '{path}'", "file not found")
     except PermissionError:
-        raise PermissionError(f"Permission denied when reading: {path}")
+        fail(f"read '{path}'", "permission denied")
 
 def write_file(path: str, content: str) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -420,7 +431,7 @@ def markdown_to_html(md: str, source_label: str = "") -> str:
     # title remains the sole h1.
     if re.search(r'<h1\b', html, flags=re.IGNORECASE):
         where = f" in '{source_label}'" if source_label else ""
-        print(f"Warning: '#' (h1) used in markdown{where} — shifting all headings down one level (use '##' or deeper to avoid this)")
+        warn(f"'#' (h1) used in markdown{where} — shifting all headings down one level (use '##' or deeper to avoid this)")
         def _shift(match):
             slash = match.group(1)
             level = int(match.group(2))
@@ -429,11 +440,12 @@ def markdown_to_html(md: str, source_label: str = "") -> str:
 
     return html
 
-def render_template(template: str, variables: dict) -> str:
+def render_template(template: str, variables: dict, source_label: str = "") -> str:
     def replacer(match):
         key = match.group(1).strip()
         if key not in variables:
-            raise KeyError(f"Template variable '{key}' not found in provided dictionary")
+            where = f" while rendering {source_label}" if source_label else ""
+            raise KeyError(f"Template variable '{key}' not found{where}")
         return str(variables[key])
 
     return re.sub(r'\{html_var\((\w+)\)\}', replacer, template)
@@ -447,10 +459,9 @@ def validate_article_folders(article_folders):
         article_json_path = os.path.join(CONFIG["input_content_folder"], folder, JSON_ARTICLE_FILEPATH)
         try:
             article_data = validate_json(article_json_path, REQUIRED_JSON_ARTICLE_FIELDS)
-            print(f"Validated article: {article_data['article_title']}")
             validated_articles.append((folder, article_data))
         except (FileNotFoundError, ValueError, KeyError) as e:
-            raise SystemExit(f"Error in article folder '{folder}': {e}")
+            fail(f"article folder '{folder}'", str(e))
 
     # Order: most-recently-published first; ties broken alphabetically by title.
     # Two passes leverage sort stability — the title order from pass 1 is preserved within each date group in pass 2.
@@ -465,6 +476,13 @@ def validate_article_folders(article_folders):
 def startup_checks() -> list[tuple[str, dict]]:
     global AUTHORS, SOCIAL_LINKS
 
+    # Pillow is a hard dependency: LQIP + WebP conversion both need it, and the
+    # generated HTML rewrites <img> srcs to .webp paths that would 404 without it.
+    try:
+        import PIL  # noqa: F401
+    except ImportError:
+        fail("Pillow", "required but not installed. Run: pip install -r requirements.txt")
+
     # Verify all template file paths exist before any generation begins
     all_template_paths = {
         **CONFIG.get("base_template_paths", {}),
@@ -472,18 +490,18 @@ def startup_checks() -> list[tuple[str, dict]]:
     }
     for key, path in all_template_paths.items():
         if path is None or not os.path.exists(path):
-            raise SystemExit(f"Template file missing for '{key}': {path}")
+            fail(f"template '{key}'", f"file missing at {path}")
 
     # Load authors.json once
     authors_data = validate_json(AUTHOR_JSON_PATH, [])
     if not isinstance(authors_data, list):
-        raise ValueError(f"Expected a JSON array in {AUTHOR_JSON_PATH}, got {type(authors_data).__name__}")
+        fail(AUTHOR_JSON_PATH, f"expected a JSON array, got {type(authors_data).__name__}")
     AUTHORS = authors_data
 
     # Load social_links.json once
     social_data = validate_json(SOCIAL_LINKS_JSON_PATH, [])
     if not isinstance(social_data, dict):
-        raise ValueError(f"Expected a JSON object in {SOCIAL_LINKS_JSON_PATH}, got {type(social_data).__name__}")
+        fail(SOCIAL_LINKS_JSON_PATH, f"expected a JSON object, got {type(social_data).__name__}")
     SOCIAL_LINKS = social_data
 
     # Verify every article folder contains article.md
@@ -493,9 +511,22 @@ def startup_checks() -> list[tuple[str, dict]]:
         if not os.path.exists(os.path.join(CONFIG["input_content_folder"], folder, "article.md"))
     ]
     if missing_md:
-        raise SystemExit(f"Missing article.md in folders: {missing_md}")
+        fail("article.md", f"missing in folders: {missing_md}")
 
-    return validate_article_folders(article_folders)
+    validated_articles = validate_article_folders(article_folders)
+
+    # Every author slug referenced by any article must exist in authors.json
+    known_author_slugs = {a.get("author_slug") for a in AUTHORS if a.get("author_slug")}
+    missing_refs: dict[str, list[str]] = {}
+    for folder, article_data in validated_articles:
+        for slug in article_data.get("author_slugs", []):
+            if slug not in known_author_slugs:
+                missing_refs.setdefault(slug, []).append(folder)
+    if missing_refs:
+        lines = [f"  - '{slug}' (referenced by: {', '.join(folders)})" for slug, folders in sorted(missing_refs.items())]
+        fail("authors.json", "the following author slugs are referenced by articles but not defined:\n" + "\n".join(lines))
+
+    return validated_articles
 
 
 def select_related_articles(current_slug: str, current_data: dict, all_articles: list[tuple[str, dict]]) -> list[tuple[str, dict]]:
@@ -642,10 +673,10 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
         "articles_page_styling_and_scripts": read_file(CONFIG["components_template_paths"].get("articles_page_styling_and_scripts")),
         "article_page_head_application_json_ld": read_file(CONFIG["components_template_paths"].get("article_page_head_application_json_ld")),
         "article_page_main_article": read_file(CONFIG["components_template_paths"].get("article_page_main_article")),
-    })
+    }, source_label=f"article page '{article_slug}' (pass 1)")
 
     # Pass 2: resolve variables that lived inside the injected component contents
-    final_html = render_template(base_page_template, replacement_vars)
+    final_html = render_template(base_page_template, replacement_vars, source_label=f"article page '{article_slug}' (pass 2)")
 
     write_file(output_path, final_html)
 
@@ -699,10 +730,10 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
         **replacement_vars,
         "articles_page_styling_and_scripts": read_file(CONFIG["components_template_paths"].get("articles_page_styling_and_scripts")),
         "article_page_main_article": read_file(CONFIG["components_template_paths"].get("article_page_main_article")),
-    })
+    }, source_label=f"print page '{article_slug}' (pass 1)")
 
     # Pass 2: resolve variables inside injected component content
-    final_html = render_template(base_print_template, replacement_vars)
+    final_html = render_template(base_print_template, replacement_vars, source_label=f"print page '{article_slug}' (pass 2)")
 
     write_file(output_path, final_html)
 
@@ -783,7 +814,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
             "article_published_date_iso": article_data.get("date", {}).get("published", ""),
             "article_card_thumbnail": article_card_thumbnail,
             "article_url": f"/{CONFIG['output_path']}/{folder}/index.html",
-        }))
+        }, source_label=f"article-list item for '{folder}'"))
 
     article_list_items_html += "\n</div>"
     return article_list_items_html
@@ -806,9 +837,9 @@ def generate_article_list_page(validated_articles: list[tuple[str, dict]], lqip_
         "website_title": CONFIG["website_title"],
     }
     # Resolve any {html_var(...)} inside the component snippet before injecting it
-    replacement_vars["article_list_styling_and_scripts"] = render_template(article_list_styling_and_scripts, replacement_vars)
+    replacement_vars["article_list_styling_and_scripts"] = render_template(article_list_styling_and_scripts, replacement_vars, source_label="article-list styling component")
 
-    final_html = render_template(article_list_template, replacement_vars)
+    final_html = render_template(article_list_template, replacement_vars, source_label="article-list page")
 
     write_file(output_path, final_html)
 
@@ -842,7 +873,7 @@ def generate_author_list_page():
             "author_role_formatted": author_role_formatted,
             "author_picture_url": author_picture_url,
             "author_url": f"/{CONFIG['output_path']}/authors/{author_slug}/index.html",
-        }))
+        }, source_label=f"author-list item for '{author_slug}'"))
 
     author_list_items_html += "\n</div>"
 
@@ -853,13 +884,13 @@ def generate_author_list_page():
         "assets_url": assets_url(),
         "website_title": CONFIG["website_title"],
     }
-    replacement_vars["author_list_styling_and_scripts"] = render_template(author_list_styling_and_scripts, replacement_vars)
+    replacement_vars["author_list_styling_and_scripts"] = render_template(author_list_styling_and_scripts, replacement_vars, source_label="author-list styling component")
 
-    final_html = render_template(author_list_template, replacement_vars)
+    final_html = render_template(author_list_template, replacement_vars, source_label="author-list page")
 
     write_file(output_path, final_html)
 
-def render_author_social_links_html(social_links, social_link_template, social_links_registry):
+def render_author_social_links_html(social_links, social_link_template, social_links_registry, author_slug: str = ""):
     """
     Render a <ul> of social link icons for an author. Returns "" if the author has no usable links.
     Skips + warns when a platform is missing from the registry or its icon file is missing.
@@ -870,7 +901,7 @@ def render_author_social_links_html(social_links, social_link_template, social_l
     items_html = ""
     for platform_key, data in social_links.items():
         if platform_key not in social_links_registry:
-            print(f"Warning: social platform '{platform_key}' not found in social_links.json — skipping")
+            warn(f"social platform '{platform_key}' not found in social_links.json — skipping", slug=author_slug or None)
             continue
 
         registry_entry = social_links_registry[platform_key]
@@ -879,10 +910,10 @@ def render_author_social_links_html(social_links, social_link_template, social_l
         if icon_filename and not icon_filename.startswith(("http://", "https://", "/")):
             source_icon_path = os.path.join(CONFIG["shared_assets_source_folder"], "icons", icon_filename)
             if not os.path.exists(source_icon_path):
-                print(f"Warning: icon file '{source_icon_path}' missing for platform '{platform_key}' — skipping")
+                warn(f"icon file '{source_icon_path}' missing for platform '{platform_key}' — skipping", slug=author_slug or None)
                 continue
         elif not icon_filename:
-            print(f"Warning: no icon configured for platform '{platform_key}' — skipping")
+            warn(f"no icon configured for platform '{platform_key}' — skipping", slug=author_slug or None)
             continue
 
         platform_name = registry_entry.get("name", platform_key)
@@ -898,7 +929,7 @@ def render_author_social_links_html(social_links, social_link_template, social_l
             "social_link_icon_url": resolve_social_icon_url(icon_filename),
             "social_link_aria_label": aria_label,
             "social_link_title": aria_label,
-        })
+        }, source_label=f"social link '{platform_key}' for author '{author_slug}'")
 
     if not items_html:
         return ""
@@ -945,6 +976,7 @@ def generate_author_page(author_data: dict, validated_articles: list[tuple[str, 
         author_data.get("social_links", {}),
         social_link_template,
         social_links_registry,
+        author_slug=author_slug,
     )
 
     replacement_vars = {
@@ -961,9 +993,9 @@ def generate_author_page(author_data: dict, validated_articles: list[tuple[str, 
         "author_social_links_formatted": author_social_links_formatted,
         "author_articles_list_items": author_articles_list_items,
     }
-    replacement_vars["author_page_styling_and_scripts"] = render_template(author_page_styling_and_scripts, replacement_vars)
+    replacement_vars["author_page_styling_and_scripts"] = render_template(author_page_styling_and_scripts, replacement_vars, source_label=f"author page styling component for '{author_slug}'")
 
-    final_html = render_template(author_page_template, replacement_vars)
+    final_html = render_template(author_page_template, replacement_vars, source_label=f"author page '{author_slug}'")
 
     output_path = os.path.join(CONFIG["output_path"], "authors", author_slug, "index.html")
     write_file(output_path, final_html)
@@ -971,33 +1003,64 @@ def generate_author_page(author_data: dict, validated_articles: list[tuple[str, 
 def generate_all_author_pages(validated_articles: list[tuple[str, dict]], lqip_thumbnails: dict):
     for author in AUTHORS:
         generate_author_page(author, validated_articles, SOCIAL_LINKS, lqip_thumbnails)
-        print(f"Generated author page: {author.get('author_name', 'Unknown Author')}")
 
 def main():
     global CONFIG, AUTHORS, SOCIAL_LINKS
+
+    started = time.perf_counter()
 
     config_data = validate_json(JSON_CONFIG_FILEPATH, REQUIRED_JSON_CONFIG_FIELDS)
     CONFIG = {**CONFIG_DEFAULTS, **config_data}
 
     validated_articles = startup_checks()
+    progress(f"Validated {len(validated_articles)} articles and {len(AUTHORS)} authors")
 
     # Copy source assets before LQIP/HTML generation so they aren't wiped by the article folder copy
     copy_shared_assets()
     copy_all_article_assets(validated_articles)
+    progress(f"Copied shared assets + {len(validated_articles)} article asset folders")
 
     # Convert raster images in each article's output folder to WebP (replacing originals).
     # Runs after the copy step so it operates on the output copy, leaving the source folder untouched.
     convert_all_article_images(validated_articles)
+    progress(f"Converted {_IMAGE_CONVERSION_COUNT} images to WebP")
 
     lqip_thumbnails = generate_all_lqip_thumbnails(validated_articles)
+    progress(f"Generated {sum(1 for v in lqip_thumbnails.values() if v)} LQIP thumbnails")
 
     generate_all_article_pages(validated_articles, lqip_thumbnails)
+    progress(f"Generated {len(validated_articles)} article pages")
+
     generate_all_article_prints(validated_articles)
+    progress(f"Generated {len(validated_articles)} print pages")
+
     generate_article_list_page(validated_articles, lqip_thumbnails)
+    progress("Generated article-list page")
+
     generate_author_list_page()
+    progress("Generated author-list page")
+
     generate_all_author_pages(validated_articles, lqip_thumbnails)
+    progress(f"Generated {len(AUTHORS)} author pages")
+
+    elapsed = time.perf_counter() - started
+    print(
+        f"Done: {len(validated_articles)} articles, {len(AUTHORS)} authors, "
+        f"{_IMAGE_CONVERSION_COUNT} images, {_WARNING_COUNT} warning(s) "
+        f"(took {elapsed:.2f}s)"
+    )
 
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        # Already formatted as "Error: ..." by fail() or raised directly with a message.
+        raise
+    except Exception as e:
+        if os.environ.get("ARTIPRESS_DEBUG", "").strip().lower() not in ("", "0", "false"):
+            raise
+        print(f"Error: unexpected failure — {type(e).__name__}: {e}", file=sys.stderr)
+        print("Hint: set ARTIPRESS_DEBUG=1 to see the full traceback.", file=sys.stderr)
+        sys.exit(1)
