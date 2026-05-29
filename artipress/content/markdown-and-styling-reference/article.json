@@ -3,8 +3,8 @@
   "author_slugs": [
     "majdi-jaigirdar"
   ],
-  "article_image_url": "",
-  "article_image_alt": "",
+  "article_image_url": "images/cover.jpg",
+  "article_image_alt": "Abstract geometric cover illustration for the ArtiPress Markdown and styling reference",
   "article_strap_line": "Every Markdown element ArtiPress renders, on one page. Use it as a syntax lookup or as a visual regression target when editing CSS.",
   "date": {
     "published": "2026-05-28T00:00:00Z"

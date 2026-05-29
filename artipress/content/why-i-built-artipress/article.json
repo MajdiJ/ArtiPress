@@ -3,8 +3,8 @@
   "author_slugs": [
     "majdi-jaigirdar"
   ],
-  "article_image_url": "",
-  "article_image_alt": "",
+  "article_image_url": "images/cover.jpg",
+  "article_image_alt": "Abstract geometric cover illustration for an article on the origin story of ArtiPress",
   "article_strap_line": "The origin story: keeping HTML, list pages, and SEO tags in sync by hand is tedious, and a full backend is overkill.",
   "date": {
     "published": "2026-05-28T00:00:00Z"

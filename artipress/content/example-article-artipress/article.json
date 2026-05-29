@@ -3,8 +3,8 @@
   "author_slugs": [
     "john-doe"
   ],
-  "article_image_url": "images/image1.png",
-  "article_image_alt": "An example cover image for the article",
+  "article_image_url": "images/cover.jpg",
+  "article_image_alt": "Abstract geometric cover illustration for an example ArtiPress article",
   "article_strap_line": "A demo article that puts every Markdown element ArtiPress renders into real prose, rather than listing them out.",
   "date": {
     "published": "2026-05-21T00:00:00Z",

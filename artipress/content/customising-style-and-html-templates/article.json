@@ -3,8 +3,8 @@
   "author_slugs": [
     "majdi-jaigirdar"
   ],
-  "article_image_url": "",
-  "article_image_alt": "",
+  "article_image_url": "images/cover.jpg",
+  "article_image_alt": "Abstract geometric cover illustration for an article on customising ArtiPress templates and CSS",
   "article_strap_line": "Where the templates and CSS live, the variable system that wires them up, and how to swap any of it out for your own files.",
   "date": {
     "published": "2026-05-28T00:00:00Z"

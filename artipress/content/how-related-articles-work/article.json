@@ -3,8 +3,8 @@
   "author_slugs": [
     "majdi-jaigirdar"
   ],
-  "article_image_url": "",
-  "article_image_alt": "",
+  "article_image_url": "images/cover.jpg",
+  "article_image_alt": "Abstract geometric cover illustration for an article on how ArtiPress picks related articles",
   "article_strap_line": "The three stages ArtiPress uses to pick the cards under each article: manual pins, keyword overlap, then recency. And how to override each one.",
   "date": {
     "published": "2026-05-28T00:00:00Z"

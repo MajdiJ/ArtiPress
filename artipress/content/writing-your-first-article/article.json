@@ -3,8 +3,8 @@
   "author_slugs": [
     "majdi-jaigirdar"
   ],
-  "article_image_url": "",
-  "article_image_alt": "",
+  "article_image_url": "images/cover.jpg",
+  "article_image_alt": "Abstract geometric cover illustration for a tutorial on writing your first ArtiPress article",
   "article_strap_line": "From an empty folder to a generated article page. The minimum you need in article.json, the Markdown rules, and what running the generator looks like.",
   "date": {
     "published": "2026-05-28T00:00:00Z"
