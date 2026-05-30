@@ -1,10 +1,17 @@
-<p align="center">
-  <img src="docs/assets/artipress-logo.png" alt="ArtiPress logo" width="180" />
-</p>
+<h1>ArtiPress</h1>
 
-<h1 align="center">ArtiPress</h1>
+<table>
+<tr>
+<td valign="middle" align="left" width="30%">
+  <img src="docs/assets/artipress-logo.png" alt="ArtiPress logo" width="180" />
+</td>
+<td valign="top" width="70%">
 
 A static site generator for articles. Drop the `artipress/` folder into any existing website repo, write articles in Markdown, run one Python script, and get a fully generated article section: list page, individual article pages, author pages, print views, SEO metadata, and WebP images. No backend needed.
+
+</td>
+</tr>
+</table>
 
 I built this for my own portfolio website, which runs as a static site on Cloudflare Pages. I wanted articles on it, but managing them by hand in HTML would have meant keeping the article page, the list page, and all the SEO tags in sync every time I changed a title or description. That gets old fast. A full backend felt like overkill for a personal site with low traffic. So I wrote a Python script to generate everything from Markdown and JSON, it worked well for my site, and I turned it into its own project (ArtiPress!) so anyone in the same situation can use it.
 
