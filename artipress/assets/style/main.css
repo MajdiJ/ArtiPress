@@ -29,6 +29,25 @@ header h1 {
     font-size: 1.5rem;
 }
 
+.site-logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+}
+
+.site-logo {
+    display: block;
+    height: 40px;
+    width: auto;
+}
+
+.site-logo-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+}
+
 header nav {
     margin-top: 10px;
 }

@@ -1,4 +1,8 @@
-# ArtiPress
+<p align="center">
+  <img src="docs/assets/artipress-logo.png" alt="ArtiPress logo" width="180" />
+</p>
+
+<h1 align="center">ArtiPress</h1>
 
 A static site generator for articles. Drop the `artipress/` folder into any existing website repo, write articles in Markdown, run one Python script, and get a fully generated article section: list page, individual article pages, author pages, print views, SEO metadata, and WebP images. No backend needed.
 

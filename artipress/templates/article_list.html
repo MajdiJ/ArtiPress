@@ -29,6 +29,7 @@ You can edit the article card layout in the `article_list_item.html` template co
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/png" href="{html_var(assets_url)}/branding/favicon.png" />
 
     <!-- Site specific meta tags -->
     <title>Articles - ArtiPress</title>
@@ -48,7 +49,10 @@ You can edit the article card layout in the `article_list_item.html` template co
 <body>
 
     <header class="articles-page-header">
-        <h1><a href="/">ArtiPress</a></h1>
+        <a href="/" class="site-logo-link" aria-label="ArtiPress home">
+            <img src="{html_var(assets_url)}/branding/logo.png" alt="" class="site-logo" />
+            <span class="site-logo-name">ArtiPress</span>
+        </a>
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>

@@ -1,7 +1,7 @@
 {
     "base_url": "https://artipress.majdij.com",
     "website_title": "ArtiPress",
-    "website_logo_url": "https://artipress.majdij.com/resource/image/logo.png",
+    "website_logo_url": "https://artipress.majdij.com/articles/_artipress/branding/logo.png",
     "base_template_paths": {
         "article_list": "artipress/templates/article_list.html",
         "article_page": "artipress/templates/article_page.html",
