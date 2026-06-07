@@ -84,7 +84,7 @@ def fail(context: str, reason: str) -> NoReturn:
 
 
 def assets_url() -> str:
-    return f"/{CONFIG['output_path']}/{CONFIG['shared_assets_subfolder']}"
+    return f"/{CONFIG['output_url_path']}/{CONFIG['shared_assets_subfolder']}"
 
 def author_picture_deploy_url(filename: str) -> str:
     return f"{assets_url()}/author-pictures/{filename}"
@@ -93,7 +93,7 @@ def social_icon_deploy_url(filename: str) -> str:
     return f"{assets_url()}/icons/{filename}"
 
 def article_asset_deploy_url(article_slug: str, relative_path: str) -> str:
-    return f"/{CONFIG['output_path']}/{article_slug}/{relative_path.lstrip('/')}"
+    return f"/{CONFIG['output_url_path']}/{article_slug}/{relative_path.lstrip('/')}"
 
 def resolve_article_image_url(article_slug: str, image_path: str) -> str:
     if not image_path:
@@ -118,7 +118,7 @@ def resolve_social_icon_url(filename: str) -> str:
 
 def copy_shared_assets():
     src = CONFIG["shared_assets_source_folder"]
-    dst = os.path.join(CONFIG["output_path"], CONFIG["shared_assets_subfolder"])
+    dst = os.path.join(CONFIG["output_disk_path"], CONFIG["shared_assets_subfolder"])
 
     if not os.path.exists(src):
         warn(f"shared_assets_source_folder not found at '{src}' — skipping asset copy")
@@ -130,7 +130,7 @@ def copy_shared_assets():
 
 def copy_article_assets(article_slug: str):
     src = os.path.join(CONFIG["input_content_folder"], article_slug)
-    dst = os.path.join(CONFIG["output_path"], article_slug)
+    dst = os.path.join(CONFIG["output_disk_path"], article_slug)
 
     if not os.path.exists(src):
         return
@@ -166,9 +166,9 @@ def generate_lqip_thumbnail(article_slug: str, article_data: dict) -> str | None
     if not os.path.exists(source_path):
         fail(f"article '{article_slug}'", f"article_image_url points to a missing file: {source_path}")
 
-    output_dir = os.path.join(CONFIG["output_path"], article_slug, "images")
+    output_dir = os.path.join(CONFIG["output_disk_path"], article_slug, "images")
     output_path = os.path.join(output_dir, LQIP_THUMBNAIL_FILENAME)
-    thumbnail_url = f"/{CONFIG['output_path']}/{article_slug}/images/{LQIP_THUMBNAIL_FILENAME}"
+    thumbnail_url = f"/{CONFIG['output_url_path']}/{article_slug}/images/{LQIP_THUMBNAIL_FILENAME}"
 
     try:
         with Image.open(source_path) as img:
@@ -212,7 +212,7 @@ def convert_article_images(article_slug: str, article_data: dict) -> None:
 
     from PIL import Image
 
-    article_output_dir = os.path.join(CONFIG["output_path"], article_slug)
+    article_output_dir = os.path.join(CONFIG["output_disk_path"], article_slug)
     if not os.path.exists(article_output_dir):
         return
 
@@ -645,7 +645,7 @@ def generate_article_page(article_slug: str, article_data: dict, output_path: st
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
         "website_title": CONFIG["website_title"],
-        "output_path": CONFIG["output_path"],
+        "output_path": CONFIG["output_url_path"],
         "assets_url": assets_url(),
         "base_url": CONFIG["base_url"],
         "article_id": article_slug,
@@ -712,7 +712,7 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
     replacement_vars = {
         "article_title": article_data.get("article_title", "Untitled Article"),
         "website_title": CONFIG["website_title"],
-        "output_path": CONFIG["output_path"],
+        "output_path": CONFIG["output_url_path"],
         "assets_url": assets_url(),
         "base_url": CONFIG["base_url"],
         "article_id": article_slug,
@@ -739,7 +739,7 @@ def generate_article_print(article_slug: str, article_data: dict, output_path: s
 
 def generate_all_article_pages(validated_articles: list[tuple[str, dict]], lqip_thumbnails: dict):
     for folder, article_data in validated_articles:
-        output_path = os.path.join(CONFIG["output_path"], folder, "index.html")
+        output_path = os.path.join(CONFIG["output_disk_path"], folder, "index.html")
         generate_article_page(folder, article_data, output_path, lqip_thumbnails.get(folder), validated_articles, lqip_thumbnails)
 
 def copy_all_article_assets(validated_articles: list[tuple[str, dict]]):
@@ -748,7 +748,7 @@ def copy_all_article_assets(validated_articles: list[tuple[str, dict]]):
 
 def generate_all_article_prints(validated_articles: list[tuple[str, dict]]):
     for folder, article_data in validated_articles:
-        output_path = os.path.join(CONFIG["output_path"], folder, "print.html")
+        output_path = os.path.join(CONFIG["output_disk_path"], folder, "print.html")
         generate_article_print(folder, article_data, output_path)
 
 def render_article_list_items_html(validated_articles, article_list_item_template, lqip_thumbnails: dict | None = None, include_hidden: bool = False):
@@ -813,7 +813,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
             "article_published_date": format_display_date(article_data.get("date", {}).get("published", "")),
             "article_published_date_iso": article_data.get("date", {}).get("published", ""),
             "article_card_thumbnail": article_card_thumbnail,
-            "article_url": f"/{CONFIG['output_path']}/{folder}/index.html",
+            "article_url": f"/{CONFIG['output_url_path']}/{folder}/index.html",
         }, source_label=f"article-list item for '{folder}'"))
 
     article_list_items_html += "\n</div>"
@@ -825,14 +825,14 @@ def generate_article_list_page(validated_articles: list[tuple[str, dict]], lqip_
     article_list_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("article_list_styling_and_scripts"))
     article_list_item_template = read_file(CONFIG["components_template_paths"].get("article_list_item"))
 
-    output_path = os.path.join(CONFIG["output_path"], "index.html")
+    output_path = os.path.join(CONFIG["output_disk_path"], "index.html")
 
     article_list_items_html = render_article_list_items_html(validated_articles, article_list_item_template, lqip_thumbnails)
 
     replacement_vars = {
         "article_list_items": article_list_items_html,
         "base_url": CONFIG["base_url"],
-        "output_path": CONFIG["output_path"],
+        "output_path": CONFIG["output_url_path"],
         "assets_url": assets_url(),
         "website_title": CONFIG["website_title"],
     }
@@ -849,7 +849,7 @@ def generate_author_list_page():
     author_list_styling_and_scripts = read_file(CONFIG["components_template_paths"].get("author_list_styling_and_scripts"))
     author_list_item_template = read_file(CONFIG["components_template_paths"].get("author_list_item"))
 
-    output_path = os.path.join(CONFIG["output_path"], "authors", "index.html")
+    output_path = os.path.join(CONFIG["output_disk_path"], "authors", "index.html")
 
     author_list_items_html = "<div class=\"artipress-authors-container\">\n"
 
@@ -872,7 +872,7 @@ def generate_author_list_page():
             "author_name": author.get("author_name", "Unknown Author"),
             "author_role_formatted": author_role_formatted,
             "author_picture_url": author_picture_url,
-            "author_url": f"/{CONFIG['output_path']}/authors/{author_slug}/index.html",
+            "author_url": f"/{CONFIG['output_url_path']}/authors/{author_slug}/index.html",
         }, source_label=f"author-list item for '{author_slug}'"))
 
     author_list_items_html += "\n</div>"
@@ -880,7 +880,7 @@ def generate_author_list_page():
     replacement_vars = {
         "author_list_items": author_list_items_html,
         "base_url": CONFIG["base_url"],
-        "output_path": CONFIG["output_path"],
+        "output_path": CONFIG["output_url_path"],
         "assets_url": assets_url(),
         "website_title": CONFIG["website_title"],
     }
@@ -982,7 +982,7 @@ def generate_author_page(author_data: dict, validated_articles: list[tuple[str, 
     replacement_vars = {
         "website_title": CONFIG["website_title"],
         "base_url": CONFIG["base_url"],
-        "output_path": CONFIG["output_path"],
+        "output_path": CONFIG["output_url_path"],
         "assets_url": assets_url(),
         "author_name": author_name,
         "author_slug": author_slug,
@@ -997,7 +997,7 @@ def generate_author_page(author_data: dict, validated_articles: list[tuple[str, 
 
     final_html = render_template(author_page_template, replacement_vars, source_label=f"author page '{author_slug}'")
 
-    output_path = os.path.join(CONFIG["output_path"], "authors", author_slug, "index.html")
+    output_path = os.path.join(CONFIG["output_disk_path"], "authors", author_slug, "index.html")
     write_file(output_path, final_html)
 
 def generate_all_author_pages(validated_articles: list[tuple[str, dict]], lqip_thumbnails: dict):
@@ -1017,7 +1017,7 @@ def cleanup_stale_output(validated_articles: list[tuple[str, dict]]) -> list[str
     leftovers from articles or authors whose source has since been removed or renamed.
     Must run only after generation succeeds, so a mid-build failure can't nuke the output.
     """
-    output_root = CONFIG["output_path"]
+    output_root = CONFIG["output_disk_path"]
     if not os.path.isdir(output_root):
         return []
 
@@ -1056,6 +1056,12 @@ def main():
 
     config_data = validate_json(JSON_CONFIG_FILEPATH, REQUIRED_JSON_CONFIG_FIELDS)
     CONFIG = {**CONFIG_DEFAULTS, **config_data}
+    # output_disk_path (where files are written, relative to the project root) and
+    # output_url_path (the URL prefix baked into generated links/asset references,
+    # relative to the webroot) only need to differ when the engine's output directory
+    # isn't itself the webroot. Fall back to the single output_path for compatibility.
+    CONFIG.setdefault("output_disk_path", CONFIG["output_path"])
+    CONFIG.setdefault("output_url_path", CONFIG["output_path"])
 
     validated_articles = startup_checks()
     progress(f"Validated {len(validated_articles)} articles and {len(AUTHORS)} authors")

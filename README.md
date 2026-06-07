@@ -27,7 +27,7 @@ Then open `articles/index.html` in your browser.
 ## Setup
 
 1. Copy the `artipress/` folder into the root of your website repo.
-2. Copy the `articles/` output folder into your repo (or point `output_path` in the config to wherever your site serves static files from).
+2. Copy the `articles/` output folder into your repo (or point `output_path` — or, if the engine doesn't live at your webroot, the separate `output_disk_path`/`output_url_path` pair — in the config to wherever your site serves static files from).
 3. Edit `artipress/config.json` with your site's details (see [Config](#config) below).
 4. Update the templates in `artipress/templates/` to match your site's header, nav, and footer.
 5. Add your authors to `artipress/authors.json`.
@@ -146,7 +146,9 @@ Edit `artipress/config.json`:
 | `base_url` | — | Full site URL, no trailing slash (e.g. `https://example.com`) |
 | `website_title` | `"ArtiPress"` | Site name used in page titles and metadata |
 | `website_logo_url` | — | Full URL to your site logo |
-| `output_path` | `"articles"` | Folder where generated HTML is written |
+| `output_path` | `"articles"` | Fallback for both of the below — used when only one path is needed |
+| `output_disk_path` | `output_path` | Folder where generated files are written, relative to the project root |
+| `output_url_path` | `output_path` | URL prefix baked into generated links and asset references, relative to the webroot |
 | `recently_published_within_hours` | `168` | Hours before a "Recently Published" badge expires (168 = 1 week) |
 | `related_articles_count` | `3` | Related articles shown per article page. Set to `0` to disable |
 | `date_format` | `"{day} %B %Y"` | strftime pattern; `{day}` gives the day without a leading zero |
@@ -171,7 +173,7 @@ Done: 7 articles, 2 authors, 14 images, 0 warning(s) (took 1.23s)
 
 ## Output
 
-The generator writes everything into the `output_path` folder (default: `articles/`):
+The generator writes everything into the `output_disk_path` folder (default: `articles/`):
 
 ```
 articles/
