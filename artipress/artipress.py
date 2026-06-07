@@ -172,13 +172,14 @@ def generate_lqip_thumbnail(article_slug: str, article_data: dict) -> str | None
 
     try:
         with Image.open(source_path) as img:
+            icc_profile = img.info.get("icc_profile")
             original_width, original_height = img.size
             if original_width <= LQIP_THUMBNAIL_MAX_WIDTH:
                 return None
             new_height = max(1, round(original_height * LQIP_THUMBNAIL_MAX_WIDTH / original_width))
             thumbnail = img.resize((LQIP_THUMBNAIL_MAX_WIDTH, new_height), Image.Resampling.LANCZOS)
             os.makedirs(output_dir, exist_ok=True)
-            thumbnail.save(output_path, "WEBP", quality=60)
+            thumbnail.save(output_path, "WEBP", quality=60, icc_profile=icc_profile)
             return thumbnail_url
     except Exception as e:
         fail(f"article '{article_slug}'", f"could not generate LQIP thumbnail for '{source_path}' — {e}")
@@ -224,6 +225,7 @@ def convert_article_images(article_slug: str, article_data: dict) -> None:
             dst_path = os.path.join(root, os.path.splitext(filename)[0] + ".webp")
             try:
                 with Image.open(src_path) as img:
+                    icc_profile = img.info.get("icc_profile")
                     if img.mode in ("P", "LA", "RGBA"):
                         img = img.convert("RGBA")
                     else:
@@ -232,7 +234,7 @@ def convert_article_images(article_slug: str, article_data: dict) -> None:
                     if width > WEBP_CONVERSION_MAX_WIDTH:
                         new_height = max(1, round(height * WEBP_CONVERSION_MAX_WIDTH / width))
                         img = img.resize((WEBP_CONVERSION_MAX_WIDTH, new_height), Image.Resampling.LANCZOS)
-                    img.save(dst_path, "WEBP", quality=WEBP_CONVERSION_QUALITY)
+                    img.save(dst_path, "WEBP", quality=WEBP_CONVERSION_QUALITY, icc_profile=icc_profile)
                 if src_path != dst_path:
                     os.remove(src_path)
                 _IMAGE_CONVERSION_COUNT += 1
