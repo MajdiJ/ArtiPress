@@ -28,5 +28,6 @@
     "recently_published_within_hours": 168,
     "date_format": "{day} %B %Y",
     "time_format": "%H:%M",
-    "related_articles_count": 4
+    "related_articles_count": 4,
+    "recent_articles_export_count": 3
 }

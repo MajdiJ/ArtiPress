@@ -29,6 +29,7 @@ CONFIG_DEFAULTS = {
     "date_format": "{day} %B %Y",
     "time_format": "%H:%M",
     "related_articles_count": 3,
+    "recent_articles_export_count": 3,
 }
 REQUIRED_JSON_CONFIG_FIELDS = [
     "base_template_paths.article_list",
@@ -753,7 +754,14 @@ def generate_all_article_prints(validated_articles: list[tuple[str, dict]]):
         output_path = os.path.join(CONFIG["output_disk_path"], folder, "print.html")
         generate_article_print(folder, article_data, output_path)
 
-def render_article_list_items_html(validated_articles, article_list_item_template, lqip_thumbnails: dict | None = None, include_hidden: bool = False):
+def card_full_image_url(folder: str, article_data: dict) -> str:
+    """Resolve the deployed (WebP-aware) URL of an article's card/featured image."""
+    raw_path = article_data.get("article_image_url", "")
+    if webp_conversion_enabled(article_data):
+        raw_path = map_image_path_to_webp(raw_path)
+    return resolve_article_image_url(folder, raw_path)
+
+def render_article_list_items_html(validated_articles, article_list_item_template, lqip_thumbnails: dict | None = None, include_hidden: bool = False, container_extra_classes: str = ""):
     """
     Render the grid of article cards used on both the article list page and individual author pages.
 
@@ -761,10 +769,14 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
         validated_articles: list of (folder, article_data) tuples.
         article_list_item_template: raw template string for a single card.
         include_hidden: if True, render articles with hide_from_article_list=true too (used by related-articles when the author manually opted them in).
+        container_extra_classes: extra CSS classes appended to the .artipress-articles-container wrapper (e.g. a column-count modifier for the exported recent-articles fragment).
     Returns:
         HTML string wrapping the cards in an .artipress-articles-container div.
     """
-    article_list_items_html = f"<div class=\"artipress-articles-container\" data-recently-published-hours=\"{CONFIG.get('recently_published_within_hours', 0)}\">\n"
+    container_class = "artipress-articles-container"
+    if container_extra_classes:
+        container_class += f" {container_extra_classes}"
+    article_list_items_html = f"<div class=\"{container_class}\" data-recently-published-hours=\"{CONFIG.get('recently_published_within_hours', 0)}\">\n"
 
     for folder, article_data in validated_articles:
 
@@ -792,10 +804,7 @@ def render_article_list_items_html(validated_articles, article_list_item_templat
                 article_authors += ", "
             article_authors += author_info.get('author_name', 'Unknown Author')
 
-        raw_card_image_path = article_data.get("article_image_url", "")
-        if webp_conversion_enabled(article_data):
-            raw_card_image_path = map_image_path_to_webp(raw_card_image_path)
-        article_image_url = resolve_article_image_url(folder, raw_card_image_path)
+        article_image_url = card_full_image_url(folder, article_data)
         article_image_alt = article_data.get("article_image_alt", "")
         thumbnail_url = (lqip_thumbnails or {}).get(folder)
         if article_image_url and thumbnail_url:
@@ -844,6 +853,82 @@ def generate_article_list_page(validated_articles: list[tuple[str, dict]], lqip_
     final_html = render_template(article_list_template, replacement_vars, source_label="article-list page")
 
     write_file(output_path, final_html)
+
+def build_articles_manifest(exported_articles: list[tuple[str, dict]], lqip_thumbnails: dict) -> list[dict]:
+    """Build the structured-data representation of the exported recent articles (for consumers rendering their own cards)."""
+    manifest = []
+    for folder, article_data in exported_articles:
+        published_iso = article_data.get("date", {}).get("published", "")
+        authors = []
+        for author_slug in article_data.get("author_slugs", []):
+            author_info = get_author_info(author_slug, AUTHORS)
+            authors.append({
+                "author_name": author_info.get("author_name", "Unknown Author"),
+                "author_slug": author_slug,
+                "author_url": f"/{CONFIG['output_url_path']}/authors/{author_slug}/index.html",
+            })
+        manifest.append({
+            "article_title": article_data.get("article_title", "Untitled Article"),
+            "article_strap_line": article_data.get("article_strap_line", ""),
+            "article_url": f"/{CONFIG['output_url_path']}/{folder}/index.html",
+            "article_image_url": card_full_image_url(folder, article_data),
+            "article_thumbnail_url": lqip_thumbnails.get(folder) or "",
+            "article_image_alt": article_data.get("article_image_alt", ""),
+            "article_authors": authors,
+            "article_published_date": format_display_date(published_iso),
+            "article_published_date_iso": published_iso,
+            "article_labels": article_data.get("article_labels", []),
+            "hide_from_article_list": bool(article_data.get("hide_from_article_list", False)),
+        })
+    return manifest
+
+def generate_recent_articles_export(validated_articles: list[tuple[str, dict]], lqip_thumbnails: dict) -> int:
+    """
+    Write the recent-articles artifacts into the shared-assets output folder (alongside _artipress/style/)
+    so external builders (e.g. a homepage that runs ArtiPress as a subprocess) can drop them onto disk:
+
+      - recent_articles.html      ready-to-inject card grid (top N visible articles, most-recent first)
+      - articles_manifest.json    same articles as structured data, for consumers rendering custom markup
+      - recent_articles_head.html the <head> CSS/JS the cards need (kept in sync with the article-list component)
+
+    Returns the number of cards exported (0 when the feature is disabled or there are no visible articles).
+    """
+    count = CONFIG.get("recent_articles_export_count", 0)
+    export_dir = os.path.join(CONFIG["output_disk_path"], CONFIG["shared_assets_subfolder"])
+
+    if count <= 0:
+        return 0
+
+    visible_articles = [
+        (folder, data) for folder, data in validated_articles
+        if not data.get("hide_from_article_list", False)
+    ]
+    exported_articles = visible_articles[:count]
+    if not exported_articles:
+        return 0
+
+    # Drive the layout from how many cards we actually have, capped at the CSS-provided modifiers (1–4).
+    # repeat(N, 1fr) for an exact N-across row, collapsing to one column on mobile (see article_list_cards.css).
+    cols = max(1, min(len(exported_articles), 4))
+
+    article_list_item_template = read_file(CONFIG["components_template_paths"].get("article_list_item"))
+    fragment_html = render_article_list_items_html(
+        exported_articles,
+        article_list_item_template,
+        lqip_thumbnails,
+        container_extra_classes=f"artipress-articles-container--cols-{cols}",
+    )
+    write_file(os.path.join(export_dir, "recent_articles.html"), fragment_html)
+
+    manifest = build_articles_manifest(exported_articles, lqip_thumbnails)
+    write_file(os.path.join(export_dir, "articles_manifest.json"), json.dumps(manifest, indent=2))
+
+    # Reuse the article-list styling component so the exported head snippet's asset paths never drift.
+    head_template = read_file(CONFIG["components_template_paths"].get("article_list_styling_and_scripts"))
+    head_html = render_template(head_template, {"assets_url": assets_url()}, source_label="recent-articles head snippet")
+    write_file(os.path.join(export_dir, "recent_articles_head.html"), head_html)
+
+    return len(exported_articles)
 
 def generate_author_list_page():
 
@@ -1089,6 +1174,10 @@ def main():
 
     generate_article_list_page(validated_articles, lqip_thumbnails)
     progress("Generated article-list page")
+
+    exported_count = generate_recent_articles_export(validated_articles, lqip_thumbnails)
+    if exported_count:
+        progress(f"Exported recent-articles artifacts ({exported_count} cards)")
 
     generate_author_list_page()
     progress("Generated author-list page")

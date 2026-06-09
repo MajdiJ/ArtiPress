@@ -33,6 +33,29 @@
     justify-content: center; /* centers the grid columns, not the items within a row */
 }
 
+/* Fixed-column modifiers (used by the exported recent-articles fragment).
+   Lay cards out in an exact N-across row that collapses to a single column on mobile. */
+.artipress-articles-container--cols-1 { grid-template-columns: 1fr; }
+.artipress-articles-container--cols-2 { grid-template-columns: repeat(2, 1fr); }
+.artipress-articles-container--cols-3 { grid-template-columns: repeat(3, 1fr); }
+.artipress-articles-container--cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Let the cards fill their grid track instead of holding their fixed default width. */
+.artipress-articles-container--cols-1 .artipress-article-card,
+.artipress-articles-container--cols-2 .artipress-article-card,
+.artipress-articles-container--cols-3 .artipress-article-card,
+.artipress-articles-container--cols-4 .artipress-article-card {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .artipress-articles-container--cols-2,
+    .artipress-articles-container--cols-3,
+    .artipress-articles-container--cols-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
 .artipress-article-card {
     padding: 12px 12px 0;
     width: var(--artipress-article-card-width);

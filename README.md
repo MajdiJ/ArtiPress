@@ -151,6 +151,7 @@ Edit `artipress/config.json`:
 | `output_url_path` | `output_path` | URL prefix baked into generated links and asset references, relative to the webroot |
 | `recently_published_within_hours` | `168` | Hours before a "Recently Published" badge expires (168 = 1 week) |
 | `related_articles_count` | `3` | Related articles shown per article page. Set to `0` to disable |
+| `recent_articles_export_count` | `3` | Recent-article cards exported for external pages (see [Recent-articles export](#recent-articles-export)). Set to `0` to disable |
 | `date_format` | `"{day} %B %Y"` | strftime pattern; `{day}` gives the day without a leading zero |
 | `time_format` | `"%H:%M"` | Only shown when the published time is not midnight |
 
@@ -179,6 +180,9 @@ The generator writes everything into the `output_disk_path` folder (default: `ar
 articles/
 ├── index.html                   ← article list page
 ├── _artipress/                  ← shared CSS, JS, icons (do not edit directly)
+│   ├── recent_articles.html     ← recent-articles fragment (see below)
+│   ├── recent_articles_head.html
+│   └── articles_manifest.json
 ├── authors/
 │   ├── index.html               ← author list page
 │   └── jane-doe/
@@ -192,6 +196,20 @@ articles/
 ```
 
 Commit the `articles/` output folder alongside your site's other static files.
+
+## Recent-articles export
+
+Every build drops a few extra files into the shared-assets folder (`_artipress/`, alongside `style/`) so a separate page — a homepage, say — can show the most-recent article cards without importing ArtiPress. This is handy when your homepage build runs ArtiPress as a subprocess and can only consume files on disk.
+
+The number of articles exported is controlled by `recent_articles_export_count` (default `3`, set to `0` to turn the export off). The exported set is the top N most-recent articles that aren't hidden (`hide_from_article_list`).
+
+| File | What it is |
+|---|---|
+| `_artipress/recent_articles.html` | A ready-to-inject HTML fragment: the top N cards rendered with the same `article_list_item.html` component and wrapped in `.artipress-articles-container`, so the existing card CSS/JS apply. The wrapper carries a `--cols-N` modifier (capped at 4) for an exact N-across row that collapses to a single column at ≤768px. |
+| `_artipress/recent_articles_head.html` | The `<link>`/`<script>` tags the cards need (`article_list_cards.css`, `lqip.css`, `recently_published_label.js`, `lqip.js`). Generated from the same component the article-list page uses, so the asset paths can't drift. Drop it in your `<head>`. |
+| `_artipress/articles_manifest.json` | The same N articles as structured data — `article_title`, `article_strap_line`, `article_url`, `article_image_url`, `article_thumbnail_url` (LQIP), `article_image_alt`, `article_authors` (name/slug/url), `article_published_date` (+ `_iso`), `article_labels`, `hide_from_article_list` — in most-recent-first order. Use this if you'd rather render your own markup. |
+
+To consume the fragment, inject `recent_articles_head.html` into your page's `<head>` and `recent_articles.html` wherever you want the cards. The asset URLs inside both files are built from `output_url_path`, so they resolve relative to your site's webroot (e.g. `/articles/_artipress/...`).
 
 ## Customising templates
 
