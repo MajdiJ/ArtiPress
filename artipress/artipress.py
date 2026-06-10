@@ -424,7 +424,7 @@ def write_file(path: str, content: str) -> None:
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
 
-_MD_EXTENSIONS = ["tables", "fenced_code", "footnotes", "sane_lists", "md_in_html"]
+_MD_EXTENSIONS = ["tables", "fenced_code", "footnotes", "sane_lists", "md_in_html", "toc"]
 
 def markdown_to_html(md: str, source_label: str = "") -> str:
     html = md_lib.markdown(md, extensions=_MD_EXTENSIONS)
