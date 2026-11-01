@@ -180,6 +180,15 @@ The `footnotes` extension is enabled, so footnote syntax is supported[^demo-foot
 
 </div>
 
+As a shortcut, any `<div>` with the `md-to-html` class gets `markdown="1"` added for you. That's handy for a table of contents:
+
+```html
+<div class="md-to-html table-of-contents">
+1. [Headings](#headings)
+2. [Inline HTML](#inline-html)
+</div>
+```
+
 A `<details>`/`<summary>` block, useful for collapsible asides:
 
 <details>

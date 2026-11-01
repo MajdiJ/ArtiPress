@@ -8,6 +8,8 @@ from datetime import datetime
 from typing import NoReturn
 
 import markdown as md_lib
+from markdown.extensions import Extension
+from markdown.preprocessors import Preprocessor
 
 
 # Run from the project root regardless of where the script is invoked from
@@ -424,7 +426,25 @@ def write_file(path: str, content: str) -> None:
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
 
-_MD_EXTENSIONS = ["tables", "fenced_code", "footnotes", "sane_lists", "md_in_html", "toc"]
+# Any <div> with the 'md-to-html' class gets markdown="1" added, so md_in_html
+# renders the Markdown inside it (e.g. a table of contents list). Runs after
+# fenced_code (priority 25) so code examples are left alone, and before
+# md_in_html's html_block (priority 20) so the attribute is seen.
+_MD_TO_HTML_DIV = re.compile(
+    r'^(\s*<div\b(?=[^>]*\bclass\s*=\s*["\'][^"\']*(?<![\w-])md-to-html(?![\w-]))(?![^>]*\bmarkdown\s*=)[^>]*?)(\s*/?>)',
+    flags=re.IGNORECASE | re.MULTILINE,
+)
+
+class _MdToHtmlDivPreprocessor(Preprocessor):
+    def run(self, lines):
+        text = _MD_TO_HTML_DIV.sub(r'\1 markdown="1"\2', "\n".join(lines))
+        return text.split("\n")
+
+class _MdToHtmlDivExtension(Extension):
+    def extendMarkdown(self, md):
+        md.preprocessors.register(_MdToHtmlDivPreprocessor(md), "md_to_html_div", 22)
+
+_MD_EXTENSIONS = ["tables", "fenced_code", "footnotes", "sane_lists", "md_in_html", "toc", _MdToHtmlDivExtension()]
 
 def markdown_to_html(md: str, source_label: str = "") -> str:
     html = md_lib.markdown(md, extensions=_MD_EXTENSIONS)
